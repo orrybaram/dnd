@@ -39,12 +39,46 @@ class MainHandler(webapp2.RequestHandler):
 
 class CharacterCreate(webapp2.RequestHandler):
     def post(self):
-        character = Character()
-        character.put()
-        self.response.headers['Content-Type'] = 'application/json'
-        self.response.out.write(json.dumps({'success': True}))
+        data = json.loads(self.request.body)
 
-class CharacterHandler(webapp2.RequestHandler):
+        character = Character()
+        character.name = data.get('name')
+        character.put()
+        
+        self.response.headers['Content-Type'] = 'application/json'
+        self.response.out.write(json.dumps(character.serializable()))
+
+class CharacterUpdate(webapp2.RequestHandler):
+    def post(self, character_key):
+        data = json.loads(self.request.body)
+        character = Character.get(character_key)
+
+        for k, v in data.iteritems():
+            
+            if k == 'date_created' or k == 'key':
+                continue
+            
+            value = data.get(k)
+
+            if isinstance(value, basestring) and value.isdigit():
+                value = int(value)
+            
+            try:
+                setattr(character, k, value)
+            except Exception, e:
+                logging.info('===============================')
+                logging.info(e)
+                logging.exception(e)
+                logging.exception(e)
+                logging.exception(e)
+                logging.info('===============================')
+            
+        character.put()
+        
+        self.response.headers['Content-Type'] = 'application/json'
+        self.response.out.write(json.dumps(character.serializable()))
+
+class CharacterDetail(webapp2.RequestHandler):
     def get(self, character_key):
         character = Character.get(character_key)
 
@@ -58,7 +92,8 @@ class CharacterHandler(webapp2.RequestHandler):
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
     ('/api/v1/character/create/?', CharacterCreate),
-    ('/api/v1/character/(?P<character_key>[^/]+)/?', CharacterHandler),
+    ('/api/v1/character/(?P<character_key>[^/]+)/?', CharacterDetail),
+    ('/api/v1/character/(?P<character_key>[^/]+)/update/?', CharacterUpdate),
     
 
 ], debug=True)
