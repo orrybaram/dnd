@@ -1,0 +1,9 @@
+<h1>{{ group.name }}</h1>
+
+<h2>Players</h2>
+<ul>
+	<li ng-repeat="character in characters"><a ui-sref="character-detail({character_key: character.key})">{{ character.name }}</a></li>
+</ul>
+
+<input placeholder="Character name" ng-model="new_character.name" />
+<button ng-click="create_character(group.key)">add character</button>

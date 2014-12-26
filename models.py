@@ -1,8 +1,22 @@
 from google.appengine.ext import db
 
-class Character(db.Model):
-    # Basics
+class Group(db.Model):
     date_created = db.DateTimeProperty(auto_now_add=True)
+    name = db.StringProperty()
+
+    def serializable(self):
+        return {
+            'date_created': self.date_created.isoformat(),
+            'key': str(self.key()),
+            'name': self.name,
+        }
+
+class Character(db.Model):
+    
+    date_created = db.DateTimeProperty(auto_now_add=True)
+    group = db.ReferenceProperty(Group, collection_name="players", default=None)
+
+    # Basics
     name = db.StringProperty()
     level = db.IntegerProperty(default=0)
     char_class = db.StringProperty()

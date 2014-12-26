@@ -7,12 +7,22 @@ angular.module('dnd', [
 ])
 
 .config(function($stateProvider, $urlRouterProvider) {
-  //
-  // For any unmatched url, redirect to /state1
-  $urlRouterProvider.otherwise("/character/create");
-  //
-  // Now set up the states
+  
+  $urlRouterProvider.otherwise("/");
+  
   $stateProvider
+    .state('group-list', {
+      url: "/",
+      templateUrl: "partials/groups.html",
+      controller: 'GroupsCtrl'
+    })
+
+    .state('group-detail', {
+      url: "/group/:group_key",
+      templateUrl: "partials/group-detail.html",
+      controller: 'GroupDetailCtrl'
+    })
+
     .state('character-create', {
       url: "/character/create",
       templateUrl: "partials/character-create.html",

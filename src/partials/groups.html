@@ -1,0 +1,11 @@
+<h1>Create group</h1>
+
+<input placeholder="Group name" ng-model="new_group.name" />
+<button ng-click="create_group()">create group</button>
+
+<h1>Groups</h1>
+<ul>
+	<li ng-repeat="group in groups">
+		<a ui-sref="group-detail({group_key: group.key})">{{ group.name }}</a>
+	</li>
+</ul>
