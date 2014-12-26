@@ -1,0 +1,7 @@
+{
+  "name": "dnd",
+  "version": "0.0.0",
+  "devDependencies": {
+    "angular-ui-router": "~0.2.13"
+  }
+}
