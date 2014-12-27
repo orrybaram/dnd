@@ -3207,7 +3207,8 @@ a:visited {
   background: #455a64;
   color: white;
   position: relative;
-  padding: 10px; }
+  padding: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); }
   .toolbar h1 {
     margin: 0;
     font-size: 20px; }
