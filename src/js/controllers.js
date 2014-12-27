@@ -77,8 +77,14 @@ angular.module('app.controllers', [])
     	$http.get('/api/v1/character/' + character_key).then(function(response) {
     		console.log(response);
     		$scope.character = response.data.character;
+
+            
     	})
     }
+
+    $scope.$watch('character', function() {
+        $scope.next_level = XP_LEVELS[$scope.get_level()];
+    }, true)
 
     $scope.save_character = function() {
         $scope.ui.saving = true;
@@ -96,5 +102,40 @@ angular.module('app.controllers', [])
         })
     }
     $scope.get_character();
+
+    $scope.getAbilModifier = function(score) {
+        return Math.floor((score - 10) / 2);
+    }
+    $scope.getHalfLevel = function() {
+        return Math.floor($scope.character.level / 2)
+    }
+    $scope.roundDown = function(score) {
+        return Math.floor(score)
+    }
+    $scope.getInitiativeTotal =function() {
+        var total = parseInt($scope.character.dexterity);
+        total += parseInt($scope.getHalfLevel());
+        total += parseInt($scope.character.initiative_misc);
+        return total;
+    }
+    $scope.getDefenseTotal = function(defense) {
+        var total = 10 + parseInt($scope.getHalfLevel())
+        total += parseInt($scope.character[defense + '_abil'])
+        total += parseInt($scope.character[defense + '_char_class'])
+        total += parseInt($scope.character[defense + '_feat'])
+        total += parseInt($scope.character[defense + '_enh'])
+        total += parseInt($scope.character[defense + '_misc1'])
+        total += parseInt($scope.character[defense + '_misc2'])
+        return total
+    }
+    $scope.get_level = function() {
+        var level = 0;
+        for (var i = 0; i < XP_LEVELS.length; i++) {
+            if(XP_LEVELS[i] <= $scope.character.total_xp) {
+                level += 1
+            }
+        };
+        return level;
+    }
 })
 

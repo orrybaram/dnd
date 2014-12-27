@@ -13,7 +13,7 @@
 
 		<div class="inline-block">
 			<label>Level</label>
-			<input class="tiny-input" ng-model="character.level" />
+			<input class="tiny-input" value="{{get_level()}}" />
 		</div>
 
 		<div class="inline-block">
@@ -27,8 +27,8 @@
 		</div>
 
 		<div class="inline-block">
-			<label>XP</label>
-			<input class="tiny-input" ng-model="character.total_xp" />
+			<label>XP <small>Next Level: {{ next_level }}</small></label>
+			<input class="" ng-model="character.total_xp" />
 		</div>
 
 		<div class="inline-block">
@@ -75,7 +75,7 @@
 		<h2>Initiative</h2>
 		<div class="inline-block">
 			<label>Initiative</label>
-			<input class="tiny-input" ng-model="character.initiative_score" />
+			<input class="tiny-input" value="{{ getInitiativeTotal() }}" />
 		</div>
 
 		<div class="inline-block">
@@ -94,12 +94,12 @@
 
 			<div class="inline-block">
 				<label>Abil Mod</label>
-				<input class="tiny-input" ng-model="character.strength_abil_mod" />
+				<input class="tiny-input" value="{{ getAbilModifier(character.strength) }}" />
 			</div>
-
+			
 			<div class="inline-block">
 				<label>Abil Mod + 1/2 Level</label>
-				<input class="tiny-input" value="{{ character.strength_abil_mod + (character.level / 2) }}" />
+				<input class="tiny-input" value="{{ getAbilModifier(character.strength) + getHalfLevel() }}" />
 			</div>
 		</div>
 
@@ -112,12 +112,12 @@
 
 			<div class="inline-block">
 				<label>Abil Mod</label>
-				<input class="tiny-input" ng-model="character.constitution_abil_mod" />
+				<input class="tiny-input" value="{{ getAbilModifier(character.constitution) }}" />
 			</div>
 
 			<div class="inline-block">
 				<label>Abil Mod + 1/2 Level</label>
-				<input class="tiny-input" value="{{ character.constitution_abil_mod + (character.level / 2) }}" />
+				<input class="tiny-input" value="{{ getAbilModifier(character.constitution) + getHalfLevel() }}" />
 			</div>
 		</div>
 
@@ -131,12 +131,12 @@
 
 			<div class="inline-block">
 				<label>Abil Mod</label>
-				<input class="tiny-input" ng-model="character.dexterity_abil_mod" />
+				<input class="tiny-input" value="{{ getAbilModifier(character.dexterity) }}" />
 			</div>
 
 			<div class="inline-block">
 				<label>Abil Mod + 1/2 Level</label>
-				<input class="tiny-input" value="{{ character.dexterity_abil_mod + (character.level / 2) }}" />
+				<input class="tiny-input" value="{{ getAbilModifier(character.dexterity) + getHalfLevel() }}" />
 			</div>
 		</div>
 
@@ -149,12 +149,12 @@
 
 			<div class="inline-block">
 				<label>Abil Mod</label>
-				<input class="tiny-input" ng-model="character.intelligence_abil_mod" />
+				<input class="tiny-input" value="{{ getAbilModifier(character.intelligence) }}" />
 			</div>
 
 			<div class="inline-block">
 				<label>Abil Mod + 1/2 Level</label>
-				<input class="tiny-input" value="{{ character.intelligence_abil_mod + (character.level / 2) }}" />
+				<input class="tiny-input" value="{{ getAbilModifier(character.intelligence) + getHalfLevel() }}" />
 			</div>
 		</div>
 
@@ -167,12 +167,12 @@
 
 			<div class="inline-block">
 				<label>Abil Mod</label>
-				<input class="tiny-input" ng-model="character.charisma_abil_mod" />
+				<input class="tiny-input" value="{{ getAbilModifier(character.charisma) }}" />
 			</div>
 
 			<div class="inline-block">
 				<label>Abil Mod + 1/2 Level</label>
-				<input class="tiny-input" value="{{ character.charisma_abil_mod + character.level / 2 }}" />
+				<input class="tiny-input" value="{{ getAbilModifier(character.charisma) + getHalfLevel() }}" />
 			</div>
 		</div>
 
@@ -181,7 +181,11 @@
 			<h3>AC</h3>
 			<div class="inline-block">
 				<label>Total</label>
-				<input class="tiny-input" ng-model="character.armor_class_total" />
+				<input class="tiny-input" value="{{ getDefenseTotal('armor') }}" />
+			</div>
+			<div class="inline-block">
+				<label>10 + 1/2 Level</label>
+				<input class="tiny-input" value="{{ 10 + getHalfLevel() }}" />
 			</div>
 			<div class="inline-block">
 				<label>Abil</label>
@@ -213,7 +217,11 @@
 			<h3>Fortitude</h3>
 			<div class="inline-block">
 				<label>Total</label>
-				<input class="tiny-input" ng-model="character.fortitude_total" />
+				<input class="tiny-input" value="{{ getDefenseTotal('fortitude') }}" />
+			</div>
+			<div class="inline-block">
+				<label>10 + 1/2 Level</label>
+				<input class="tiny-input" value="{{ 10 + getHalfLevel() }}" />
 			</div>
 			<div class="inline-block">
 				<label>Abil</label>
@@ -245,7 +253,11 @@
 			<h3>Reflex</h3>
 			<div class="inline-block">
 				<label>Total</label>
-				<input class="tiny-input" ng-model="character.reflex_total" />
+				<input class="tiny-input" value="{{ getDefenseTotal('reflex') }}" />
+			</div>
+			<div class="inline-block">
+				<label>10 + 1/2 Level</label>
+				<input class="tiny-input" value="{{ 10 + getHalfLevel() }}" />
 			</div>
 			<div class="inline-block">
 				<label>Abil</label>
@@ -277,7 +289,11 @@
 			<h3>Will</h3>
 			<div class="inline-block">
 				<label>Total</label>
-				<input class="tiny-input" ng-model="character.will_total" />
+				<input class="tiny-input" value="{{ getDefenseTotal('will') }}" />
+			</div>
+			<div class="inline-block">
+				<label>10 + 1/2 Level</label>
+				<input class="tiny-input" value="{{ 10 + getHalfLevel() }}" />
 			</div>
 			<div class="inline-block">
 				<label>Abil</label>
@@ -344,11 +360,11 @@
 		</div>
 		<div class="inline-block">
 			<label>Bloodied</label>
-			<input class="tiny-input" value="{{ character.hp_max / 2 }}" />
+			<input class="tiny-input" value="{{ roundDown(character.hp_max / 2) }}" />
 		</div>
 		<div class="inline-block">
 			<label>Surge Value</label>
-			<input class="tiny-input" value="{{ character.hp_max / 4 }}" />
+			<input class="tiny-input" value="{{ roundDown(character.hp_max / 4) }}" />
 		</div>
 		<div class="inline-block">
 			<label>Surges per Day</label>

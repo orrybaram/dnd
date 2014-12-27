@@ -91,6 +91,11 @@ label {
 	display: block;
 	font-weight: bold;
 	color: $primaryText;
+
+	small {
+		float: right;
+		color: #808080;
+	}
 }
 
 .avatar {
