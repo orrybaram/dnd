@@ -3200,6 +3200,9 @@ a:visited {
   display: inline-block;
   vertical-align: top; }
 
+.hidden {
+  display: none; }
+
 .toolbar {
   background: #455a64;
   color: white;
@@ -3219,7 +3222,17 @@ a:visited {
   border: 0;
   font-size: 50px;
   border-bottom: 2px solid #cddc39;
-  color: white; }
+  color: white;
+  vertical-align: top; }
+
+.toast {
+  position: fixed;
+  z-index: 2;
+  background: rgba(0, 0, 0, 0.74);
+  padding: 10px;
+  color: #FFF;
+  top: 20px;
+  right: 20px; }
 
 label {
   font-size: 10px;
@@ -3227,6 +3240,17 @@ label {
   display: block;
   font-weight: bold;
   color: #212121; }
+
+.avatar {
+  height: 100px;
+  width: 100px;
+  background-size: cover;
+  background-position: center;
+  border-radius: 50%;
+  cursor: pointer;
+  background-color: rgba(0, 0, 0, 0.25);
+  display: inline-block;
+  margin-right: 20px; }
 
 .content-view {
   padding: 25px; }

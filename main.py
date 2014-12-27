@@ -95,21 +95,30 @@ class CharacterUpdate(webapp2.RequestHandler):
     def post(self, character_key):
         data = json.loads(self.request.body)
         character = Character.get(character_key)
+        values = {}
 
         for k, v in data.iteritems():
             if k == 'date_created' or k == 'key':
                 continue
-            value = data.get(k)
+            if k == 'avatar':
+                value = db.Blob(str(data.get('avatar')))
+            else:
+                value = data.get(k)
             if isinstance(value, basestring) and value.isdigit():
                 value = int(value)
             try:
                 setattr(character, k, value)
             except Exception, e:
                 logging.exception(e)
-        character.put()
         
+        try:                 
+            character.put()
+            values = character.serializable()
+        except Exception, e:
+            values = {'error': e}
+
         self.response.headers['Content-Type'] = 'application/json'
-        self.response.out.write(json.dumps(character.serializable()))
+        self.response.out.write(json.dumps(values))
 
 class CharacterDetail(webapp2.RequestHandler):
     def get(self, character_key):

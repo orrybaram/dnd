@@ -1,7 +1,11 @@
+<div ng-show="ui.saving" class="toast">Saving...</div>
+
 <form on-form-change="save_character()">
 	<div class="toolbar">
 		<a ui-sref="group-detail({group_key: character.group_key})"><i class="fa fa-arrow-left"></i></a>
+		<div fake-click="avatar-input" class="avatar" style="background-image: url('{{character.avatar}}')"></div>
 		<input class="title-input" ng-model="character.name" />
+		<input id="avatar-input" type="file" ng-model="character.avatar" fileread="character.avatar" filereadcallback="save_character()" class="hidden" />
 	</div>
 
 	<div class="content-view">

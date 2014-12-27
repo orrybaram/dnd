@@ -64,9 +64,10 @@ angular.module('app.controllers', [])
 
 })
 
-.controller('CharacterDetailCtrl', function($scope, $http, $stateParams) {
+.controller('CharacterDetailCtrl', function($scope, $http, $timeout, $stateParams) {
     
     $scope.character = {};
+    $scope.ui = {};
 
     console.log($stateParams)
 
@@ -80,9 +81,19 @@ angular.module('app.controllers', [])
     }
 
     $scope.save_character = function() {
+        $scope.ui.saving = true;
     	$http.post('/api/v1/character/' + character_key + '/update/', $scope.character).then(function(response) {
     		console.log(response);
-    	})
+            $timeout(function() {
+                $scope.ui.saving = false;    
+            }, 3000)
+            
+    	}, function(error) {
+            console.log(error);
+            $timeout(function() {
+                $scope.ui.saving = false;    
+            }, 3000)
+        })
     }
     $scope.get_character();
 })

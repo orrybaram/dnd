@@ -42,6 +42,10 @@ a {
 	vertical-align: top;
 }
 
+.hidden {
+	display: none;
+}
+
 .toolbar {
 	background: $darkPrimary;
 	color: white;
@@ -67,6 +71,17 @@ a {
 	font-size: 50px;
 	border-bottom: 2px solid $accentColor;
 	color: white;
+	vertical-align: top;
+}
+
+.toast {
+	position: fixed;
+	z-index: 2;
+	background: rgba(0, 0, 0, 0.74);
+	padding: 10px;
+	color: #FFF;
+	top: 20px;
+	right: 20px;
 }
 
 label {
@@ -75,6 +90,18 @@ label {
 	display: block;
 	font-weight: bold;
 	color: $primaryText;
+}
+
+.avatar {
+	height: 100px;
+	width: 100px;
+	background-size: cover;
+	background-position: center;
+	border-radius: 50%;
+	cursor: pointer;
+	background-color: rgba(0, 0, 0, 0.25);
+	display: inline-block;
+	margin-right: 20px;
 }
 
 .content-view {

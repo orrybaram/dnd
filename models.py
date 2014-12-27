@@ -30,6 +30,7 @@ class Character(db.Model):
     alignment = db.StringProperty()
     deity = db.StringProperty()
     affiliations = db.StringProperty()
+    avatar = db.BlobProperty()
     
     # Initiative
     initiative_score = db.IntegerProperty(default=0)
@@ -259,6 +260,7 @@ class Character(db.Model):
             'alignment': self.alignment,
             'deity': self.deity,
             'affiliations': self.affiliations,
+            'avatar': self.avatar,
             
             # Initiative
             'initiative_score': self.initiative_score,
