@@ -21,6 +21,9 @@ handlers:
 - url: /js
   static_dir: src/js
 
+- url: /fonts
+  static_dir: src/fonts
+
 - url: .*
   script: main.app
 

@@ -1,11 +1,17 @@
-<h1>Create group</h1>
+<div class="toolbar content-view">
+	<h1>DnD Buddy</h1>
+</div>
 
-<input placeholder="Group name" ng-model="new_group.name" />
-<button ng-click="create_group()">create group</button>
+<div class="content-view">
+	<h2>Create group</h2>
 
-<h1>Groups</h1>
-<ul>
-	<li ng-repeat="group in groups">
-		<a ui-sref="group-detail({group_key: group.key})">{{ group.name }}</a>
-	</li>
-</ul>
+	<input placeholder="Group name" ng-model="new_group.name" />
+	<button ng-click="create_group()">create group</button>
+
+	<h2>Groups</h2>
+	<ul>
+		<li ng-repeat="group in groups">
+			<a ui-sref="group-detail({group_key: group.key})">{{ group.name }}</a>
+		</li>
+	</ul>
+</div>

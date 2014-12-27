@@ -2,36 +2,37 @@
 
 
 angular.module('dnd', [
-  'ui.router',
-   'app.controllers'
+    'ui.router',
+    'app.controllers',
+    'directives'
 ])
 
-.config(function($stateProvider, $urlRouterProvider) {
-  
-  $urlRouterProvider.otherwise("/");
-  
-  $stateProvider
-    .state('group-list', {
-      url: "/",
-      templateUrl: "partials/groups.html",
-      controller: 'GroupsCtrl'
-    })
+.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
+    
+    $urlRouterProvider.otherwise("/");
+
+    $stateProvider
+        .state('group-list', {
+            url: "/",
+            templateUrl: "/partials/groups.html",
+            controller: 'GroupsCtrl'
+        })
 
     .state('group-detail', {
-      url: "/group/:group_key",
-      templateUrl: "partials/group-detail.html",
-      controller: 'GroupDetailCtrl'
+        url: "/group/:group_key",
+        templateUrl: "/partials/group-detail.html",
+        controller: 'GroupDetailCtrl'
     })
 
     .state('character-create', {
-      url: "/character/create",
-      templateUrl: "partials/character-create.html",
-      controller: 'CharacterCreateCtrl'
+        url: "/character/create",
+        templateUrl: "/partials/character-create.html",
+        controller: 'CharacterCreateCtrl'
     })
 
     .state('character-detail', {
-      url: "/character/:character_key",
-      templateUrl: "partials/character-detail.html",
-      controller: 'CharacterDetailCtrl'
+        url: "/character/:character_key",
+        templateUrl: "/partials/character-detail.html",
+        controller: 'CharacterDetailCtrl'
     })
 });

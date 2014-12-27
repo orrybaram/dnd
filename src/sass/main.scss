@@ -1,0 +1,89 @@
+$primary: #607D8B;
+$darkPrimary: #455A64;
+$lightPrimary: #CFD8DC;
+$accentColor: #CDDC39;
+$primaryText: #212121;
+$secondaryText: #727272;
+
+body {
+	background: #F1F1F1;
+	font-family: sans-serif;
+	color: $primaryText;
+}
+
+h1 {
+	font-size: 35px;
+	margin: 0 0 5px;
+}
+
+h2 {
+	margin: 0 0 5px;
+}
+
+h3 {
+	margin: 0 0 5px;
+}
+
+button {
+	border: 0;
+	background: $accentColor;
+	color: white;
+	border-radius: 3px;
+	padding: 5px 10px;
+	font-size: 16px;
+}
+
+a {
+	&:visited {color: inherit}
+}
+
+.inline-block {
+	display: inline-block;
+	vertical-align: top;
+}
+
+.toolbar {
+	background: $darkPrimary;
+	color: white;
+	position: relative;
+
+	h1 {
+		margin:0;
+	}
+
+	.fa-arrow-left {
+		position: absolute;
+		top:15px;
+		left:15px;
+	}
+}
+
+.title-input {
+	background: none;
+	border: 0;
+	font-size: 50px;
+	border-bottom: 2px solid $accentColor;
+	color: white;
+}
+
+label {
+	font-size: 10px;
+	text-transform: uppercase;
+	display: block;
+	font-weight: bold;
+	color: $primaryText;
+}
+
+.content-view {
+	padding: 25px;
+}
+
+input {
+	font-size: 20px;
+	padding: 5px;
+}
+
+.tiny-input {
+	width: 35px;
+	text-align: center;
+}

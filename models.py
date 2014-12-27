@@ -245,6 +245,7 @@ class Character(db.Model):
             # Basics
             'key': str(self.key()),
             'date_created': self.date_created.isoformat(),
+            'group_key': str(self.group.key()),
             'name': self.name,
             'level': self.level,
             'char_class': self.char_class,
