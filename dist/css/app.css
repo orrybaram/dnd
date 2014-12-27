@@ -3203,13 +3203,16 @@ a:visited {
 .toolbar {
   background: #455a64;
   color: white;
-  position: relative; }
+  position: relative;
+  padding: 10px; }
   .toolbar h1 {
-    margin: 0; }
+    margin: 0;
+    font-size: 20px; }
   .toolbar .fa-arrow-left {
-    position: absolute;
-    top: 15px;
-    left: 15px; }
+    float: left;
+    position: relative;
+    top: 6px;
+    margin-right: 10px; }
 
 .title-input {
   background: none;
