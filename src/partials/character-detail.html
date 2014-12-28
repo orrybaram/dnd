@@ -7,6 +7,11 @@
             <div fake-click="avatar-input" class="avatar" style="background-image: url('{{character.avatar}}')"></div>
             <input class="title-input" ng-model="character.name" />
             <input id="avatar-input" type="file" ng-model="character.avatar" fileread="character.avatar" filereadcallback="save_character()" class="hidden" />
+
+            <p class="char-bio">
+                A level {{character.level}} {{character.char_race}} {{character.char_class}} 
+            </p>
+
         </div>
     </div>
 
@@ -766,11 +771,11 @@
                 ========================================= -->
                 <section>
                     <h2 class="section-header">Senses</h2>
-                    <div class="">
+                    <div class="inline-block">
                         <h3 class="item-name wider">PSV INST</h3>
                         <input disabled class="tiny-input highlighted total-box" value="{{character.insight_total + 10}}" />
                     </div>
-                    <div class="">
+                    <div class="inline-block">
                         <h3 class="item-name wider">PSV PRCP</h3>
                         <input disabled class="tiny-input highlighted total-box" value="{{character.perception_total + 10}}" />
                     </div>

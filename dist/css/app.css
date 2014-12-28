@@ -3172,7 +3172,7 @@ select {
 
 body {
   background: #F1F1F1;
-  font-family: sans-serif;
+  font-family: Helvetica Neue, sans-serif;
   color: #212121; }
 
 h1 {
@@ -3238,7 +3238,7 @@ a:visited {
   display: none; }
 
 .row {
-  max-width: 100%; }
+  max-width: 80em; }
 
 .toolbar {
   background: #455a64;
@@ -3255,6 +3255,10 @@ a:visited {
     top: 6px;
     margin-right: 10px; }
 
+.char-bio {
+  color: rgba(255, 255, 255, 0.7);
+  text-align: center; }
+
 .item {
   padding: 2px 0; }
   .item:nth-child(even) {
@@ -3267,7 +3271,7 @@ a:visited {
   color: white;
   vertical-align: top;
   text-align: center;
-  margin: 0 auto 20px;
+  margin: 0 auto 0;
   display: block;
   width: 100%; }
 
@@ -3305,7 +3309,7 @@ label {
   margin: 20px auto 0; }
 
 .content-view {
-  padding: 25px; }
+  padding: 25px 0; }
 
 input {
   font-size: 16px;

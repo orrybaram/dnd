@@ -255,6 +255,7 @@ class Character(db.Model):
             'total_xp': self.total_xp,
             'char_race': self.char_race,
             'char_size': self.char_size,
+            'char_weight': self.char_weight,
             'char_age': self.char_age,
             'char_gender': self.char_gender,
             'char_height': self.char_height,
