@@ -206,6 +206,7 @@ class Character(db.Model):
             # Basics
             'key': str(self.key()),
             'user_id': str(self.user.user_id()),
+            'user_name': str(self.user),
             'date_created': self.date_created.isoformat(),
             'group_key': str(self.group.key()),
             'name': self.name,

@@ -6,7 +6,7 @@
 	<h2>Players</h2>
 	<div class="empty-message" ng-show="!characters.length">Loading...</div>
 	<ul>
-		<li ng-repeat="character in characters"><a ui-sref="character-detail({character_key: character.key})">{{ character.name }}</a></li>
+		<li ng-repeat="character in characters"><a ui-sref="character-detail({character_key: character.key})">{{ character.name }}</a> -- {{ character.user_name }}</li>
 	</ul>
 
 	<input placeholder="Character name" ng-model="new_character.name" />
