@@ -26,6 +26,26 @@ h3 {
 	margin: 0 0 5px;
 	font-size: 16px;
 	font-weight: bold;
+
+	&.item-name {
+		display: inline-block;
+		text-transform: uppercase;
+		color: #FFF;
+		background-color: #454545;
+		padding: 8px 5px;
+		width: 45px;
+		text-align: center;
+		font-size: 13px;
+		margin-right: -5px;
+		vertical-align: top;
+
+		&.wide {
+			width: 60px;
+		}
+		&.wider {
+			width: 80px;
+		}
+	}
 }
 
 section {
@@ -33,6 +53,16 @@ section {
 	padding: 10px;
 	background: #FFF;
 	box-shadow: 0 2px #E0E0E0;
+}
+
+.section-header {
+	margin: -10px -10px 10px;
+	font-size: 12px;
+	font-weight: bold;
+	padding: 3px 10px;
+	background: #E0E0E0;
+	text-transform: uppercase;
+	color: #646464;
 }
 
 button {
@@ -82,7 +112,7 @@ a {
 }
 
 .item {
-	padding: 10px;
+	padding: 2px 0;
 
 	&:nth-child(even) {
 		background-color: rgba(0, 0, 0, 0.02);
@@ -111,12 +141,13 @@ a {
 }
 
 label {
-	font-size: 10px;
+	font-size: 8px;
 	text-transform: uppercase;
 	display: block;
 	font-weight: bold;
 	color: $primaryText;
-
+	line-height: 9px;
+	
 	small {
 		float: right;
 		color: #808080;
@@ -147,6 +178,13 @@ input {
 	padding: 2px;
 }
 
+input[disabled] {
+	background: #E4E4E4;
+	border: 0;
+	padding: 3px;
+	border-bottom: 1px solid #E0E0E0;
+}
+
 .tiny-input {
 	width: 30px;
 	text-align: center;
@@ -156,12 +194,20 @@ input {
 	width: 65px;
 	text-align: center;
 }
+.medium-input {
+	width: 100px;
+}
+
+.total-box {
+	font-size: 18px;
+	padding: 7px!important;
+	width: 42px;
+}
+
+
 
 input.highlighted {
 	background: #282828;
 	color: $accentColor;
-	font-size: 22px;
-	width: 40px;
-	display: inline-block;
 	border: 0;
 }
