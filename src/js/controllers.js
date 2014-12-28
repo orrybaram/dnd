@@ -30,6 +30,22 @@ angular.module('app.controllers', [])
     $scope.characters = [];
     $scope.new_character = {};
 
+    $scope.$on('character-updated', function(event, args) {
+        console.log(args)
+        
+        var updated_char = args.character;
+
+        for (var i = 0; i < $scope.characters.length; i++) {
+            if ($scope.characters[i].key === updated_char.key) {
+                $scope.characters[i] = updated_char
+                break;
+            }
+        };
+
+        $scope.character = args.character;
+        $scope.$apply();
+    })
+
     var group_key = $stateParams.group_key;
     
     $scope.get_group_detail = function() {
