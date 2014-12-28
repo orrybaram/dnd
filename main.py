@@ -14,6 +14,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+from google.appengine.api import users
+from google.appengine.ext.webapp import template
 
 import webapp2
 import os
@@ -22,6 +24,8 @@ import logging
 import urlparse
 import json
 
+from template_filters import  *
+
 from models import *
 
 JINJA_ENVIRONMENT = jinja2.Environment(
@@ -29,13 +33,34 @@ JINJA_ENVIRONMENT = jinja2.Environment(
     extensions=['jinja2.ext.autoescape'],
     autoescape=True)
 
+JINJA_ENVIRONMENT.filters['to_json'] = to_json
+
 class MainHandler(webapp2.RequestHandler):
     def get(self):
 
-        logging.info(JINJA_ENVIRONMENT)
+        current_user = users.get_current_user()
+        values = {}
+        
+        if current_user:
+            values["logout_url"] = users.create_logout_url('/')
+            
+            user = User.all().filter('user_id =', current_user.user_id()).get()
+
+            if not user:
+                user = User()
+                user.name = str(current_user)
+                user.user_id = current_user.user_id()
+                user.put()
+            
+            values["user"] = user
+            values["template_values"] = {
+                'user_id': user.user_id
+            }
+        else:
+            values["login_url"] = users.create_login_url('/')
 
         template = JINJA_ENVIRONMENT.get_template('src/index.html')
-        self.response.write(template.render())
+        self.response.write(template.render(values))
 
 class GroupCreate(webapp2.RequestHandler):
     def post(self):
@@ -79,17 +104,33 @@ class GroupDetail(webapp2.RequestHandler):
 
 class CharacterCreate(webapp2.RequestHandler):
     def post(self):
-        data = json.loads(self.request.body)
-
-        logging.info(data)
-
-        character = Character()
-        character.name = data.get('name')
-        character.group = Group.get(data.get('group'))
-        character.put()
         
-        self.response.headers['Content-Type'] = 'application/json'
-        self.response.out.write(json.dumps(character.serializable()))
+        data = json.loads(self.request.body)
+        
+        
+        if users.get_current_user():
+            character = Character()
+            character.name = data.get('name')
+            character.user = users.get_current_user()
+            character.group = Group.get(data.get('group_key'))
+            character.put()
+
+            logging.info(character.user)
+            logging.info(character.user)
+
+            values = {
+                'character': character.serializable()
+            }
+            
+            self.response.headers['Content-Type'] = 'application/json'
+            self.response.out.write(json.dumps(values))
+        else:
+            values = {
+                'error': 'need to be logged in'
+            }
+
+            self.response.headers['Content-Type'] = 'application/json'
+            self.response.out.write(json.dumps(values))
 
 class CharacterUpdate(webapp2.RequestHandler):
     def post(self, character_key):

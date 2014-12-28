@@ -4,12 +4,14 @@
     <div class="toolbar">
         <a ui-sref="group-detail({group_key: character.group_key})"><i class="fa fa-arrow-left"></i></a>
         <div>
-            <div fake-click="avatar-input" class="avatar" style="background-image: url('{{character.avatar}}')"></div>
+            <div fake-click="avatar-input" class="avatar" style="background-image: url('{{character.avatar}}')">
+                <p ng-show="!character.avatar">Upload Image</p>
+            </div>
             <input class="title-input" ng-model="character.name" />
             <input id="avatar-input" type="file" ng-model="character.avatar" fileread="character.avatar" filereadcallback="save_character()" class="hidden" />
 
             <p class="char-bio">
-                A level {{character.level}} {{character.char_race}} {{character.char_class}}
+                A level {{character.level}} {{character.char_race || 'noob'}} {{character.char_class}}
             </p>
 
         </div>
@@ -19,7 +21,10 @@
     <div class="content-view">
     <!-- BASIC INFO
     ========================================= -->
-        
+        <div ng-if="template_values.user_id === character.user_id">
+            This is your character
+        </div>
+
         <div class="row">
             <div class="column medium-12">
                 <section>
@@ -40,12 +45,6 @@
                         <label>Class</label>
                         <input class="medium-input" ng-model="character.char_class" />
                     </div>
-
-                    <div class="inline-block">
-                        <label>Epic Destiny</label>
-                        <input class="" ng-model="character.epic_destiny" />
-                    </div>
-
                     <div class="inline-block">
                         <label>Race</label>
                         <input class="medium-input" ng-model="character.char_race" />
@@ -84,6 +83,11 @@
                     <div class="inline-block">
                         <label>Deity</label>
                         <input class="medium-input" ng-model="character.deity" />
+                    </div>
+
+                    <div class="inline-block">
+                        <label>Epic Destiny</label>
+                        <input class="" ng-model="character.epic_destiny" />
                     </div>
 
                     <div class="inline-block">
@@ -739,6 +743,18 @@
                         </div>
                     </div>
                 </section>
+                <section>
+                    <h2 class="section-header">Race Features</h2>
+                    <textarea ng-model="character.race_features"></textarea>
+                </section>
+                <section>
+                    <h2 class="section-header">Class / Path / Destiny Features</h2>
+                    <textarea ng-model="character.other_features"></textarea>
+                </section>
+                <section>
+                    <h2 class="section-header">Known Languages</h2>
+                    <textarea class="mini" ng-model="character.languages"></textarea>
+                </section>
             </div>
 
             <div class="medium-4 column">
@@ -780,6 +796,11 @@
                         <h3 class="item-name wider">PSV PRCP</h3>
                         <input disabled class="tiny-input highlighted total-box" value="{{character.perception_total + 10}}" />
                     </div>
+                </section>
+
+                <section>
+                    <h2 class="section-header">Feats</h2>
+                    <textarea ng-model="character.feats"></textarea>
                 </section>
             </div>
         </div>

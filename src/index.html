@@ -9,14 +9,27 @@
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 
     <link rel="stylesheet" href="css/app.css">
-
 </head>
 
 <body>
+    <div class="login-stuff">
+        {% if user %}
+            <span>{{ user.name }} | </span>
+            <a href="{{logout_url}}">Logout</a>
+        {% else %}
+            <a href="{{login_url}}">Login</a>
+        {% endif %}
+    </div>
 
     <div ui-view></div>
-
     
+    <script>
+    {% if template_values %}
+        var template_values = {{ template_values|to_json|safe}}
+    {% else %}
+        var template_values = {}
+    {% endif %}
+    </script>
     <script src="components/angular/angular.min.js"></script>
     <script src="components/angular-ui-router/release/angular-ui-router.min.js"></script>
     <script src="js/dnd-data.js"></script>

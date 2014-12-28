@@ -3311,6 +3311,18 @@ label {
   cursor: pointer;
   background-color: rgba(0, 0, 0, 0.25);
   margin: 20px auto 0; }
+  .avatar p {
+    position: relative;
+    top: 64px;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.25); }
+
+.login-stuff {
+  position: absolute;
+  right: 10px;
+  top: 11px;
+  z-index: 2;
+  color: #FFF; }
 
 .content-view {
   padding: 25px 0; }
@@ -3324,6 +3336,15 @@ input[disabled] {
   border: 0;
   padding: 3px;
   border-bottom: 1px solid #E0E0E0; }
+
+textarea {
+  width: 100%;
+  border: 1px solid #DBDBDB;
+  font-size: 14px;
+  height: 110px;
+  min-height: 25; }
+  textarea.mini {
+    height: 25px; }
 
 .tiny-input {
   width: 30px;

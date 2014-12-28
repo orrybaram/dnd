@@ -1,8 +1,22 @@
 from google.appengine.ext import db
 
+INSTALLED_APPS = ('template_filters')
+
+class User(db.Model):
+    user_id = db.StringProperty()
+    name = db.StringProperty()
+    is_admin = db.BooleanProperty(default=False)
+
+    def serializable(self):
+        result = {}
+        result["key"] = str(self.key())
+        result["name"] = self.name
+        result["user_id"] = self.user_id
+
 class Group(db.Model):
     date_created = db.DateTimeProperty(auto_now_add=True)
     name = db.StringProperty()
+    dm = db.UserProperty()
 
     def serializable(self):
         return {
@@ -15,6 +29,7 @@ class Character(db.Model):
     
     date_created = db.DateTimeProperty(auto_now_add=True)
     group = db.ReferenceProperty(Group, collection_name="players", default=None)
+    user = db.UserProperty()
 
     # Basics
     name = db.StringProperty()
@@ -181,71 +196,16 @@ class Character(db.Model):
     theivery_armor_penalty = db.StringProperty(default="0")
     theivery_misc = db.IntegerProperty(default=0)
 
-
-    def get_initiative_score(self):
-        return self.dexterity + half_level_mod()
-
-    # will need some fixin
-    def get_half_level(self):
-        return self.level / 2
-
-    def get_ac_total(self):
-        ac = self.armor_abil
-        ac += 10 + get_half_level()
-        ac += self.armor_char_class
-        ac += self.armor_feat
-        ac += self.armor_enh
-        ac += self.armor_misc1
-        ac += self.armor_misc2
-        return ac
-
-    def get_fort_total(self):
-        fort = self.fort_abil
-        fort += 10 + get_half_level()
-        fort += self.fort_char_class
-        fort += self.fort_feat
-        fort += self.fort_enh
-        fort += self.fort_misc1
-        fort += self.fort_misc2
-        return fort
-
-    def get_reflex_total(self):
-        reflex = self.reflex_abil
-        reflex += 10 + get_half_level()
-        reflex += self.reflex_char_class
-        reflex += self.reflex_feat
-        reflex += self.reflex_enh
-        reflex += self.reflex_misc1
-        reflex += self.reflex_misc2
-        return reflex
-
-    def get_will_total(self):
-        will = self.will_abil
-        will += 10 + get_half_level()
-        will += self.will_char_class
-        will += self.will_feat
-        will += self.will_enh
-        will += self.will_misc1
-        will += self.will_misc2
-        return will
-
-    def get_speed_total(self):
-        speed = self.speed_base
-        speed += self.speed_armor
-        speed += self.speed_item
-        speed += self.speed_misc
-        return speed
-
-    def get_passive_insight(self):
-        return 10 + insight
-
-    def get_passive_perception(self):
-        return 10 + perception
+    race_features = db.TextProperty()
+    other_features = db.TextProperty()
+    feats = db.TextProperty()
+    languages = db.TextProperty()
 
     def serializable(self):
         result = {
             # Basics
             'key': str(self.key()),
+            'user_id': str(self.user.user_id()),
             'date_created': self.date_created.isoformat(),
             'group_key': str(self.group.key()),
             'name': self.name,
@@ -411,6 +371,11 @@ class Character(db.Model):
             'theivery_trained': self.theivery_trained,
             'theivery_armor_penalty': self.theivery_armor_penalty,
             'theivery_misc': self.theivery_misc,
+
+            'race_features': self.race_features,
+            'other_features': self.other_features,
+            'feats': self.feats,
+            'languages': self.languages,
         }
 
         return result

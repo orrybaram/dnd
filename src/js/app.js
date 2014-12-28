@@ -24,15 +24,14 @@ angular.module('dnd', [
         controller: 'GroupDetailCtrl'
     })
 
-    .state('character-create', {
-        url: "/character/create",
-        templateUrl: "/partials/character-create.html",
-        controller: 'CharacterCreateCtrl'
-    })
-
     .state('character-detail', {
         url: "/character/:character_key",
         templateUrl: "/partials/character-detail.html",
         controller: 'CharacterDetailCtrl'
     })
-});
+
+
+})
+.run(function($rootScope) {
+    $rootScope.template_values = template_values;
+})

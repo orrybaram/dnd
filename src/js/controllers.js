@@ -44,32 +44,25 @@ angular.module('app.controllers', [])
     $scope.new_character.group = group_key;
 
     $scope.create_character = function() {
-    	$http.post('/api/v1/character/create/', $scope.new_character).then(function(response) {
-    		console.log(response)
-    		$state.go('character-detail', {character_key: response.data.key})
-    	})
+
+        var data = {
+            'name': $scope.new_character.name,  
+            'group_key': group_key, 
+        }
+
+        $http.post('/api/v1/character/create/', data).then(function(response) {
+            console.log(response)
+            $state.go('character-detail', {character_key: response.data.character.key})
+        })
     }
 })
 
-.controller('CharacterCreateCtrl', function($scope, $http, $state) {
-    
-    $scope.character = {};
-
-    $scope.create_character = function() {
-    	$http.post('/api/v1/character/create/', $scope.character).then(function(response) {
-    		console.log(response)
-    		$state.go('character-detail', {character_key: response.data.key})
-    	})
-    }
-
-})
-
-.controller('CharacterDetailCtrl', function($scope, $http, $timeout, $stateParams) {
+.controller('CharacterDetailCtrl', function($scope, $rootScope, $http, $timeout, $stateParams) {
     
     $scope.character = {};
     $scope.ui = {};
 
-    console.log($stateParams)
+    console.log($rootScope)
 
     var character_key = $stateParams.character_key;
 

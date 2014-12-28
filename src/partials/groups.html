@@ -9,6 +9,7 @@
 	<button ng-click="create_group()">create group</button>
 
 	<h2>Groups</h2>
+	<div class="empty-message" ng-show="!groups.length">Loading...</div>
 	<ul>
 		<li ng-repeat="group in groups">
 			<a ui-sref="group-detail({group_key: group.key})">{{ group.name }}</a>

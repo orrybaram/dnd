@@ -1,13 +1,14 @@
 <div class="toolbar">
 	<a ui-sref="group-list"><i class="fa fa-arrow-left"></i></a>
-	<h1>{{ group.name }}</h1>
+	<h1>{{ group.name || 'Loading...' }}</h1>
 </div>
 <div class="content-view">
 	<h2>Players</h2>
+	<div class="empty-message" ng-show="!characters.length">Loading...</div>
 	<ul>
 		<li ng-repeat="character in characters"><a ui-sref="character-detail({character_key: character.key})">{{ character.name }}</a></li>
 	</ul>
 
 	<input placeholder="Character name" ng-model="new_character.name" />
-	<button ng-click="create_character(group.key)">add character</button>
+	<button ng-click="create_character(group.key)">Join</button>
 </div>
