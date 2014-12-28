@@ -78,6 +78,8 @@ angular.module('app.controllers', [])
     $scope.character = {};
     $scope.ui = {};
 
+    var is_editting = false;
+
     console.log($rootScope)
 
     var character_key = $stateParams.character_key;
@@ -91,8 +93,11 @@ angular.module('app.controllers', [])
 
     $scope.$on('character-updated', function(event, args) {
         console.log(args)
-        $scope.character = args.character;
-        $scope.$apply();
+        if(!is_editting) {
+            $scope.character = args.character;
+            $scope.$apply();    
+        }
+        
     })
 
     $scope.$watch('character', function() {
@@ -104,6 +109,9 @@ angular.module('app.controllers', [])
     }, true)
 
     $scope.save_character = function() {
+        
+        is_editting = true;
+        
         var data = {
             'character': $scope.character,
             'channel_token': template_values.channel_token
@@ -113,13 +121,15 @@ angular.module('app.controllers', [])
     	$http.post('/api/v1/character/' + character_key + '/update/', data).then(function(response) {
     		console.log(response);
             $timeout(function() {
-                $scope.ui.saving = false;    
+                $scope.ui.saving = false;
+                is_editting = false;    
             }, 3000)
             
     	}, function(error) {
             console.log(error);
             $timeout(function() {
                 $scope.ui.saving = false;    
+                is_editting = false;
             }, 3000)
         })
     }
