@@ -27,6 +27,7 @@ class Character(db.Model):
     char_age = db.IntegerProperty(default=0)
     char_gender = db.StringProperty()
     char_height = db.StringProperty()
+    char_weight = db.StringProperty()
     alignment = db.StringProperty()
     deity = db.StringProperty()
     affiliations = db.StringProperty()

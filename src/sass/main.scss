@@ -18,10 +18,21 @@ h1 {
 
 h2 {
 	margin: 0 0 5px;
+	font-size: 22px;
+	font-weight: bold;
 }
 
 h3 {
 	margin: 0 0 5px;
+	font-size: 16px;
+	font-weight: bold;
+}
+
+section {
+	margin-bottom: 20px;
+	padding: 10px;
+	background: #FFF;
+	box-shadow: 0 2px #E0E0E0;
 }
 
 button {
@@ -46,6 +57,10 @@ a {
 	display: none;
 }
 
+.row {
+	max-width: 100%;
+}
+
 .toolbar {
 	background: $darkPrimary;
 	color: white;
@@ -66,17 +81,23 @@ a {
 	}
 }
 
+.item {
+	padding: 10px;
+
+	&:nth-child(even) {
+		background-color: rgba(0, 0, 0, 0.02);
+	}
+}
 .title-input {
 	background: none;
 	border: 0;
-	font-size: 50px;
-	border-bottom: 2px solid $accentColor;
+	font-size: 45px;
 	color: white;
 	vertical-align: top;
 	text-align: center;
 	margin: 0 auto 20px;
 	display: block;
-	width: 60%;
+	width: 100%;
 }
 
 .toast {
@@ -107,14 +128,14 @@ label {
 }
 
 .avatar {
-	height: 100px;
-	width: 100px;
+	height: 150px;
+	width: 150px;
 	background-size: cover;
 	background-position: center;
 	border-radius: 50%;
 	cursor: pointer;
 	background-color: rgba(0, 0, 0, 0.25);
-	margin: 20px auto;
+	margin: 20px auto 0;
 }
 
 .content-view {
@@ -122,16 +143,25 @@ label {
 }
 
 input {
-	font-size: 20px;
-	padding: 5px;
+	font-size: 16px;
+	padding: 2px;
 }
 
 .tiny-input {
-	width: 45px;
+	width: 30px;
 	text-align: center;
 }
 
 .small-input {
 	width: 65px;
 	text-align: center;
+}
+
+input.highlighted {
+	background: #282828;
+	color: $accentColor;
+	font-size: 22px;
+	width: 40px;
+	display: inline-block;
+	border: 0;
 }
