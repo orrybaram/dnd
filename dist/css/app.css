@@ -45,6 +45,8 @@ table {
   border-collapse: collapse;
   border-spacing: 0; }
 
+/* FANCYHANDS MIXINS
+========================================================== */
 meta.foundation-version {
   font-family: "/5.5.0/"; }
 
@@ -3232,7 +3234,8 @@ a:visited {
 
 .inline-block {
   display: inline-block;
-  vertical-align: top; }
+  vertical-align: top;
+  position: relative; }
 
 .hidden {
   display: none; }
@@ -3253,7 +3256,8 @@ a:visited {
     float: left;
     position: relative;
     top: 6px;
-    margin-right: 10px; }
+    margin-right: 10px;
+    font-size: 20px; }
 
 .char-bio {
   color: rgba(255, 255, 255, 0.7);
@@ -3335,11 +3339,26 @@ input[disabled] {
 .total-box {
   font-size: 18px;
   padding: 7px !important;
-  width: 42px; }
+  width: 42px;
+  text-align: center; }
+  .total-box.wide {
+    width: 90px;
+    -webkit-transition: 1s box-shadow;
+    -moz-transition: 1s box-shadow;
+    -o-transition: 1s box-shadow;
+    transition: 1s box-shadow; }
 
 input.highlighted {
   background: #282828;
   color: #cddc39;
   border: 0; }
+
+.next-level {
+  position: absolute;
+  font-size: 8px;
+  bottom: -7px;
+  right: 15px;
+  color: #888;
+  font-weight: bold; }
 
 /*# sourceMappingURL=app.css.map */

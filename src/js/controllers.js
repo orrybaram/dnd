@@ -77,13 +77,15 @@ angular.module('app.controllers', [])
     	$http.get('/api/v1/character/' + character_key).then(function(response) {
     		console.log(response);
     		$scope.character = response.data.character;
-
-            
-    	})
+        })
     }
 
     $scope.$watch('character', function() {
-        $scope.next_level = XP_LEVELS[$scope.get_level()];
+        $scope.next_level_xp = XP_LEVELS[$scope.get_level()];
+        $scope.current_level_xp = XP_LEVELS[$scope.get_level() - 1];
+        $scope.your_xp_in_this_level = $scope.character.total_xp - $scope.current_level_xp;
+        $scope.xp_in_level = $scope.next_level_xp - $scope.current_level_xp
+        $scope.xp_level_progress = Math.floor(($scope.your_xp_in_this_level / $scope.xp_in_level) * 100).toFixed(0);
     }, true)
 
     $scope.save_character = function() {

@@ -1,0 +1,286 @@
+/* FANCYHANDS MIXINS
+========================================================== */
+
+// Transitions
+@mixin transition($transition...) {
+  -webkit-transition: $transition;
+     -moz-transition: $transition;
+       -o-transition: $transition;
+          transition: $transition;
+}
+@mixin transition-delay($transition-delay...) {
+  -webkit-transition-delay: $transition-delay;
+     -moz-transition-delay: $transition-delay;
+       -o-transition-delay: $transition-delay;
+          transition-delay: $transition-delay;
+}
+
+// Transformations
+@mixin transform($transformation...) {
+  -webkit-transform: $transformation;
+     -moz-transform: $transformation;
+      -ms-transform: $transformation;
+       -o-transform: $transformation;
+          transform: $transformation;
+}
+
+@mixin rotate($degrees...) {
+  -webkit-transform: rotate($degrees);
+     -moz-transform: rotate($degrees);
+      -ms-transform: rotate($degrees);
+       -o-transform: rotate($degrees);
+          transform: rotate($degrees);
+}
+@mixin rotateX($degrees...) {
+  -webkit-transform: rotateX($degrees);
+     -moz-transform: rotateX($degrees);
+      -ms-transform: rotateX($degrees);
+       -o-transform: rotateX($degrees);
+          transform: rotateX($degrees);
+}
+@mixin rotateY($degrees...) {
+  -webkit-transform: rotateY($degrees);
+     -moz-transform: rotateY($degrees);
+      -ms-transform: rotateY($degrees);
+       -o-transform: rotateY($degrees);
+          transform: rotateY($degrees);
+}
+@mixin scale($ratio...) {
+  -webkit-transform: scale($ratio);
+     -moz-transform: scale($ratio);
+      -ms-transform: scale($ratio);
+       -o-transform: scale($ratio);
+          transform: scale($ratio);
+}
+@mixin translate($x, $y) {
+  -webkit-transform: translate($x, $y);
+     -moz-transform: translate($x, $y);
+      -ms-transform: translate($x, $y);
+       -o-transform: translate($x, $y);
+          transform: translate($x, $y);
+}
+@mixin skew($x, $y) {
+  -webkit-transform: skew($x, $y);
+     -moz-transform: skew($x, $y);
+      -ms-transform: skewX($x) skewY($y); // See https://github.com/twitter/bootstrap/issues/4885
+       -o-transform: skew($x, $y);
+          transform: skew($x, $y);
+}
+@mixin translate3d($x, $y, $z) {
+  -webkit-transform: translate3d($x, $y, $z);
+     -moz-transform: translate3d($x, $y, $z);
+       -o-transform: translate3d($x, $y, $z);
+          transform: translate3d($x, $y, $z);
+}
+
+@mixin transform($transform...) {
+  -webkit-transform:$transform;
+   -moz-transform:$transform;
+    -ms-transform:$transform;
+     -o-transform:$transform;
+        transform:$transform;
+}
+
+@mixin transform-style($transform-style...) {
+  -webkit-transform-style:$transform-style;
+   -moz-transform-style:$transform-style;
+    -ms-transform-style:$transform-style;
+     -o-transform-style:$transform-style;
+        transform-style:$transform-style;
+}
+
+@mixin transform-origin($transform-origin...) {
+  -webkit-transform-origin:$transform-origin;
+   -moz-transform-origin:$transform-origin;
+    -ms-transform-origin:$transform-origin;
+     -o-transform-origin:$transform-origin;
+        transform-origin:$transform-origin;
+}
+
+@mixin perspective($perspective...) {
+  -webkit-perspective:$perspective;
+   -moz-perspective:$perspective;
+    -ms-perspective:$perspective;
+     -o-perspective:$perspective;
+        perspective:$perspective;
+}
+
+@mixin animation($animation...) {
+  -webkit-animation:$animation;
+   -moz-animation:$animation;
+    -ms-animation:$animation;
+     -o-animation:$animation;
+        animation:$animation;
+}
+
+@mixin animation-duration($animation-duration...) {
+  -webkit-animation-duration:$animation-duration;
+   -moz-animation-duration:$animation-duration;
+    -ms-animation-duration:$animation-duration;
+     -o-animation-duration:$animation-duration;
+        animation-duration:$animation-duration;
+}
+
+@mixin animation-delay($animation-delay...) {
+  -webkit-animation-delay:$animation-delay;
+   -moz-animation-delay:$animation-delay;
+    -ms-animation-delay:$animation-delay;
+     -o-animation-delay:$animation-delay;
+        animation-delay:$animation-delay;
+}
+
+@mixin animation-direction($animation-direction...) {
+  -webkit-animation-direction:$animation-direction;
+   -moz-animation-direction:$animation-direction;
+    -ms-animation-direction:$animation-direction;
+     -o-animation-direction:$animation-direction;
+        animation-direction:$animation-direction;
+}
+
+@mixin gradient-horizontal($startColor: #555, $endColor: #333) {
+  background-color: $endColor;
+  background-image: -moz-linear-gradient(left, $startColor, $endColor); // FF 3.6+
+  background-image: -webkit-gradient(linear, 0 0, 100% 0, from($startColor), to($endColor)); // Safari 4+, Chrome 2+
+  background-image: -webkit-linear-gradient(left, $startColor, $endColor); // Safari 5.1+, Chrome 10+
+  background-image: -o-linear-gradient(left, $startColor, $endColor); // Opera 11.10
+  background-image: linear-gradient(to right, $startColor, $endColor); // Standard, IE10
+  background-repeat: repeat-x;
+}
+@mixin gradient-vertical($startColor: #555, $endColor: #333) {
+  background-color: mix($startColor, $endColor, 60%);
+  background-image: -moz-linear-gradient(top, $startColor, $endColor); // FF 3.6+
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from($startColor), to($endColor)); // Safari 4+, Chrome 2+
+  background-image: -webkit-linear-gradient(top, $startColor, $endColor); // Safari 5.1+, Chrome 10+
+  background-image: -o-linear-gradient(top, $startColor, $endColor); // Opera 11.10
+  background-image: linear-gradient(to bottom, $startColor, $endColor); // Standard, IE10
+  background-repeat: repeat-x;
+}
+
+@mixin gradient-vertical-image($startColor: #555, $endColor: #333, $imageUrl: '') {
+  
+  background-image: url($imageUrl), -moz-linear-gradient(top, $startColor, $endColor); // FF 3.6+
+  background-image: url($imageUrl), -webkit-gradient(linear, 0 0, 0 100%, from($startColor), to($endColor)); // Safari 4+, Chrome 2+
+  background-image: url($imageUrl), -webkit-linear-gradient(top, $startColor, $endColor); // Safari 5.1+, Chrome 10+
+  background-image: url($imageUrl), -o-linear-gradient(top, $startColor, $endColor); // Opera 11.10
+  background-image: url($imageUrl), linear-gradient(to bottom, $startColor, $endColor); // Standard, IE10
+}
+
+
+@mixin gradient-directional($startColor: #555, $endColor: #333, $deg: 45deg) {
+  background-color: $endColor;
+  background-repeat: repeat-x;
+  background-image: -moz-linear-gradient($deg, $startColor, $endColor); // FF 3.6+
+  background-image: -webkit-linear-gradient($deg, $startColor, $endColor); // Safari 5.1+, Chrome 10+
+  background-image: -o-linear-gradient($deg, $startColor, $endColor); // Opera 11.10
+  background-image: linear-gradient($deg, $startColor, $endColor); // Standard, IE10
+}
+@mixin gradient-radial($innerColor: #555, $outerColor: #333)  {
+  background-image: -webkit-gradient(radial, center center, 0, center center, 460, from($innerColor), to($outerColor));
+  background-image: -webkit-radial-gradient(circle, $innerColor, $outerColor);
+  background-image: -moz-radial-gradient(circle, $innerColor, $outerColor);
+  background-image: -o-radial-gradient(circle, $innerColor, $outerColor);
+  background-repeat: no-repeat;
+}
+
+@mixin keyframes($animation-name) {
+  @-webkit-keyframes $animation-name {
+    @content;
+  }
+
+  @-moz-keyframes $animation-name {
+    @content;
+  }
+
+  @keyframes $animation-name {
+    @content;
+  }
+}
+
+// Box sizing
+@mixin box-sizing($boxmodel) {
+  -webkit-box-sizing: $boxmodel;
+     -moz-box-sizing: $boxmodel;
+          box-sizing: $boxmodel;
+}
+
+@mixin flex() {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+}
+
+@mixin vertical-align-content() {
+    @include flex();
+    @include flex-align(center);
+    @include justify-content(center);
+    @include flex-direction(column);
+}
+
+@mixin flex-align($alignment) {
+    -webkit-flex-line-pack:$alignment;
+    -ms-flex-line-pack:$alignment;
+    -webkit-align-content:$alignment;
+    align-content:$alignment;
+}
+
+@mixin justify-content($alignment) {
+    -webkit-flex-pack:$alignment;
+    -webkit-justify-content:$alignment;
+    -moz-justify-content:$alignment;
+    -ms-flex-pack:$alignment;
+    justify-content:$alignment;
+}
+
+@mixin flex-direction($direction) {
+    -webkit-flex-direction:$direction;
+    -moz-flex-direction:$direction;
+    -ms-flex-direction:$direction;
+    flex-direction:$direction;
+}
+
+
+// Backface visibility
+// Prevent browsers from flickering when using CSS 3D transforms.
+// Default value is `visible`, but can be changed to `hidden
+// See git pull https://github.com/dannykeane/bootstrap.git backface-visibility for examples
+@mixin backface-visibility($visibility){
+  -webkit-backface-visibility: $visibility;
+     -moz-backface-visibility: $visibility;
+          backface-visibility: $visibility;
+}
+
+// Single Corner Border Radius
+@mixin border-top-left-radius($radius) {
+  -webkit-border-top-left-radius: $radius;
+      -moz-border-radius-topleft: $radius;
+          border-top-left-radius: $radius;
+}
+@mixin border-top-right-radius($radius) {
+  -webkit-border-top-right-radius: $radius;
+      -moz-border-radius-topright: $radius;
+          border-top-right-radius: $radius;
+}
+@mixin border-bottom-right-radius($radius) {
+  -webkit-border-bottom-right-radius: $radius;
+      -moz-border-radius-bottomright: $radius;
+          border-bottom-right-radius: $radius;
+}
+@mixin border-bottom-left-radius($radius) {
+  -webkit-border-bottom-left-radius: $radius;
+      -moz-border-radius-bottomleft: $radius;
+          border-bottom-left-radius: $radius;
+}
+
+@function makelongshadow($color) {
+  $val: 0px 0px $color;
+  @for $i from 1 through 200 {
+    $val: #{$val}, #{$i}px #{$i}px #{$color};
+  }
+  @return $val;
+}
+
+@mixin longshadow($color) {
+  text-shadow: makelongshadow($color);
+}

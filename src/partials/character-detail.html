@@ -9,7 +9,7 @@
             <input id="avatar-input" type="file" ng-model="character.avatar" fileread="character.avatar" filereadcallback="save_character()" class="hidden" />
 
             <p class="char-bio">
-                A level {{character.level}} {{character.char_race}} {{character.char_class}} 
+                A level {{character.level}} {{character.char_race}} {{character.char_class}}
             </p>
 
         </div>
@@ -26,8 +26,9 @@
                     <h2 class="section-header">Basics</h2>
 
                     <div class="inline-block">
-                        <label>XP <small>Next Level: {{ next_level }}</small></label>
-                        <input class="medium-input highlighted" ng-model="character.total_xp" />
+                        <small class="next-level">Next Level: {{ next_level_xp }}</small>
+                        <h3 class="item-name">XP</h3>
+                        <input class="medium-input total-box wide highlighted" ng-model="character.total_xp" style="box-shadow: inset {{ (xp_level_progress / 100) * 90 }}px 0 0 rgba(181, 239, 12, 0.25);"/>
                     </div>
                     <div class="inline-block">
                         <label>Level</label>

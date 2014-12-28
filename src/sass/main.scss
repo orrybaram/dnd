@@ -81,6 +81,7 @@ a {
 .inline-block {
 	display: inline-block;
 	vertical-align: top;
+	position:relative;
 }
 
 .hidden {
@@ -108,6 +109,7 @@ a {
 		position: relative;
 		top: 6px;
 		margin-right: 10px;
+		font-size: 20px;
 	}
 }
 
@@ -207,12 +209,25 @@ input[disabled] {
 	font-size: 18px;
 	padding: 7px!important;
 	width: 42px;
+	text-align: center;
+
+	&.wide {
+		width: 90px;
+		@include transition(1s box-shadow);
+	}
 }
-
-
 
 input.highlighted {
 	background: #282828;
 	color: $accentColor;
 	border: 0;
 }
+.next-level {
+	position: absolute;
+	font-size: 8px;
+	bottom: -7px;
+	right: 15px;
+	color: #888;
+	font-weight: bold;
+}
+
