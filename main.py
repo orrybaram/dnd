@@ -16,6 +16,7 @@
 #
 from google.appengine.api import users
 from google.appengine.ext.webapp import template
+from google.appengine.api import channel
 
 import webapp2
 import os
@@ -23,6 +24,7 @@ import jinja2
 import logging
 import urlparse
 import json
+
 
 from template_filters import  *
 
@@ -52,9 +54,12 @@ class MainHandler(webapp2.RequestHandler):
                 user.user_id = current_user.user_id()
                 user.put()
             
+            token = channel.create_channel(user.user_id)
+
             values["user"] = user
             values["template_values"] = {
-                'user_id': user.user_id
+                'user_id': user.user_id,
+                'channel_token': token
             }
         else:
             values["login_url"] = users.create_login_url('/')
@@ -135,16 +140,21 @@ class CharacterCreate(webapp2.RequestHandler):
 class CharacterUpdate(webapp2.RequestHandler):
     def post(self, character_key):
         data = json.loads(self.request.body)
+        char_data = data.get('character') 
+        channel_token = data.get('channel_token') 
         character = Character.get(character_key)
         values = {}
 
-        for k, v in data.iteritems():
+        group_key = char_data.get('group_key')
+        group = Group.get(group_key)
+
+        for k, v in char_data.iteritems():
             if k == 'date_created' or k == 'key':
                 continue
             if k == 'avatar':
-                value = db.Blob(str(data.get('avatar')))
+                value = db.Blob(str(char_data.get('avatar')))
             else:
-                value = data.get(k)
+                value = char_data.get(k)
             if isinstance(value, basestring) and value.isdigit():
                 value = int(value)
             try:
@@ -155,6 +165,15 @@ class CharacterUpdate(webapp2.RequestHandler):
         try:                 
             character.put()
             values = character.serializable()
+
+            message = {
+                "msg": "character-updated",
+                "character": character.serializable()
+            }
+
+            for player in group.players:
+                channel.send_message(player.user.user_id(), json.dumps(message))
+
         except Exception, e:
             values = {'error': e}
 

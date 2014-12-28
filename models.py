@@ -118,9 +118,12 @@ class Character(db.Model):
 
     # Hit Points
     hp_max = db.IntegerProperty(default=0)
+    hp_current = db.IntegerProperty(default=0)
     hp_bloodied = db.IntegerProperty(default=0)
+    hp_temp = db.IntegerProperty(default=0)
     surge_value = db.IntegerProperty(default=0)
     surges_per_day = db.IntegerProperty(default=0)
+    surges_used = db.IntegerProperty(default=0)
 
     # Skills
     acrobatics_total = db.IntegerProperty(default=0)
@@ -295,9 +298,12 @@ class Character(db.Model):
 
             # Hit Points
             'hp_max': self.hp_max,
+            'hp_current': self.hp_current,
             'hp_bloodied': self.hp_bloodied,
+            'hp_temp': self.hp_temp,
             'surge_value': self.surge_value,
             'surges_per_day': self.surges_per_day,
+            'surges_used': self.surges_used,
 
             # Skills
             'acrobatics_total': self.acrobatics_total,

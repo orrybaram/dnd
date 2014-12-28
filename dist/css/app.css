@@ -3211,6 +3211,22 @@ section {
   padding: 10px;
   background: #FFF;
   box-shadow: 0 2px #E0E0E0; }
+  section.character-card {
+    width: 300px;
+    display: inline-block;
+    margin: 15px; }
+    section.character-card a {
+      text-decoration: none;
+      color: white; }
+  section .toolbar {
+    margin: -10px -10px 10px;
+    text-align: center; }
+    section .toolbar .avatar {
+      margin: -40px auto 0;
+      border: 3px solid #607d8b; }
+    section .toolbar .char-bio {
+      margin-top: -6px;
+      font-size: 14px; }
 
 .section-header {
   margin: -10px -10px 10px;
@@ -3253,11 +3269,15 @@ a:visited {
     margin: 0;
     font-size: 20px; }
   .toolbar .fa-arrow-left {
+    color: white;
     float: left;
     position: relative;
     top: 6px;
     margin-right: 10px;
     font-size: 20px; }
+  .toolbar a {
+    text-decoration: none;
+    color: white; }
 
 .char-bio {
   color: rgba(255, 255, 255, 0.7);
@@ -3311,6 +3331,16 @@ label {
   cursor: pointer;
   background-color: rgba(0, 0, 0, 0.25);
   margin: 20px auto 0; }
+  .avatar.mini {
+    height: 80px;
+    width: 80px; }
+  .avatar.default {
+    background-color: #607d8b; }
+    .avatar.default span {
+      font-size: 50px;
+      position: relative;
+      top: 2px;
+      font-weight: 100; }
   .avatar p {
     position: relative;
     top: 64px;
@@ -3323,6 +3353,9 @@ label {
   top: 11px;
   z-index: 2;
   color: #FFF; }
+  .login-stuff a {
+    text-decoration: none;
+    color: white; }
 
 .content-view {
   padding: 25px 0; }
@@ -3362,6 +3395,15 @@ textarea {
   padding: 7px !important;
   width: 42px;
   text-align: center; }
+  .total-box.secondary {
+    margin-left: -7px;
+    font-size: 14px;
+    top: -1px;
+    position: relative;
+    width: 35px;
+    height: 35px;
+    color: #8C8C8C;
+    border-left: 1px solid #494848; }
   .total-box.wide {
     width: 90px;
     -webkit-transition: 1s box-shadow;
@@ -3373,6 +3415,8 @@ input.highlighted {
   background: #282828;
   color: #cddc39;
   border: 0; }
+  input.highlighted.warning {
+    color: #ea5252; }
 
 .next-level {
   position: absolute;

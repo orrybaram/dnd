@@ -29,9 +29,21 @@ angular.module('dnd', [
         templateUrl: "/partials/character-detail.html",
         controller: 'CharacterDetailCtrl'
     })
-
-
 })
 .run(function($rootScope) {
     $rootScope.template_values = template_values;
+
+    if(template_values.channel_token) {
+        var channel = new goog.appengine.Channel(template_values.channel_token);
+        var socket = channel.open();
+        socket.onopen = function(){};
+        socket.onmessage = function(data) {
+            var message = JSON.parse(data.data);
+
+            $rootScope.$broadcast('character-updated', {character: message.character})
+            
+        };
+        socket.onerror = function(){};
+        socket.onclose = function(){};    
+    }
 })

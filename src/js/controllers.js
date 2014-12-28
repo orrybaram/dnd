@@ -73,6 +73,12 @@ angular.module('app.controllers', [])
         })
     }
 
+    $scope.$on('character-updated', function(event, args) {
+        console.log(args)
+        $scope.character = args.character;
+        $scope.$apply();
+    })
+
     $scope.$watch('character', function() {
         $scope.next_level_xp = XP_LEVELS[$scope.get_level()];
         $scope.current_level_xp = XP_LEVELS[$scope.get_level() - 1];
@@ -82,8 +88,13 @@ angular.module('app.controllers', [])
     }, true)
 
     $scope.save_character = function() {
+        var data = {
+            'character': $scope.character,
+            'channel_token': template_values.channel_token
+        }
+
         $scope.ui.saving = true;
-    	$http.post('/api/v1/character/' + character_key + '/update/', $scope.character).then(function(response) {
+    	$http.post('/api/v1/character/' + character_key + '/update/', data).then(function(response) {
     		console.log(response);
             $timeout(function() {
                 $scope.ui.saving = false;    
@@ -108,6 +119,14 @@ angular.module('app.controllers', [])
     $scope.roundDown = function(score) {
         return Math.floor(score)
     }
+
+    $scope.get_bloodied = function(hp) {
+        var bloodied = $scope.roundDown(hp / 2);
+        $scope.character.hp_bloodied = bloodied;
+        return bloodied;
+
+    }
+
     $scope.getInitiativeTotal =function() {
         var total = parseInt($scope.character.dexterity);
         total += parseInt($scope.getHalfLevel());

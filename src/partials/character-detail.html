@@ -13,7 +13,6 @@
             <p class="char-bio">
                 A level {{character.level}} {{character.char_race || 'noob'}} {{character.char_class}}
             </p>
-
         </div>
     </div>
 
@@ -240,11 +239,27 @@
                     <h2 class="section-header">Hit Points</h2>
                     <div class="inline-block">
                         <h3 class="item-name">HP</h3>
-                        <input class="small-input highlighted total-box" ng-model="character.hp_max" />
+                        <input class="small-input highlighted total-box" ng-class="{warning: character.hp_current <= character.hp_bloodied}" ng-model="character.hp_current" />
+                    </div>
+                    <div class="inline-block">
+                        <label>Max</label>
+                        <input class="tiny-input" ng-model="character.hp_max" />
                     </div>
                     <div class="inline-block">
                         <label>Bloodied</label>
-                        <input disabled class="tiny-input" value="{{ roundDown(character.hp_max / 2) }}" />
+                        <input disabled class="tiny-input" value="{{ get_bloodied(character.hp_max) }}" />
+                    </div>
+                    <div class="inline-block">
+                        <label>Temp</label>
+                        <input class="tiny-input" ng-model="character.hp_temp" />
+                    </div>
+                </section>
+                
+                <section>
+                    <h2 class="section-header">Surges</h2>
+                    <div class="inline-block">
+                        <h3 class="item-name">SRG</h3>
+                        <input class="small-input highlighted total-box" ng-model="character.surges_used" />
                     </div>
                     <div class="inline-block">
                         <label>Surge Value</label>
