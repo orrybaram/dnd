@@ -109,6 +109,7 @@ angular.module('app.controllers', [])
     $scope.getHalfLevel = function() {
         return Math.floor($scope.character.level / 2)
     }
+
     $scope.roundDown = function(score) {
         return Math.floor(score)
     }
@@ -116,6 +117,7 @@ angular.module('app.controllers', [])
         var total = parseInt($scope.character.dexterity);
         total += parseInt($scope.getHalfLevel());
         total += parseInt($scope.character.initiative_misc);
+        $scope.character.initiative_score = total;
         return total;
     }
     $scope.getDefenseTotal = function(defense) {
@@ -126,6 +128,7 @@ angular.module('app.controllers', [])
         total += parseInt($scope.character[defense + '_enh'])
         total += parseInt($scope.character[defense + '_misc1'])
         total += parseInt($scope.character[defense + '_misc2'])
+        $scope.character[defense + '_total'] = total;
         return total
     }
     $scope.get_level = function() {
@@ -135,7 +138,31 @@ angular.module('app.controllers', [])
                 level += 1
             }
         };
+        $scope.character.level = level;
         return level;
+    }
+    $scope.get_speed = function() {
+        var speed = parseInt($scope.character.speed_base);
+        speed += parseInt($scope.character.speed_armor)
+        speed += parseInt($scope.character.speed_item)
+        speed += parseInt($scope.character.speed_misc)
+        $scope.character.speed_total = speed;
+        return speed;
+    }
+
+    $scope.get_skill_total = function(skill, ability) {
+        var total = 0;
+
+        if($scope.character[skill + '_armor_penalty']) {
+            total += parseInt($scope.character[skill + '_armor_penalty'])            
+        }
+        if($scope.character[skill + '_trained']) {
+            total += 5;
+        } 
+        total += $scope.getAbilModifier($scope.character[ability]) + $scope.getHalfLevel()
+        total += parseInt($scope.character[skill + '_misc'])
+        $scope.character[skill + '_total'] = total;
+        return total
     }
 })
 

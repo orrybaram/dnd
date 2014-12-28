@@ -3224,7 +3224,11 @@ a:visited {
   font-size: 50px;
   border-bottom: 2px solid #cddc39;
   color: white;
-  vertical-align: top; }
+  vertical-align: top;
+  text-align: center;
+  margin: 0 auto 20px;
+  display: block;
+  width: 60%; }
 
 .toast {
   position: fixed;
@@ -3245,6 +3249,9 @@ label {
     float: right;
     color: #808080; }
 
+.center-text {
+  text-align: center; }
+
 .avatar {
   height: 100px;
   width: 100px;
@@ -3253,8 +3260,7 @@ label {
   border-radius: 50%;
   cursor: pointer;
   background-color: rgba(0, 0, 0, 0.25);
-  display: inline-block;
-  margin-right: 20px; }
+  margin: 20px auto; }
 
 .content-view {
   padding: 25px; }
@@ -3264,7 +3270,11 @@ input {
   padding: 5px; }
 
 .tiny-input {
-  width: 35px;
+  width: 45px;
+  text-align: center; }
+
+.small-input {
+  width: 65px;
   text-align: center; }
 
 /*# sourceMappingURL=app.css.map */
