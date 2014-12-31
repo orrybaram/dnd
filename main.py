@@ -119,9 +119,6 @@ class CharacterCreate(webapp2.RequestHandler):
             character.group = Group.get(data.get('group_key'))
             character.put()
 
-            logging.info(character.user)
-            logging.info(character.user)
-
             values = {
                 'character': character.serializable()
             }
@@ -130,9 +127,9 @@ class CharacterCreate(webapp2.RequestHandler):
             self.response.out.write(json.dumps(values))
         else:
             values = {
-                'error': 'need to be logged in'
+                'error': 'Please log in to join this group'
             }
-
+            self.response.set_status(400)
             self.response.headers['Content-Type'] = 'application/json'
             self.response.out.write(json.dumps(values))
 
@@ -190,6 +187,41 @@ class CharacterDetail(webapp2.RequestHandler):
         self.response.headers['Content-Type'] = 'application/json'
         self.response.out.write(json.dumps(values))
 
+class CharacterAddPower(webapp2.RequestHandler):
+    def post(self, character_key):
+        data = json.loads(self.request.body)
+
+        try:
+            power = db.Query(Power).filter('name', data.get('name'))[0]
+        except:
+            power = None
+
+        if power:
+            power.character = Character.get(character_key)
+            power.put()
+        else:
+            power = Power()
+            power.character = Character.get(character_key)
+            for k, v in data.iteritems():
+                setattr(power, k, v)
+
+            power.put()
+
+        self.response.headers['Content-Type'] = 'application/json'
+        self.response.out.write(json.dumps(power.serializable()))
+
+class CharacterLoadPowers(webapp2.RequestHandler):
+    def get(self, character_key):
+        character = Character.get(character_key)
+
+        _powers = []
+
+        for power in character.powers:
+            _powers.append(power.serializable())
+
+        self.response.headers['Content-Type'] = 'application/json'
+        self.response.out.write(json.dumps({'powers': _powers}))
+
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
     ('/api/v1/character/create/?', CharacterCreate),
@@ -198,6 +230,8 @@ app = webapp2.WSGIApplication([
     ('/api/v1/groups/(?P<group_key>[^/]+)/?', GroupDetail),
     ('/api/v1/character/(?P<character_key>[^/]+)/?', CharacterDetail),
     ('/api/v1/character/(?P<character_key>[^/]+)/update/?', CharacterUpdate),
+    ('/api/v1/character/(?P<character_key>[^/]+)/powers/add/?', CharacterAddPower),
+    ('/api/v1/character/(?P<character_key>[^/]+)/powers/?', CharacterLoadPowers),
     
 
 ], debug=True)

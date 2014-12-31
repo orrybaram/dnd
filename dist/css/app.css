@@ -3172,6 +3172,17 @@ select {
 .fa-meanpath:before {
   content: "\f20c"; }
 
+.dropdown-menu {
+  position: absolute;
+  background: #FFF;
+  border: 1px solid #DFDFDF;
+  box-shadow: 0 2px rgba(60, 60, 60, 0.02); }
+  .dropdown-menu li {
+    padding: 10px; }
+    .dropdown-menu li.active {
+      background: #607d8b;
+      color: white; }
+
 body {
   background: #F1F1F1;
   font-family: Helvetica Neue, sans-serif;

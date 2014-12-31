@@ -380,7 +380,48 @@ class Character(db.Model):
             'other_features': self.other_features,
             'feats': self.feats,
             'languages': self.languages,
+
         }
 
         return result
+
+class Power(db.Model):
+    character = db.ReferenceProperty(Character, collection_name="powers")
+    
+    power_id = db.IntegerProperty()
+    name = db.StringProperty()
+    power_type = db.StringProperty()
+    level = db.StringProperty()
+    description = db.StringProperty()
+    info = db.StringProperty()
+    target = db.StringProperty()
+    attack = db.StringProperty()
+    hit = db.StringProperty()
+    hit2 = db.StringProperty()
+    hit3 = db.StringProperty()
+    miss = db.StringProperty()
+    special = db.StringProperty()
+    effect = db.StringProperty()
+    secondary_target = db.StringProperty()
+    secondary_attack = db.StringProperty()
+
+    def serializable(self):
+        return {
+            "power_id": self.power_id,
+            "name": self.name,
+            "power_type": self.power_type,
+            "level": self.level,
+            "description": self.description,
+            "info": self.info,
+            "target": self.target,
+            "attack": self.attack,
+            "hit": self.hit,
+            "hit2": self.hit2,
+            "hit3": self.hit3,
+            "miss": self.miss,
+            "special": self.special,
+            "effect": self.effect,
+            "secondary_target": self.secondary_target,
+            "secondary_attack": self.secondary_attack,
+        }
 

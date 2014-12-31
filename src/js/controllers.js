@@ -30,6 +30,9 @@ angular.module('app.controllers', [])
     $scope.characters = [];
     $scope.new_character = {};
 
+    $scope.ui = {};
+    $scope.ui.loading = false;
+
     $scope.$on('character-updated', function(event, args) {
         console.log(args)
         
@@ -49,14 +52,16 @@ angular.module('app.controllers', [])
     var group_key = $stateParams.group_key;
     
     $scope.get_group_detail = function() {
-    	$http.get('/api/v1/groups/' + group_key).then(function(response) {
+    	$scope.ui.loading = true;
+        $http.get('/api/v1/groups/' + group_key).then(function(response) {
     		console.log(response)
     		$scope.group = response.data.group;
     		$scope.characters = response.data.players;
+            $scope.ui.loading = false;
     	})
     }
-    $scope.get_group_detail();
 
+    $scope.get_group_detail();
     $scope.new_character.group = group_key;
 
     $scope.create_character = function() {
@@ -69,6 +74,8 @@ angular.module('app.controllers', [])
         $http.post('/api/v1/character/create/', data).then(function(response) {
             console.log(response)
             $state.go('character-detail', {character_key: response.data.character.key})
+        }, function(err) {
+            alert(err.data.error);
         })
     }
 })
@@ -98,7 +105,6 @@ angular.module('app.controllers', [])
             $scope.character = args.character;
             $scope.$apply();    
         }
-        
     })
 
     $scope.$watch('character', function() {
@@ -134,6 +140,31 @@ angular.module('app.controllers', [])
             }, 3000)
         })
     }
+
+    $scope.add_power = function() {
+        var data = $scope.new_power;
+        $http.post('/api/v1/character/' + character_key + '/powers/add/', data).then(function(response) {
+            console.log(response)
+
+            $scope.character.powers.push(response.data);
+
+            $scope.new_power = '';
+        })
+    }
+
+    $scope.load_powers = function() {
+        var data = $scope.new_power;
+        $http.get('/api/v1/character/' + character_key + '/powers/', data).then(function(response) {
+            console.log(response)
+
+            $scope.character.powers = response.data.powers;
+
+            console.log($scope.character.powers)
+
+        })
+    }
+
+    $scope.load_powers();
     $scope.get_character();
 
     $scope.getAbilModifier = function(score) {

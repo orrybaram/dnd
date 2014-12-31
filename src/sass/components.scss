@@ -1,0 +1,15 @@
+.dropdown-menu {
+	position: absolute;
+	background: #FFF;
+	
+	border: 1px solid #DFDFDF;
+	box-shadow: 0 2px rgba(60, 60, 60, 0.02);
+
+	li {
+		padding: 10px;
+		&.active {
+			background: $primary;
+			color: white;
+		}
+	}
+}

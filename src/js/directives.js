@@ -12,7 +12,6 @@ angular.module('directives', [])
 		}
 	}
 })
-
 .directive("fileread",function () {
     return {
         scope: {
@@ -31,7 +30,6 @@ angular.module('directives', [])
         }
     }
 })
-
 .directive("fakeClick", function() {
 	return {
 		link: function(scope, element, attr) {
