@@ -180,8 +180,15 @@ class CharacterDetail(webapp2.RequestHandler):
     def get(self, character_key):
         character = Character.get(character_key)
 
+        _powers = []
+        for power in character.powers:
+            _powers.append(power.serializable())
+
+        _character = character.serializable()
+        _character['powers'] = _powers
+
         values = {
-            'character': character.serializable()
+            'character': _character
         }
 
         self.response.headers['Content-Type'] = 'application/json'

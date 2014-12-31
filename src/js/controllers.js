@@ -87,9 +87,6 @@ angular.module('app.controllers', [])
     $scope.powers = dnd_powers;
 
     var is_editting = false;
-
-    console.log($rootScope)
-
     var character_key = $stateParams.character_key;
 
     $scope.get_character = function() {
@@ -152,19 +149,6 @@ angular.module('app.controllers', [])
         })
     }
 
-    $scope.load_powers = function() {
-        var data = $scope.new_power;
-        $http.get('/api/v1/character/' + character_key + '/powers/', data).then(function(response) {
-            console.log(response)
-
-            $scope.character.powers = response.data.powers;
-
-            console.log($scope.character.powers)
-
-        })
-    }
-
-    $scope.load_powers();
     $scope.get_character();
 
     $scope.getAbilModifier = function(score) {

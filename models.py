@@ -381,6 +381,8 @@ class Character(db.Model):
             'feats': self.feats,
             'languages': self.languages,
 
+            'powers': self.powers
+
         }
 
         return result
