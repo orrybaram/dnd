@@ -73,6 +73,7 @@ class GroupCreate(webapp2.RequestHandler):
 
         group = Group()
         group.name = data.get('name')
+        group.db = current_user
         group.put()
         
         self.response.headers['Content-Type'] = 'application/json'
@@ -82,7 +83,6 @@ class GroupList(webapp2.RequestHandler):
     def get(self):
         
         values = []
-
         _groups= Group.all().fetch(100)
         for group in _groups:
             values.append(group.serializable());
@@ -111,7 +111,6 @@ class CharacterCreate(webapp2.RequestHandler):
     def post(self):
         
         data = json.loads(self.request.body)
-        
         
         if users.get_current_user():
             character = Character()

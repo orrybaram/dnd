@@ -4,7 +4,8 @@
 angular.module('dnd', [
     'ui.router',
     'app.controllers',
-    'directives'
+    'directives',
+    'ui.bootstrap'
 ])
 
 .config(function($stateProvider, $urlRouterProvider, $locationProvider) {

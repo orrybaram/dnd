@@ -1,12 +1,9 @@
 from google.appengine.ext import db
 
-INSTALLED_APPS = ('template_filters')
-
 class User(db.Model):
     user_id = db.StringProperty()
     name = db.StringProperty()
-    is_admin = db.BooleanProperty(default=False)
-
+    
     def serializable(self):
         result = {}
         result["key"] = str(self.key())

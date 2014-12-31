@@ -77,6 +77,7 @@ angular.module('app.controllers', [])
     
     $scope.character = {};
     $scope.ui = {};
+    $scope.powers = dnd_powers;
 
     var is_editting = false;
 
