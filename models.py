@@ -109,10 +109,12 @@ class Character(db.Model):
     speed_armor = db.StringProperty(default="0")
     speed_item = db.IntegerProperty(default=0)
     speed_misc = db.IntegerProperty(default=0)
+    speed_abilites = db.StringProperty()
 
     # Senses
     passive_insight = db.IntegerProperty(default=0)
     passive_perception = db.IntegerProperty(default=0)
+    sense_abilites = db.StringProperty()
 
     # Hit Points
     hp_max = db.IntegerProperty(default=0)
@@ -293,10 +295,12 @@ class Character(db.Model):
             'speed_armor': self.speed_armor,
             'speed_item': self.speed_item,
             'speed_misc': self.speed_misc,
+            'speed_abilites': self.speed_abilites,
 
             # Senses
             'passive_insight': self.passive_insight,
             'passive_perception': self.passive_perception,
+            'sense_abilites': self.sense_abilites,
 
             # Hit Points
             'hp_max': self.hp_max,

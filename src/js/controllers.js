@@ -27,12 +27,13 @@ angular.module('app.controllers', [])
 .controller('GroupDetailCtrl', function($scope, $http, $state, $stateParams, $modal) {
     
     $scope.group = {};
-    $scope.characters = [];
     $scope.new_character = {};
 
     $scope.ui = {};
     $scope.ui.loading = false;
 
+    $scope.characters = angular.fromJson(localStorage.getItem('characters')) || []
+    
     $scope.$on('character-updated', function(event, args) {
         console.log(args)
         
@@ -68,8 +69,12 @@ angular.module('app.controllers', [])
     		$scope.characters = response.data.players;
             $scope.ui.loading = false;
 
-            
-    	})
+            var _cache = [];
+            $scope.characters.forEach(function(character) {
+                _cache.push(character);
+            })
+            localStorage.setItem('characters', angular.toJson(_cache));
+        })
     }
 
     $scope.get_group_detail();
@@ -113,19 +118,28 @@ angular.module('app.controllers', [])
 
 .controller('CharacterDetailCtrl', function($scope, $rootScope, $http, $timeout, $stateParams, $modal, $log) {
     
-    $scope.character = {};
     $scope.ui = {};
     $scope.powers = dnd_powers;
-
     var is_editting = false;
     var character_key = $stateParams.character_key;
+    $scope.character = {};
 
+    var _characters = angular.fromJson(localStorage.getItem('characters'));
+    var _character = _.where(_characters, {key: character_key})[0] || {};    
+
+    $scope.character = _character
+    
     $scope.get_character = function() {
     	$http.get('/api/v1/character/' + character_key).then(function(response) {
     		console.log(response);
     		$scope.character = response.data.character;
+
+            var idx = _.findIndex(_characters, {key: character_key});
+            _characters[idx] = $scope.character;
+            localStorage.setItem('characters', angular.toJson(_characters));
         })
     }
+    $scope.get_character();
 
     $scope.$on('character-updated', function(event, args) {
         if(!is_editting) {
@@ -158,8 +172,12 @@ angular.module('app.controllers', [])
                 $scope.ui.saving = false;
                 is_editting = false;    
             }, 3000)
-            
-    	}, function(error) {
+
+            var idx = _.findIndex(_characters, {key: character_key});
+            _characters[idx] = $scope.character;
+            localStorage.setItem('characters', angular.toJson(_characters));
+
+        }, function(error) {
             console.log(error);
             $timeout(function() {
                 $scope.ui.saving = false;    
@@ -187,7 +205,7 @@ angular.module('app.controllers', [])
         })
     }
 
-    $scope.get_character();
+    
 
     $scope.getAbilModifier = function(score) {
         return Math.floor((score - 10) / 2);
