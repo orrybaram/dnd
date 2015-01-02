@@ -29,6 +29,7 @@ angular.module('app.controllers', [])
     var group_key = $stateParams.group_key;
 
     console.log($scope)
+    $scope.characters = angular.fromJson(localStorage.getItem('characters')) || []
 
     $scope.get_group_detail = function() {
         $scope.ui.loading = true;
@@ -47,8 +48,6 @@ angular.module('app.controllers', [])
     }
 
     $scope.get_group_detail();
-
-    // $state.go('group-detail.dashboard')
 })
 .controller('GroupDetailDashboardCtrl', function($scope, $rootScope, $http, $state, $stateParams, $modal) {
     $rootScope.state = $state;
@@ -60,8 +59,6 @@ angular.module('app.controllers', [])
     $scope.ui = {};
     $scope.ui.loading = false;
 
-    $scope.characters = angular.fromJson(localStorage.getItem('characters')) || []
-    
     $scope.$on('character-updated', function(event, args) {
         console.log(args)
         
@@ -128,13 +125,46 @@ angular.module('app.controllers', [])
 
 .controller('GroupDetailEncounterCtrl', function($scope, $rootScope, $filter, $http, $state, $stateParams, $modal) {
     $rootScope.state = $state;
-    if($scope.characters) {
-        $scope.characters.forEach(function(character) {
-            character.encounter_initiative = 0;
-        })    
+    $scope.encounter_characters = angular.fromJson(localStorage.getItem('encounter')) || $scope.characters;
+
+    $scope.characters.forEach(function(character) {
+        character.encounter_initiative = 0;
+    })    
+
+    $scope.$watch('encounter_characters', function() {
+        var _cache = [];
+        $scope.encounter_characters.forEach(function(character) {
+            _cache.push(character);
+        })
+        localStorage.setItem('encounter', angular.toJson(_cache));
+    }, true)
+
+    $scope.new_enemy_class = {};
+
+    $scope.sort_by_initiative = function() {
+        console.log($scope.characters)
+        console.log('gooo')
+        $scope.encounter_characters = $filter('orderBy')($scope.encounter_characters, 'encounter_initiative', true);    
     }
 
-    $filter('orderBy')($scope.characters, 'encounter_initiaitve');
+    $scope.reset_encounter = function() {
+        $scope.encounter_characters.forEach(function(character, i) {
+            character.encounter_initiative = 0;
+
+            if(character.type === 'enemy') {
+                $scope.encounter_characters.splice(i, 1);
+            }
+
+        })
+    }
+
+    $scope.add_enemy_class = function() {
+        $scope.new_enemy_class.type = 'enemy';
+        $scope.new_enemy_class.encounter_initiative = 0;
+        $scope.encounter_characters.push($scope.new_enemy_class)
+        $scope.new_enemy_class = {};
+    }
+
 })
 
 .controller('CharacterDetailCtrl', function($scope, $rootScope, $http, $timeout, $stateParams, $modal, $log) {

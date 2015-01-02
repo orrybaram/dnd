@@ -23,18 +23,6 @@ class Group(db.Model):
             'name': self.name,
         }
 
-class Character(db.Expando):
-    pass
-
-for character in Character.all():
-    character.speed_armor = int(character.speed_armor)
-    character.acrobatics_armor_penalty = int(character.acrobatics_armor_penalty)
-    character.athletics_armor_penalty = int(character.athletics_armor_penalty)
-    character.endurance_armor_penalty = int(character.endurance_armor_penalty)
-    character.stealth_armor_penalty = int(character.stealth_armor_penalty)
-    character.theivery_armor_penalty = int(character.athletics_armor_penalty)
-    character.put()
-
 class Character(db.Model):
     
     date_created = db.DateTimeProperty(auto_now_add=True)

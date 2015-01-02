@@ -3296,51 +3296,51 @@ h3 {
     h3.item-name.wider {
       width: 80px; }
 
-section {
+.card {
   margin-bottom: 20px;
   padding: 10px;
   background: #FFF;
   box-shadow: 0 2px #E0E0E0; }
-  section.character-card {
+  .card.character-card {
     width: 300px;
     display: inline-block;
     margin: 15px;
     vertical-align: top;
     position: relative; }
-    section.character-card a {
+    .card.character-card a {
       text-decoration: none;
       color: white; }
-    section.character-card .card-details {
-      position: absolute;
-      width: 100%;
-      background-color: white;
-      padding: 10px;
-      left: 0;
-      box-shadow: 0 2px #E0E0E0; }
-    section.character-card .fa-angle-double-down {
+    .card.character-card .fa-angle-double-down {
       font-size: 20px;
       cursor: pointer;
       -webkit-transition: 0.2s all;
       -moz-transition: 0.2s all;
       -o-transition: 0.2s all;
       transition: 0.2s all; }
-      section.character-card .fa-angle-double-down.active {
+      .card.character-card .fa-angle-double-down.active {
         -webkit-transform: rotate(180deg);
         -moz-transform: rotate(180deg);
         -ms-transform: rotate(180deg);
         -o-transform: rotate(180deg);
         transform: rotate(180deg); }
-  section .toolbar {
+  .card .toolbar {
     margin: -10px -10px 10px; }
-    section .toolbar .avatar {
+    .card .toolbar .avatar {
       margin: 0px 10px 0 0;
       text-align: center;
       border: 3px solid #607d8b;
       float: left; }
-    section .toolbar .char-bio {
+    .card .toolbar .char-bio {
       margin-top: -6px;
       font-size: 14px;
       text-align: left; }
+  .card.enemy .toolbar {
+    background-color: #D33450; }
+    .card.enemy .toolbar .avatar {
+      background-color: #ae263e;
+      border-color: #ae263e; }
+  .card.enemy .encounter-initiative {
+    display: none; }
 
 .section-header {
   margin: -10px -10px 10px;
@@ -3564,6 +3564,11 @@ input.highlighted {
   right: 15px;
   color: #888;
   font-weight: bold; }
+
+.encounter-initiative {
+  position: absolute;
+  top: 5px;
+  right: 5px; }
 
 .item-list .group-header {
   font-size: 12px;

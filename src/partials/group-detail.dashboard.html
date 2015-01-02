@@ -5,7 +5,7 @@
 			<div class="empty-message" ng-show="ui.loading && !characters.length">Loading...</div>
 			
 			<div class="characters">
-				<section class="character-card" ng-repeat="character in characters">
+				<section class="character-card card" ng-repeat="character in characters">
 					<div class="toolbar">
 						<a ui-sref="character-detail({character_key: character.key})">
 							<div ng-if="character.avatar && character.avatar !== 'None'" class="avatar mini" style="background-image: url('{{character.avatar}}')"></div>

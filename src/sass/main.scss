@@ -41,7 +41,8 @@ h3 {
 	}
 }
 
-section {
+
+.card {
 	margin-bottom: 20px;
 	padding: 10px;
 	background: #FFF;
@@ -60,12 +61,11 @@ section {
 		}
 
 		.card-details {
-			position: absolute;
-			width: 100%;
-			background-color: white;
-			padding: 10px;
-			left: 0;
-			box-shadow: 0 2px #E0E0E0;
+			
+			
+			
+			
+			
 		}
 
 		.fa-angle-double-down {
@@ -78,7 +78,6 @@ section {
 
 		}
 	}
-
 	.toolbar {
 		margin: -10px -10px 10px;
 		.avatar {
@@ -93,7 +92,20 @@ section {
 			text-align: left;
 		}	
 	}
+
+	&.enemy {
+		.toolbar {
+			background-color: #D33450;
+			.avatar {
+				background-color: darken(#D33450, 10%);
+				border-color: darken(#D33450, 10%);
+			}
+		}
+		.encounter-initiative {display: none;}
+	}
 }
+
+
 
 .section-header {
 	margin: -10px -10px 10px;
@@ -372,6 +384,11 @@ input.highlighted {
 	right: 15px;
 	color: #888;
 	font-weight: bold;
+}
+.encounter-initiative {
+	position: absolute;
+	top: 5px;
+	right: 5px;
 }
 
 .item-list {

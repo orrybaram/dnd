@@ -4,8 +4,11 @@
 			<h2>Encounter</h2>
 			<div class="empty-message" ng-show="ui.loading && !characters.length">Loading...</div>
 			
-			<div class="characters">
-				<section class="character-card" ng-repeat="character in characters">
+			<button ng-click="sort_by_initiative()">Sort</button>
+			<button ng-click="reset_encounter()">Reset</button>
+			
+			<ul class="characters" dnd-list="encounter_characters">
+				<li class="character-card card" ng-class="{enemy: character.type === 'enemy'}" ng-repeat="character in encounter_characters">
 					<div class="toolbar">
 						<a ui-sref="character-detail({character_key: character.key})">
 							<div ng-if="character.avatar && character.avatar !== 'None'" class="avatar mini" style="background-image: url('{{character.avatar}}')"></div>
@@ -13,16 +16,19 @@
 								<span>{{character.name[0]}}</span>
 							</div>
 							<h1>{{ character.name }}</h1>
-							<p class="char-bio">
+							<p ng-if="character.type !== 'enemy'" class="char-bio">
 				                A level {{character.level}} {{character.char_race || 'noob'}} {{character.char_class}}
 				            </p>
+				            <p ng-if="character.type === 'enemy'" class="char-bio">
+				            	Enemy
+				            </p>
 			            </a>
-			            <input type="number" ng-model="character.encounter_initiative" />
+			            <div class="encounter-initiative">
+			            	<input type="number" class="total-box highlighted encounter-initiative" ng-model="character.encounter_initiative" />
+			            </div>
+			            
 					</div>
-					<div class="card-content">
-						<p class="center-text">
-							<i ng-click="character.show_details = !character.show_details" ng-class="{active: character.show_details}" class="fa fa-angle-double-down"></i>
-						</p>
+					<div class="card-content" ng-if="character.type !== 'enemy'">
 						<div ng-show="character.show_details" class="card-details">
 							<div class="inline-block">
 							    <h3 class="item-name">HP</h3>
@@ -87,9 +93,14 @@
 								</li>
 	                        </ul>      
 	                    </div> 
+	                    <p class="center-text">
+							<i ng-click="character.show_details = !character.show_details" ng-class="{active: character.show_details}" class="fa fa-angle-double-down"></i>
+						</p>
                     </div>
-				</section>
-			</div>
+				</li>
+			</ul>
 		</div>
 	</div>
+	<input placeholder="Enemy Class" ng-model="new_enemy_class.name" />
+	<button ng-click="add_enemy_class()">Add Enemy</button>
 </div>
