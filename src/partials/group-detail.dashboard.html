@@ -1,0 +1,37 @@
+<div class="content-view">
+	<div class="row">
+		<div class="columns medium-12">
+			<h2>Players</h2>
+			<div class="empty-message" ng-show="ui.loading && !characters.length">Loading...</div>
+			
+			<div class="characters">
+				<section class="character-card" ng-repeat="character in characters">
+					<div class="toolbar">
+						<a ui-sref="character-detail({character_key: character.key})">
+							<div ng-if="character.avatar && character.avatar !== 'None'" class="avatar mini" style="background-image: url('{{character.avatar}}')"></div>
+							<div ng-if="!character.avatar || character.avatar === 'None'" class="avatar mini default">
+								<span>{{character.name[0]}}</span>
+							</div>
+							<h1>{{ character.name }}</h1>
+							<p class="char-bio">
+				                A level {{character.level}} {{character.char_race || 'noob'}} {{character.char_class}}
+				            </p>
+			            </a>
+					</div>
+					<div class="card-content">
+						<div class="inline-block">
+						    <h3 class="item-name">HP</h3>
+						    <input class="small-input highlighted total-box" ng-class="{warning: character.hp_current <= character.hp_bloodied}" ng-model="character.hp_current" />
+						    <input disabled class="small-input highlighted total-box secondary" ng-model="character.hp_max" />
+
+						</div>
+						<h3 class="item-name">XP</h3>
+						<input disabled class="medium-input total-box wide highlighted" ng-model="character.total_xp" />
+					</div>
+				</section>
+			</div>
+			<input placeholder="Character name" ng-model="new_character.name" />
+			<button ng-click="create_character(group.key)">Join</button>
+		</div>
+	</div>
+</div>
