@@ -194,7 +194,9 @@ class CharacterDetail(webapp2.RequestHandler):
 
 class CharacterAddPower(webapp2.RequestHandler):
     def post(self, character_key):
+        logging.info(self.request.body)
         data = json.loads(self.request.body)
+
 
         try:
             power = db.Query(Power).filter('name', data.get('name'))[0]
@@ -208,7 +210,7 @@ class CharacterAddPower(webapp2.RequestHandler):
             power = Power()
             power.character = Character.get(character_key)
             
-            power.json_string = self.request.body;
+            power.json_string = unicode(self.request.body, 'utf-8');
             power.put()
 
         self.response.headers['Content-Type'] = 'application/json'
