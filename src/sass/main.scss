@@ -404,5 +404,33 @@ input.highlighted {
 		color: $primaryText;
 		background-color: #F7F7ED;
 	}
+
+	.item-content {
+		padding: 10px;
+		font-size: 14px;
+		color: #212121;
+		background-color: #F7F7F7;
+		
+		h1 {
+			display:none;
+		}
+		h2 {
+			font-size: 12px;
+			margin: 12px 0 5px;
+			text-transform: uppercase;
+			border-bottom: 1px solid #DFDFDF;
+		}
+		img {display:none}
+
+		b {font-weight: bold;}
+
+		table {
+			width: 100%;
+			margin: 10px 0;
+		}
+
+		.publishedIn {font-size: 8px; text-align: center; margin-top: 15px;}
+		
+	}
 }
 

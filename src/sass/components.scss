@@ -1,6 +1,7 @@
 .dropdown-menu {
 	position: absolute;
 	background: #FFF;
+  z-index: 1000;
 	
 	border: 1px solid #DFDFDF;
 	box-shadow: 0 2px rgba(60, 60, 60, 0.02);
