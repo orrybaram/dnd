@@ -3554,7 +3554,8 @@ input.highlighted {
   .power-modal .modal-title {
     color: white;
     padding: 5px 10px;
-    margin: 0; }
+    margin: 0;
+    background-color: #447DB5; }
   .power-modal .encounterpower .modal-title {
     background: #961334; }
   .power-modal .atwillpower .modal-title {

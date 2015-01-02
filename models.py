@@ -209,6 +209,10 @@ class Character(db.Model):
         for power in self.powers:
             _powers.append(power.serializable())
 
+        _items = []
+        for item in self.items:
+            _items.append(item.serializable())
+
         result = {
             # Basics
             'key': str(self.key()),
@@ -390,7 +394,8 @@ class Character(db.Model):
             'feats': self.feats,
             'languages': self.languages,
 
-            'powers': _powers
+            'powers': _powers,
+            'items': _items,
 
         }
 
@@ -398,6 +403,16 @@ class Character(db.Model):
 
 class Power(db.Model):
     character = db.ReferenceProperty(Character, collection_name="powers")
+    json_string = db.TextProperty()
+
+    def serializable(self):
+        payload = json.loads(self.json_string) 
+        payload['key'] = str(self.key())
+
+        return payload
+
+class Item(db.Model):
+    character = db.ReferenceProperty(Character, collection_name="items")
     json_string = db.TextProperty()
 
     def serializable(self):

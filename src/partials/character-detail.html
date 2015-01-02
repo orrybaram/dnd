@@ -858,6 +858,23 @@
                     </div>
 
                 </section>
+                <section>
+                    <h2 class="section-header">Weapons / Items</h2>
+                    <ul class="item-list">
+                        <li class="item" ng-repeat="item in character.items">
+                            <a ng-click="open_item_modal(item.id)">{{ item.name }}</a>
+                            <i class="fa fa-times" ng-click="delete_item(item.id)"></i>
+                        </li>
+                    </ul>
+                    <div class="row">
+                        <div class="columns small-9">
+                            <input type="text" ng-model="new_item" typeahead="item as item.name for item in items | filter:{name:$viewValue} | limitTo:8" class="width-100">
+                        </div>
+                        <div class="columns small-3">
+                            <button ng-click="add_item()" class="width-100">add</button>
+                        </div>
+                    </div>
+                </section>
             </div>
         </div>
     </div>

@@ -119,16 +119,15 @@ angular.module('app.controllers', [])
 .controller('CharacterDetailCtrl', function($scope, $rootScope, $http, $timeout, $stateParams, $modal, $log) {
     
     $scope.ui = {};
-    $scope.powers = dnd_powers;
+    $scope.powers = DND_POWERS;
+    $scope.items = DND_ITEMS
     var is_editting = false;
     var character_key = $stateParams.character_key;
-    $scope.character = {};
-
     var _characters = angular.fromJson(localStorage.getItem('characters'));
     var _character = _.where(_characters, {key: character_key})[0] || {};    
 
     $scope.character = _character
-    
+
     $scope.get_character = function() {
     	$http.get('/api/v1/character/' + character_key).then(function(response) {
     		console.log(response);
@@ -146,7 +145,7 @@ angular.module('app.controllers', [])
             $scope.character = args.character;
             $scope.$apply();    
         }
-    })
+    });
 
     $scope.$watch('character', function() {
         $scope.next_level_xp = XP_LEVELS[$scope.get_level()];
@@ -201,6 +200,26 @@ angular.module('app.controllers', [])
         $scope.character.powers.splice(index, 1);
 
         $http.post('/api/v1/character/' + character_key + '/powers/' + power.key + '/delete/').then(function(response) {
+            console.log(response)
+        })
+    }
+
+    $scope.add_item = function() {
+        var data = $scope.new_item;
+        $http.post('/api/v1/character/' + character_key + '/items/add/', data).then(function(response) {
+            console.log(response)
+            $scope.character.items.push(response.data);
+            $scope.new_item = '';
+        })
+    }
+
+    $scope.delete_item = function(id) {
+        var index = _.findIndex($scope.character.items, {id: id})
+        var item = $scope.character.items[index]
+
+        $scope.character.items.splice(index, 1);
+
+        $http.post('/api/v1/character/' + character_key + '/items/' + item.key + '/delete/').then(function(response) {
             console.log(response)
         })
     }
@@ -290,6 +309,23 @@ angular.module('app.controllers', [])
             resolve: {
                 item: function () {
                     return power;
+                }
+            }
+        });
+    };
+
+    // Item Modal
+    $scope.open_item_modal = function(id) {
+        var index = _.findIndex($scope.character.items, {id: id})
+        var item = angular.copy($scope.character.items[index])
+
+        var modalInstance = $modal.open({
+            templateUrl: 'partials/item-modal.html',
+            controller: 'ModalInstanceCtrl',
+            size: 'sm',
+            resolve: {
+                item: function () {
+                    return item;
                 }
             }
         });

@@ -10,6 +10,12 @@ angular.module('app.filters', [])
     return function(input) {
         return (!!input) ? input.replace('_', ' ') : '';
     }
+})
+
+.filter('renderHTML', function($sce) {
+    return function(value) {
+        return $sce.trustAsHtml(value);
+    }
 });
 
 
@@ -20,7 +26,7 @@ angular.module('app.filters', [])
  * @author Ariel Mashraki <ariel@mashraki.co.il>
  * @license MIT License, http://www.opensource.org/licenses/MIT
  */
-(function ( window, angular, undefined ) {
+;(function ( window, angular, undefined ) {
 /*jshint globalstrict:true*/
 'use strict';
 

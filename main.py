@@ -196,42 +196,52 @@ class CharacterAddPower(webapp2.RequestHandler):
     def post(self, character_key):
         logging.info(self.request.body)
         data = json.loads(self.request.body)
-
-
         try:
             power = db.Query(Power).filter('name', data.get('name'))[0]
         except:
             power = None
-
         if power:
             power.character = Character.get(character_key)
             power.put()
         else:
             power = Power()
             power.character = Character.get(character_key)
-            
             power.json_string = unicode(self.request.body, 'utf-8');
             power.put()
 
         self.response.headers['Content-Type'] = 'application/json'
         self.response.out.write(json.dumps(power.serializable()))
 
-class CharacterLoadPowers(webapp2.RequestHandler):
-    def get(self, character_key):
-        character = Character.get(character_key)
-
-        _powers = []
-
-        for power in character.powers:
-            _powers.append(power.serializable())
-
-        self.response.headers['Content-Type'] = 'application/json'
-        self.response.out.write(json.dumps({'powers': _powers}))
-
 class CharacterDeletePower(webapp2.RequestHandler):
     def post(self, character_key, power_key):
         character = Character.get(character_key)
         character.powers.filter('__key__ =', Key(power_key)).get().delete()
+
+
+class CharacterAddItem(webapp2.RequestHandler):
+    def post(self, character_key):
+        logging.info(self.request.body)
+        data = json.loads(self.request.body)
+        try:
+            item = db.Query(Item).filter('name', data.get('name'))[0]
+        except:
+            item = None
+        if item:
+            item.character = Character.get(character_key)
+            item.put()
+        else:
+            item = Item()
+            item.character = Character.get(character_key)
+            item.json_string = unicode(self.request.body, 'utf-8');
+            item.put()
+
+        self.response.headers['Content-Type'] = 'application/json'
+        self.response.out.write(json.dumps(item.serializable()))
+
+class CharacterDeleteItem(webapp2.RequestHandler):
+    def post(self, character_key, item_key):
+        character = Character.get(character_key)
+        character.items.filter('__key__ =', Key(item_key)).get().delete()
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
@@ -242,8 +252,9 @@ app = webapp2.WSGIApplication([
     ('/api/v1/character/(?P<character_key>[^/]+)/?', CharacterDetail),
     ('/api/v1/character/(?P<character_key>[^/]+)/update/?', CharacterUpdate),
     ('/api/v1/character/(?P<character_key>[^/]+)/powers/add/?', CharacterAddPower),
-    ('/api/v1/character/(?P<character_key>[^/]+)/powers/?', CharacterLoadPowers),
     ('/api/v1/character/(?P<character_key>[^/]+)/powers/(?P<power_key>[^/]+)/delete/?', CharacterDeletePower),
+    ('/api/v1/character/(?P<character_key>[^/]+)/items/add/?', CharacterAddItem),
+    ('/api/v1/character/(?P<character_key>[^/]+)/items/(?P<item_key>[^/]+)/delete/?', CharacterDeleteItem),
     
 
 ], debug=True)
