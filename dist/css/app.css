@@ -3304,19 +3304,43 @@ section {
   section.character-card {
     width: 300px;
     display: inline-block;
-    margin: 15px; }
+    margin: 15px;
+    vertical-align: top;
+    position: relative; }
     section.character-card a {
       text-decoration: none;
       color: white; }
+    section.character-card .card-details {
+      position: absolute;
+      width: 100%;
+      background-color: white;
+      padding: 10px;
+      left: 0;
+      box-shadow: 0 2px #E0E0E0; }
+    section.character-card .fa-angle-double-down {
+      font-size: 20px;
+      cursor: pointer;
+      -webkit-transition: 0.2s all;
+      -moz-transition: 0.2s all;
+      -o-transition: 0.2s all;
+      transition: 0.2s all; }
+      section.character-card .fa-angle-double-down.active {
+        -webkit-transform: rotate(180deg);
+        -moz-transform: rotate(180deg);
+        -ms-transform: rotate(180deg);
+        -o-transform: rotate(180deg);
+        transform: rotate(180deg); }
   section .toolbar {
-    margin: -10px -10px 10px;
-    text-align: center; }
+    margin: -10px -10px 10px; }
     section .toolbar .avatar {
-      margin: -40px auto 0;
-      border: 3px solid #607d8b; }
+      margin: 0px 10px 0 0;
+      text-align: center;
+      border: 3px solid #607d8b;
+      float: left; }
     section .toolbar .char-bio {
       margin-top: -6px;
-      font-size: 14px; }
+      font-size: 14px;
+      text-align: left; }
 
 .section-header {
   margin: -10px -10px 10px;
@@ -3377,6 +3401,19 @@ a:visited {
     text-decoration: none;
     color: white; }
 
+.secondary-toolbar {
+  background: #607d8b; }
+  .secondary-toolbar .tabs a {
+    text-transform: uppercase;
+    text-decoration: none;
+    color: #FFF;
+    font-weight: bold;
+    font-size: 14px;
+    padding: 10px 20px;
+    display: inline-block; }
+    .secondary-toolbar .tabs a.active {
+      background-color: #7b96a3; }
+
 .char-bio {
   color: rgba(255, 255, 255, 0.7);
   text-align: center; }
@@ -3430,12 +3467,12 @@ label {
   background-color: rgba(0, 0, 0, 0.25);
   margin: 20px auto 0; }
   .avatar.mini {
-    height: 80px;
-    width: 80px; }
+    height: 50px;
+    width: 50px; }
   .avatar.default {
     background-color: #607d8b; }
     .avatar.default span {
-      font-size: 50px;
+      font-size: 28px;
       position: relative;
       top: 2px;
       font-weight: 100; }
@@ -3478,8 +3515,10 @@ textarea {
     height: 25px; }
 
 .tiny-input {
-  width: 30px;
+  width: 40px;
   text-align: center; }
+  .tiny-input[disabled] {
+    width: 30px; }
 
 .small-input {
   width: 65px;
@@ -3491,8 +3530,10 @@ textarea {
 .total-box {
   font-size: 18px;
   padding: 7px !important;
-  width: 42px;
+  width: 55px;
   text-align: center; }
+  .total-box[disabled] {
+    width: 42px; }
   .total-box.secondary {
     margin-left: -7px;
     font-size: 14px;

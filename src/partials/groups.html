@@ -12,7 +12,7 @@
 	<div class="empty-message" ng-show="!groups.length">Loading...</div>
 	<ul>
 		<li ng-repeat="group in groups">
-			<a ui-sref="group-detail({group_key: group.key})">{{ group.name }}</a>
+			<a ui-sref="group-detail.dashboard({group_key: group.key})">{{ group.name }}</a>
 		</li>
 	</ul>
 	

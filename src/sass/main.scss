@@ -51,23 +51,46 @@ section {
 		width: 300px;
 		display:inline-block;
 		margin: 15px;
+		vertical-align: top;
+		position:relative;
 
 		a {
 			text-decoration: none;
 			color:white;
 		}
+
+		.card-details {
+			position: absolute;
+			width: 100%;
+			background-color: white;
+			padding: 10px;
+			left: 0;
+			box-shadow: 0 2px #E0E0E0;
+		}
+
+		.fa-angle-double-down {
+			font-size: 20px;
+			cursor: pointer;
+			@include transition(.2s all);
+			&.active {
+				@include rotate(180deg)
+			}
+
+		}
 	}
 
 	.toolbar {
 		margin: -10px -10px 10px;
-		text-align: center;
 		.avatar {
-			margin: -40px auto 0;
+			margin: 0px 10px 0 0;
+			text-align: center;
 			border: 3px solid $primary;
+			float:left;
 		}
 		.char-bio {
 			margin-top: -6px;
 			font-size: 14px;
+			text-align: left;
 		}	
 	}
 }
@@ -145,6 +168,26 @@ a {
 	}
 }
 
+.secondary-toolbar {
+	background: $primary;
+	
+	.tabs {
+		a {
+			text-transform: uppercase;
+			text-decoration: none;
+			color: #FFF;
+			font-weight: bold;
+			font-size: 14px;
+			padding: 10px 20px;
+			display: inline-block;
+
+			&.active {
+				background-color: lighten($primary, 10%);
+			}
+		}
+	}
+}
+
 .char-bio {
 	color: rgba(255, 255, 255, 0.7);
 	text-align: center;
@@ -208,15 +251,15 @@ label {
 	margin: 20px auto 0;
 
 	&.mini {
-		height: 80px;
-		width: 80px;
+		height: 50px;
+		width: 50px;
 	}
 
 	&.default {
 		background-color: $primary;
 		
 		span {
-			font-size: 50px;	
+			font-size: 28px;	
 			position: relative;
 			top: 2px;
 			font-weight: 100;
@@ -273,8 +316,11 @@ textarea {
 }
 
 .tiny-input {
-	width: 30px;
+	width: 40px;
 	text-align: center;
+	&[disabled] {
+		width: 30px;
+	}
 }
 
 .small-input {
@@ -288,9 +334,11 @@ textarea {
 .total-box {
 	font-size: 18px;
 	padding: 7px!important;
-	width: 42px;
+	width: 55px;
 	text-align: center;
-
+	&[disabled] {
+		width: 42px;
+	}
 	&.secondary {
 		margin-left: -7px;
 		font-size: 14px;

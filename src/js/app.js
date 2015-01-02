@@ -27,6 +27,18 @@ angular.module('dnd', [
         controller: 'GroupDetailCtrl'
     })
 
+    .state('group-detail.dashboard', {
+        url: "/dashboard",
+        templateUrl: "/partials/group-detail.dashboard.html",
+        controller: 'GroupDetailDashboardCtrl'
+    })
+
+    .state('group-detail.encounter', {
+        url: "/encounter",
+        templateUrl: "/partials/group-detail.encounter.html",
+        controller: 'GroupDetailEncounterCtrl'
+    })
+
     .state('character-detail', {
         url: "/character/:character_key",
         templateUrl: "/partials/character-detail.html",

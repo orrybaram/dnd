@@ -2,7 +2,7 @@
 
 <form on-form-change="save_character()">
     <div class="toolbar">
-        <a ui-sref="group-detail({group_key: character.group_key})"><i class="fa fa-arrow-left"></i></a>
+        <a ui-sref="group-detail.dashboard({group_key: character.group_key})"><i class="fa fa-arrow-left"></i></a>
         <div>
             <div fake-click="avatar-input" class="avatar" style="background-image: url('{{character.avatar}}')">
                 <p ng-show="!character.avatar">Upload Image</p>
@@ -15,7 +15,6 @@
             </p>
         </div>
     </div>
-
 
     <div class="content-view">
     <!-- BASIC INFO
@@ -32,7 +31,7 @@
                     <div class="inline-block">
                         <small class="next-level">Next Level: {{ next_level_xp }}</small>
                         <h3 class="item-name">XP</h3>
-                        <input class="medium-input total-box wide highlighted" ng-model="character.total_xp" style="box-shadow: inset {{ (xp_level_progress / 100) * 90 }}px 0 0 rgba(181, 239, 12, 0.25);"/>
+                        <input type="number" class="medium-input total-box wide highlighted" ng-model="character.total_xp" style="box-shadow: inset {{ (xp_level_progress / 100) * 90 }}px 0 0 rgba(181, 239, 12, 0.25);"/>
                     </div>
                     <div class="inline-block">
                         <label>Level</label>
@@ -122,7 +121,7 @@
 
                     <div class="inline-block">
                         <label>Misc</label>
-                        <input class="tiny-input" ng-model="character.initiative_misc" />
+                        <input type="number" class="tiny-input" ng-model="character.initiative_misc" />
                     </div>
                 </section>
 
@@ -133,7 +132,7 @@
                     <div class="item">
                         <h3 class="item-name">Str</h3>
                         <div class="inline-block">
-                            <input class="tiny-input highlighted total-box" ng-model="character.strength" />
+                            <input type="number" class="tiny-input highlighted total-box" ng-model="character.strength" />
                         </div>
 
                         <div class="inline-block">
@@ -150,7 +149,7 @@
                     <div class="item">
                         <h3 class="item-name">Con</h3>
                         <div class="inline-block">
-                            <input class="tiny-input highlighted total-box" ng-model="character.constitution" />
+                            <input type="number" class="tiny-input highlighted total-box" ng-model="character.constitution" />
                         </div>
 
                         <div class="inline-block">
@@ -167,7 +166,7 @@
                     <div class="item">
                         <h3 class="item-name">Dex</h3>
                         <div class="inline-block">
-                            <input class="tiny-input highlighted total-box" ng-model="character.dexterity" />
+                            <input type="number" class="tiny-input highlighted total-box" ng-model="character.dexterity" />
                         </div>
 
                         <div class="inline-block">
@@ -184,7 +183,7 @@
                     <div class="item">
                         <h3 class="item-name">Int</h3>
                         <div class="inline-block">
-                            <input class="tiny-input highlighted total-box" ng-model="character.intelligence" />
+                            <input type="number" class="tiny-input highlighted total-box" ng-model="character.intelligence" />
                         </div>
 
                         <div class="inline-block">
@@ -201,7 +200,7 @@
                     <div class="item">
                         <h3 class="item-name">Wis</h3>
                         <div class="inline-block">
-                            <input class="tiny-input highlighted total-box" ng-model="character.wisdom" />
+                            <input type="number" class="tiny-input highlighted total-box" ng-model="character.wisdom" />
                         </div>
 
                         <div class="inline-block">
@@ -218,7 +217,7 @@
                     <div class="item">
                         <h3 class="item-name">Cha</h3>
                         <div class="inline-block">
-                            <input class="tiny-input highlighted total-box" ng-model="character.charisma" />
+                            <input type="number" class="tiny-input highlighted total-box" ng-model="character.charisma" />
                         </div>
 
                         <div class="inline-block">
@@ -239,11 +238,11 @@
                     <h2 class="section-header">Hit Points</h2>
                     <div class="inline-block">
                         <h3 class="item-name">HP</h3>
-                        <input class="small-input highlighted total-box" ng-class="{warning: character.hp_current <= character.hp_bloodied}" ng-model="character.hp_current" />
+                        <input type="number" class="small-input highlighted total-box" ng-class="{warning: character.hp_current <= character.hp_bloodied}" ng-model="character.hp_current" />
                     </div>
                     <div class="inline-block">
                         <label>Max</label>
-                        <input class="tiny-input" ng-model="character.hp_max" />
+                        <input type="number" class="tiny-input" ng-model="character.hp_max" />
                     </div>
                     <div class="inline-block">
                         <label>Bloodied</label>
@@ -259,7 +258,7 @@
                     <h2 class="section-header">Surges</h2>
                     <div class="inline-block">
                         <h3 class="item-name">SRG</h3>
-                        <input class="small-input highlighted total-box" ng-model="character.surges_used" />
+                        <input type="number" class="small-input highlighted total-box" ng-model="character.surges_used" />
                     </div>
                     <div class="inline-block">
                         <label>Surge Value</label>
@@ -267,7 +266,7 @@
                     </div>
                     <div class="inline-block">
                         <label>Surges per Day</label>
-                        <input class="tiny-input" ng-model="character.surges_per_day" />
+                        <input type="number" class="tiny-input" ng-model="character.surges_per_day" />
                     </div>
                 </section>
 
@@ -287,11 +286,11 @@
                         </div>
                         <div class="inline-block">
                             <label>Armr Pnlty</label>
-                            <input class="tiny-input" ng-model="character.acrobatics_armor_penalty" />
+                            <input type="number" class="tiny-input" ng-model="character.acrobatics_armor_penalty" />
                         </div>
                         <div class="inline-block">
                             <label>Misc</label>
-                            <input class="tiny-input" ng-model="character.acrobatics_misc" />
+                            <input type="number" class="tiny-input" ng-model="character.acrobatics_misc" />
                         </div>
                         <div class="inline-block">
                             <label>Trained</label>
@@ -310,7 +309,7 @@
                         </div>
                         <div class="inline-block">
                             <label>Misc</label>
-                            <input class="tiny-input" ng-model="character.arcana_misc" />
+                            <input type="number" class="tiny-input" ng-model="character.arcana_misc" />
                         </div>
                         <div class="inline-block">
                             <label>Trained</label>
@@ -328,11 +327,11 @@
                         </div>
                         <div class="inline-block">
                             <label>Armr Pnlty</label>
-                            <input class="tiny-input" ng-model="character.athletics_armor_penalty" />
+                            <input type="number" class="tiny-input" ng-model="character.athletics_armor_penalty" />
                         </div>
                         <div class="inline-block">
                             <label>Misc</label>
-                            <input class="tiny-input" ng-model="character.athletics_misc" />
+                            <input type="number" class="tiny-input" ng-model="character.athletics_misc" />
                         </div>
                         <div class="inline-block">
                             <label>Trained</label>
@@ -350,7 +349,7 @@
                         </div>
                         <div class="inline-block">
                             <label>Misc</label>
-                            <input class="tiny-input" ng-model="character.bluff_misc" />
+                            <input type="number" class="tiny-input" ng-model="character.bluff_misc" />
                         </div>
                         <div class="inline-block">
                             <label>Trained</label>
@@ -369,7 +368,7 @@
                         </div>
                         <div class="inline-block">
                             <label>Misc</label>
-                            <input class="tiny-input" ng-model="character.diplomacy_misc" />
+                            <input type="number" class="tiny-input" ng-model="character.diplomacy_misc" />
                         </div>
                         <div class="inline-block">
                             <label>Trained</label>
@@ -388,7 +387,7 @@
                         </div>
                         <div class="inline-block">
                             <label>Misc</label>
-                            <input class="tiny-input" ng-model="character.dungeoneering_misc" />
+                            <input type="number" class="tiny-input" ng-model="character.dungeoneering_misc" />
                         </div>
                         <div class="inline-block">
                             <label>Trained</label>
@@ -629,27 +628,27 @@
                         </div>
                         <div class="inline-block">
                             <label>Abil</label>
-                            <input class="tiny-input" ng-model="character.armor_abil" />
+                            <input type="number" class="tiny-input" ng-model="character.armor_abil" />
                         </div>
                         <div class="inline-block">
                             <label>Class</label>
-                            <input class="tiny-input" ng-model="character.armor_char_class" />
+                            <input type="number" class="tiny-input" ng-model="character.armor_char_class" />
                         </div>
                         <div class="inline-block">
                             <label>Feat</label>
-                            <input class="tiny-input" ng-model="character.armor_feat" />
+                            <input type="number" class="tiny-input" ng-model="character.armor_feat" />
                         </div>
                         <div class="inline-block">
                             <label>ENH</label>
-                            <input class="tiny-input" ng-model="character.armor_enh" />
+                            <input type="number" class="tiny-input" ng-model="character.armor_enh" />
                         </div>
                         <div class="inline-block">
                             <label>Misc 1</label>
-                            <input class="tiny-input" ng-model="character.armor_misc1" />
+                            <input type="number" class="tiny-input" ng-model="character.armor_misc1" />
                         </div>
                         <div class="inline-block">
                             <label>Misc 2</label>
-                            <input class="tiny-input" ng-model="character.armor_misc2" />
+                            <input type="number" class="tiny-input" ng-model="character.armor_misc2" />
                         </div>
                     </div>
 
@@ -664,27 +663,27 @@
                         </div>
                         <div class="inline-block">
                             <label>Abil</label>
-                            <input class="tiny-input" ng-model="character.fortitude_abil" />
+                            <input type="number" class="tiny-input" ng-model="character.fortitude_abil" />
                         </div>
                         <div class="inline-block">
                             <label>Class</label>
-                            <input class="tiny-input" ng-model="character.fortitude_char_class" />
+                            <input type="number" class="tiny-input" ng-model="character.fortitude_char_class" />
                         </div>
                         <div class="inline-block">
                             <label>Feat</label>
-                            <input class="tiny-input" ng-model="character.fortitude_feat" />
+                            <input type="number" class="tiny-input" ng-model="character.fortitude_feat" />
                         </div>
                         <div class="inline-block">
                             <label>ENH</label>
-                            <input class="tiny-input" ng-model="character.fortitude_enh" />
+                            <input type="number" class="tiny-input" ng-model="character.fortitude_enh" />
                         </div>
                         <div class="inline-block">
                             <label>Misc 1</label>
-                            <input class="tiny-input" ng-model="character.fortitude_misc1" />
+                            <input type="number" class="tiny-input" ng-model="character.fortitude_misc1" />
                         </div>
                         <div class="inline-block">
                             <label>Misc 2</label>
-                            <input class="tiny-input" ng-model="character.fortitude_misc2" />
+                            <input type="number" class="tiny-input" ng-model="character.fortitude_misc2" />
                         </div>
                     </div>
 
@@ -699,27 +698,27 @@
                         </div>
                         <div class="inline-block">
                             <label>Abil</label>
-                            <input class="tiny-input" ng-model="character.reflex_abil" />
+                            <input type="number" class="tiny-input" ng-model="character.reflex_abil" />
                         </div>
                         <div class="inline-block">
                             <label>Class</label>
-                            <input class="tiny-input" ng-model="character.reflex_char_class" />
+                            <input type="number" class="tiny-input" ng-model="character.reflex_char_class" />
                         </div>
                         <div class="inline-block">
                             <label>Feat</label>
-                            <input class="tiny-input" ng-model="character.reflex_feat" />
+                            <input type="number" class="tiny-input" ng-model="character.reflex_feat" />
                         </div>
                         <div class="inline-block">
                             <label>ENH</label>
-                            <input class="tiny-input" ng-model="character.reflex_enh" />
+                            <input type="number" class="tiny-input" ng-model="character.reflex_enh" />
                         </div>
                         <div class="inline-block">
                             <label>Misc 1</label>
-                            <input class="tiny-input" ng-model="character.reflex_misc1" />
+                            <input type="number" class="tiny-input" ng-model="character.reflex_misc1" />
                         </div>
                         <div class="inline-block">
                             <label>Misc 2</label>
-                            <input class="tiny-input" ng-model="character.reflex_misc2" />
+                            <input type="number" class="tiny-input" ng-model="character.reflex_misc2" />
                         </div>
                     </div>
 
@@ -734,27 +733,27 @@
                         </div>
                         <div class="inline-block">
                             <label>Abil</label>
-                            <input class="tiny-input" ng-model="character.will_abil" />
+                            <input type="number" class="tiny-input" ng-model="character.will_abil" />
                         </div>
                         <div class="inline-block">
                             <label>Class</label>
-                            <input class="tiny-input" ng-model="character.will_char_class" />
+                            <input type="number" class="tiny-input" ng-model="character.will_char_class" />
                         </div>
                         <div class="inline-block">
                             <label>Feat</label>
-                            <input class="tiny-input" ng-model="character.will_feat" />
+                            <input type="number" class="tiny-input" ng-model="character.will_feat" />
                         </div>
                         <div class="inline-block">
                             <label>ENH</label>
-                            <input class="tiny-input" ng-model="character.will_enh" />
+                            <input type="number" class="tiny-input" ng-model="character.will_enh" />
                         </div>
                         <div class="inline-block">
                             <label>Misc 1</label>
-                            <input class="tiny-input" ng-model="character.will_misc1" />
+                            <input type="number" class="tiny-input" ng-model="character.will_misc1" />
                         </div>
                         <div class="inline-block">
                             <label>Misc 2</label>
-                            <input class="tiny-input" ng-model="character.will_misc2" />
+                            <input type="number" class="tiny-input" ng-model="character.will_misc2" />
                         </div>
                     </div>
                 </section>
@@ -783,19 +782,19 @@
                     </div>
                     <div class="inline-block">
                         <label>Base</label>
-                        <input class="tiny-input" ng-model="character.speed_base" />
+                        <input type="number" class="tiny-input" ng-model="character.speed_base" />
                     </div>
                     <div class="inline-block">
                         <label>Armor</label>
-                        <input class="tiny-input" ng-model="character.speed_armor" />
+                        <input type="number" class="tiny-input" ng-model="character.speed_armor" />
                     </div>
                     <div class="inline-block">
                         <label>Item</label>
-                        <input class="tiny-input" ng-model="character.speed_item" />
+                        <input type="number" class="tiny-input" ng-model="character.speed_item" />
                     </div>
                     <div class="inline-block">
                         <label>Misc</label>
-                        <input class="tiny-input" ng-model="character.speed_misc" />
+                        <input type="number" class="tiny-input" ng-model="character.speed_misc" />
                     </div>
                     <div>
                         <label>Extra abilites</label>

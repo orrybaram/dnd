@@ -23,11 +23,39 @@ angular.module('app.controllers', [])
     }
     $scope.get_groups();
 })
-
 .controller('GroupDetailCtrl', function($scope, $http, $state, $stateParams, $modal) {
-    
+    $scope.ui = {};
+    $scope.ui.loading = false;
+    var group_key = $stateParams.group_key;
+
+    console.log($scope)
+
+    $scope.get_group_detail = function() {
+        $scope.ui.loading = true;
+        $http.get('/api/v1/groups/' + group_key).then(function(response) {
+            console.log(response)
+            $scope.group = response.data.group;
+            $scope.characters = response.data.players;
+            $scope.ui.loading = false;
+
+            var _cache = [];
+            $scope.characters.forEach(function(character) {
+                _cache.push(character);
+            })
+            localStorage.setItem('characters', angular.toJson(_cache));
+        })
+    }
+
+    $scope.get_group_detail();
+
+    // $state.go('group-detail.dashboard')
+})
+.controller('GroupDetailDashboardCtrl', function($scope, $rootScope, $http, $state, $stateParams, $modal) {
+    $rootScope.state = $state;
     $scope.group = {};
     $scope.new_character = {};
+
+    console.log($state)
 
     $scope.ui = {};
     $scope.ui.loading = false;
@@ -60,24 +88,6 @@ angular.module('app.controllers', [])
         };
     }
 
-
-    $scope.get_group_detail = function() {
-    	$scope.ui.loading = true;
-        $http.get('/api/v1/groups/' + group_key).then(function(response) {
-    		console.log(response)
-    		$scope.group = response.data.group;
-    		$scope.characters = response.data.players;
-            $scope.ui.loading = false;
-
-            var _cache = [];
-            $scope.characters.forEach(function(character) {
-                _cache.push(character);
-            })
-            localStorage.setItem('characters', angular.toJson(_cache));
-        })
-    }
-
-    $scope.get_group_detail();
     $scope.new_character.group = group_key;
 
     $scope.create_character = function() {
@@ -114,6 +124,17 @@ angular.module('app.controllers', [])
             }
         });
     };
+})
+
+.controller('GroupDetailEncounterCtrl', function($scope, $rootScope, $filter, $http, $state, $stateParams, $modal) {
+    $rootScope.state = $state;
+    if($scope.characters) {
+        $scope.characters.forEach(function(character) {
+            character.encounter_initiative = 0;
+        })    
+    }
+
+    $filter('orderBy')($scope.characters, 'encounter_initiaitve');
 })
 
 .controller('CharacterDetailCtrl', function($scope, $rootScope, $http, $timeout, $stateParams, $modal, $log) {
@@ -156,25 +177,24 @@ angular.module('app.controllers', [])
     }, true)
 
     $scope.save_character = function() {
-        
         is_editting = true;
+        $scope.ui.saving = true;        
         
         var data = {
             'character': $scope.character,
             'channel_token': template_values.channel_token
         }
 
-        $scope.ui.saving = true;
-    	$http.post('/api/v1/character/' + character_key + '/update/', data).then(function(response) {
+        $http.post('/api/v1/character/' + character_key + '/update/', data).then(function(response) {
     		console.log(response);
             $timeout(function() {
                 $scope.ui.saving = false;
                 is_editting = false;    
             }, 3000)
 
-            var idx = _.findIndex(_characters, {key: character_key});
-            _characters[idx] = $scope.character;
-            localStorage.setItem('characters', angular.toJson(_characters));
+            // var idx = _.findIndex(_characters, {key: character_key});
+            // _characters[idx] = $scope.character;
+            // localStorage.setItem('characters', angular.toJson(_characters));
 
         }, function(error) {
             console.log(error);

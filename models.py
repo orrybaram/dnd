@@ -23,6 +23,18 @@ class Group(db.Model):
             'name': self.name,
         }
 
+class Character(db.Expando):
+    pass
+
+for character in Character.all():
+    character.speed_armor = int(character.speed_armor)
+    character.acrobatics_armor_penalty = int(character.acrobatics_armor_penalty)
+    character.athletics_armor_penalty = int(character.athletics_armor_penalty)
+    character.endurance_armor_penalty = int(character.endurance_armor_penalty)
+    character.stealth_armor_penalty = int(character.stealth_armor_penalty)
+    character.theivery_armor_penalty = int(character.athletics_armor_penalty)
+    character.put()
+
 class Character(db.Model):
     
     date_created = db.DateTimeProperty(auto_now_add=True)
@@ -106,7 +118,7 @@ class Character(db.Model):
     # Movement
     speed_total = db.IntegerProperty(default=0)
     speed_base = db.IntegerProperty(default=0)
-    speed_armor = db.StringProperty(default="0")
+    speed_armor = db.IntegerProperty(default=0)
     speed_item = db.IntegerProperty(default=0)
     speed_misc = db.IntegerProperty(default=0)
     speed_abilites = db.StringProperty()
@@ -128,7 +140,7 @@ class Character(db.Model):
     # Skills
     acrobatics_total = db.IntegerProperty(default=0)
     acrobatics_trained = db.BooleanProperty(default=False)
-    acrobatics_armor_penalty = db.StringProperty(default="0")
+    acrobatics_armor_penalty = db.IntegerProperty(default=0)
     acrobatics_misc = db.IntegerProperty(default=0)
 
     arcana_total = db.IntegerProperty(default=0)
@@ -137,7 +149,7 @@ class Character(db.Model):
 
     athletics_total = db.IntegerProperty(default=0)
     athletics_trained = db.BooleanProperty(default=False)
-    athletics_armor_penalty = db.StringProperty(default="0")
+    athletics_armor_penalty = db.IntegerProperty(default=0)
     athletics_misc = db.IntegerProperty(default=0)
 
     bluff_total = db.IntegerProperty(default=0)
@@ -154,7 +166,7 @@ class Character(db.Model):
 
     endurance_total = db.IntegerProperty(default=0)
     endurance_trained = db.BooleanProperty(default=False)
-    endurance_armor_penalty = db.StringProperty(default="0")
+    endurance_armor_penalty = db.IntegerProperty(default=0)
     endurance_misc = db.IntegerProperty(default=0)
 
     heal_total = db.IntegerProperty(default=0)
@@ -187,7 +199,7 @@ class Character(db.Model):
 
     stealth_total = db.IntegerProperty(default=0)
     stealth_trained = db.BooleanProperty(default=False)
-    stealth_armor_penalty = db.StringProperty(default="0")
+    stealth_armor_penalty = db.IntegerProperty(default=0)
     stealth_misc = db.IntegerProperty(default=0)
 
     streetwise_total = db.IntegerProperty(default=0)
@@ -196,7 +208,7 @@ class Character(db.Model):
 
     theivery_total = db.IntegerProperty(default=0)
     theivery_trained = db.BooleanProperty(default=False)
-    theivery_armor_penalty = db.StringProperty(default="0")
+    theivery_armor_penalty = db.IntegerProperty(default=0)
     theivery_misc = db.IntegerProperty(default=0)
 
     race_features = db.TextProperty()
