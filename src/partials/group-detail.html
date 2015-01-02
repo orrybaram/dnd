@@ -10,65 +10,84 @@
 			
 			<div class="characters">
 				<section class="character-card" ng-repeat="character in characters">
-						
-						<div class="toolbar">
-							<a ui-sref="character-detail({character_key: character.key})">
-								<div ng-if="character.avatar && character.avatar !== 'None'" class="avatar mini" style="background-image: url('{{character.avatar}}')"></div>
-								<div ng-if="!character.avatar || character.avatar === 'None'" class="avatar mini default">
-									<span>{{character.name[0]}}</span>
-								</div>
-								<h1>{{ character.name }}</h1>
-								<p class="char-bio">
-					                A level {{character.level}} {{character.char_race || 'noob'}} {{character.char_class}}
-					            </p>
-				            </a>
+					<div class="toolbar">
+						<a ui-sref="character-detail({character_key: character.key})">
+							<div ng-if="character.avatar && character.avatar !== 'None'" class="avatar mini" style="background-image: url('{{character.avatar}}')"></div>
+							<div ng-if="!character.avatar || character.avatar === 'None'" class="avatar mini default">
+								<span>{{character.name[0]}}</span>
+							</div>
+							<h1>{{ character.name }}</h1>
+							<p class="char-bio">
+				                A level {{character.level}} {{character.char_race || 'noob'}} {{character.char_class}}
+				            </p>
+			            </a>
+					</div>
+					<div class="card-content">
+						<div class="inline-block">
+						    <h3 class="item-name">HP</h3>
+						    <input class="small-input highlighted total-box" ng-class="{warning: character.hp_current <= character.hp_bloodied}" ng-model="character.hp_current" />
+						    <input disabled class="small-input highlighted total-box secondary" ng-model="character.hp_max" />
+
 						</div>
-						<div class="card-content">
-							<div class="inline-block">
-							    <h3 class="item-name">HP</h3>
-							    <input class="small-input highlighted total-box" ng-class="{warning: character.hp_current <= character.hp_bloodied}" ng-model="character.hp_current" />
-							    <input disabled class="small-input highlighted total-box secondary" ng-model="character.hp_max" />
+						<h3 class="item-name">XP</h3>
+						<input disabled class="medium-input total-box wide highlighted" ng-model="character.total_xp" />
 
-							</div>
-							<h3 class="item-name">XP</h3>
-							<input disabled class="medium-input total-box wide highlighted" ng-model="character.total_xp" />
+						<div class="inline-block">
+							<h3 class="item-name">INIT</h3>
+							<input disabled class="tiny-input highlighted total-box" value="{{ character.initiative_score }}" />
+						</div>
 
-							<div class="inline-block">
-								<h3 class="item-name">INIT</h3>
-								<input disabled class="tiny-input highlighted total-box" value="{{ character.initiative_score }}" />
-							</div>
+						<div class="inline-block">
+							<h3 class="item-name">Str</h3>
+							<input disabled class="tiny-input highlighted total-box" ng-model="character.strength" />
+                        </div>
+                        <div class="inline-block">
+                        	<h3 class="item-name">Con</h3>
+                    
+                        	<input disabled class="tiny-input highlighted total-box" ng-model="character.constitution" />
+                    	</div>
+                    	<div class="inline-block">
+                        	<h3 class="item-name">Dex</h3>
+                        	<input disabled class="tiny-input highlighted total-box" ng-model="character.dexterity" />
+                        </div>
 
-							<div class="inline-block">
-								<h3 class="item-name">Str</h3>
-								<input disabled class="tiny-input highlighted total-box" ng-model="character.strength" />
-	                        </div>
-	                        <div class="inline-block">
-	                        	<h3 class="item-name">Con</h3>
+
+                        <div class="inline-block">
+                            <h3 class="item-name">Int</h3>
+                            <input disabled class="tiny-input highlighted total-box" ng-model="character.intelligence" />
+                        </div>
+
+                        <div class="inline-block">
+                        	<h3 class="item-name">Wis</h3>
+                        	<input disabled class="tiny-input highlighted total-box" ng-model="character.wisdom" />
+                        </div>
+                        <div class="inline-block">
+                        	<h3 class="item-name">Cha</h3>
+                        	<input disabled class="tiny-input highlighted total-box" ng-model="character.charisma" />
+                        </div>
+
+                        <ul class="item-list">
+                            <li class="at-will-power power" ng-repeat="power in character.powers | filter:{type: 'atwillpower'}" ng-click="open_modal(character.key, power.id)">
+                                {{ power.name }}
+                                    
+							</li>
+                        </ul>
+
+                        <ul class="item-list">
+                            <li class="encounter-power power" ng-repeat="power in character.powers | filter:{type: 'encounterpower'}" ng-click="open_modal(character.key, power.id)">
+                                {{ power.name }}
+                                
+							</li>
+                        </ul>    
+
+                        <ul class="item-list margin-bottom">
+                            <li class="daily-power power" ng-repeat="power in character.powers | filter:{type: 'dailypower'}" ng-click="open_modal(character.key, power.id)">
+                                {{ power.name }}
+                                    
+							</li>
+                        </ul>      
                         
-                            	<input disabled class="tiny-input highlighted total-box" ng-model="character.constitution" />
-                        	</div>
-                        	<div class="inline-block">
-	                        	<h3 class="item-name">Dex</h3>
-	                        	<input disabled class="tiny-input highlighted total-box" ng-model="character.dexterity" />
-	                        </div>
-
-
-	                        <div class="inline-block">
-	                            <h3 class="item-name">Int</h3>
-	                            <input disabled class="tiny-input highlighted total-box" ng-model="character.intelligence" />
-	                        </div>
-
-	                        <div class="inline-block">
-	                        	<h3 class="item-name">Wis</h3>
-	                        	<input disabled class="tiny-input highlighted total-box" ng-model="character.wisdom" />
-	                        </div>
-	                        <div class="inline-block">
-	                        	<h3 class="item-name">Cha</h3>
-	                        	<input disabled class="tiny-input highlighted total-box" ng-model="character.charisma" />
-	                        </div>
-	                        
-						</div>
-					
+					</div>
 				</section>
 			</div>
 			<input placeholder="Character name" ng-model="new_character.name" />

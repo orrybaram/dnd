@@ -24,7 +24,7 @@ angular.module('app.controllers', [])
     $scope.get_groups();
 })
 
-.controller('GroupDetailCtrl', function($scope, $http, $state, $stateParams) {
+.controller('GroupDetailCtrl', function($scope, $http, $state, $stateParams, $modal) {
     
     $scope.group = {};
     $scope.characters = [];
@@ -51,6 +51,15 @@ angular.module('app.controllers', [])
 
     var group_key = $stateParams.group_key;
     
+    function getCharacter(key) {
+        for (var i = 0; i < $scope.characters.length; i++) {
+            if ($scope.characters[i].key === key) {
+                return $scope.characters[i];
+            }
+        };
+    }
+
+
     $scope.get_group_detail = function() {
     	$scope.ui.loading = true;
         $http.get('/api/v1/groups/' + group_key).then(function(response) {
@@ -58,6 +67,8 @@ angular.module('app.controllers', [])
     		$scope.group = response.data.group;
     		$scope.characters = response.data.players;
             $scope.ui.loading = false;
+
+            
     	})
     }
 
@@ -78,9 +89,29 @@ angular.module('app.controllers', [])
             alert(err.data.error);
         })
     }
+
+    // Power Modal
+    $scope.open_modal = function(key, id) {
+
+        var character = getCharacter(key)
+
+        var index = _.findIndex(character.powers, {id: id})
+        var power = character.powers[index]
+
+        var modalInstance = $modal.open({
+            templateUrl: 'partials/power-modal.html',
+            controller: 'ModalInstanceCtrl',
+            size: 'sm',
+            resolve: {
+                item: function () {
+                    return power;
+                }
+            }
+        });
+    };
 })
 
-.controller('CharacterDetailCtrl', function($scope, $rootScope, $http, $timeout, $stateParams) {
+.controller('CharacterDetailCtrl', function($scope, $rootScope, $http, $timeout, $stateParams, $modal, $log) {
     
     $scope.character = {};
     $scope.ui = {};
@@ -97,7 +128,6 @@ angular.module('app.controllers', [])
     }
 
     $scope.$on('character-updated', function(event, args) {
-        console.log(args)
         if(!is_editting) {
             $scope.character = args.character;
             $scope.$apply();    
@@ -141,11 +171,19 @@ angular.module('app.controllers', [])
     $scope.add_power = function() {
         var data = $scope.new_power;
         $http.post('/api/v1/character/' + character_key + '/powers/add/', data).then(function(response) {
-            console.log(response)
-
             $scope.character.powers.push(response.data);
-
             $scope.new_power = '';
+        })
+    }
+
+    $scope.delete_power = function(id) {
+        var index = _.findIndex($scope.character.powers, {id: id})
+        var power = $scope.character.powers[index]
+
+        $scope.character.powers.splice(index, 1);
+
+        $http.post('/api/v1/character/' + character_key + '/powers/' + power.key + '/delete/').then(function(response) {
+            console.log(response)
         })
     }
 
@@ -220,5 +258,34 @@ angular.module('app.controllers', [])
         $scope.character[skill + '_total'] = total;
         return total
     }
+
+
+    // Power Modal
+    $scope.open_modal = function(id) {
+        var index = _.findIndex($scope.character.powers, {id: id})
+        var power = angular.copy($scope.character.powers[index])
+
+        var modalInstance = $modal.open({
+            templateUrl: 'partials/power-modal.html',
+            controller: 'ModalInstanceCtrl',
+            size: 'sm',
+            resolve: {
+                item: function () {
+                    return power;
+                }
+            }
+        });
+    };
+})
+
+.controller('ModalInstanceCtrl', function ($scope, $modalInstance, item) {
+    $scope.item = item;
+    
+    $scope.close = function () {
+        $modalInstance.close();
+    };
+    $scope.cancel = function () {
+        $modalInstance.dismiss('cancel');
+    };
 })
 

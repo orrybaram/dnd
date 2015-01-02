@@ -45,6 +45,9 @@ table {
   border-collapse: collapse;
   border-spacing: 0; }
 
+strong {
+  font-weight: bold; }
+
 /* FANCYHANDS MIXINS
 ========================================================== */
 meta.foundation-version {
@@ -3183,6 +3186,81 @@ select {
       background: #607d8b;
       color: white; }
 
+.modal-open {
+  overflow: hidden; }
+
+.modal {
+  display: none;
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 10;
+  -webkit-overflow-scrolling: touch;
+  outline: 0; }
+  .modal.fade .modal-dialog {
+    -webkit-transform: translate3d(0, -100%, 0);
+    -moz-transform: translate3d(0, -100%, 0);
+    -o-transform: translate3d(0, -100%, 0);
+    transform: translate3d(0, -100%, 0);
+    -webkit-transition: 0.2s;
+    -moz-transition: 0.2s;
+    -o-transition: 0.2s;
+    transition: 0.2s; }
+  .modal.in .modal-dialog {
+    -webkit-transform: translate3d(0, 0, 0);
+    -moz-transform: translate3d(0, 0, 0);
+    -o-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0); }
+
+.modal-open .modal {
+  overflow-x: hidden;
+  overflow-y: auto; }
+
+.modal-dialog {
+  position: relative;
+  width: auto;
+  margin: 10px; }
+
+.modal-content {
+  position: relative;
+  background-color: white;
+  border: 1px solid gray;
+  box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
+  background-clip: padding-box;
+  outline: 0; }
+
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  background-color: black;
+  -webkit-transition: 0.3s;
+  -moz-transition: 0.3s;
+  -o-transition: 0.3s;
+  transition: 0.3s; }
+  .modal-backdrop.fade {
+    opacity: 0; }
+  .modal-backdrop.in {
+    opacity: 0.5; }
+
+@media (min-width: 600px) {
+  .modal-dialog {
+    width: 600px;
+    margin: 30px auto; }
+
+  .modal-content {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5); }
+
+  .modal-sm {
+    width: 450px; } }
+@media (min-width: 992px) {
+  .modal-lg {
+    width: 900px; } }
 body {
   background: #F1F1F1;
   font-family: Helvetica Neue, sans-serif;
@@ -3251,10 +3329,12 @@ section {
 button {
   border: 0;
   background: #cddc39;
-  color: white;
+  color: #212121;
   border-radius: 3px;
   padding: 5px 10px;
-  font-size: 16px; }
+  font-size: 12px;
+  text-transform: uppercase;
+  font-weight: bold; }
 
 a:visited {
   color: inherit; }
@@ -3264,11 +3344,17 @@ a:visited {
   vertical-align: top;
   position: relative; }
 
+.width-100 {
+  width: 100%; }
+
 .hidden {
   display: none; }
 
 .row {
   max-width: 80em; }
+
+.margin-bottom {
+  margin-bottom: 15px; }
 
 .toolbar {
   background: #455a64;
@@ -3436,5 +3522,56 @@ input.highlighted {
   right: 15px;
   color: #888;
   font-weight: bold; }
+
+.item-list .group-header {
+  font-size: 12px;
+  text-transform: uppercase; }
+.item-list li {
+  font-size: 14px; }
+  .item-list li .fa-times {
+    float: right;
+    font-size: 10px;
+    color: gray;
+    cursor: pointer; }
+  .item-list li.at-will-power {
+    background-color: #4a8b4a; }
+  .item-list li.encounter-power {
+    background-color: #961334; }
+  .item-list li.daily-power {
+    background-color: #2d2d2d; }
+.item-list .power {
+  cursor: pointer;
+  color: white;
+  font-weight: bold;
+  padding: 3px;
+  margin-bottom: 2px; }
+  .item-list .power .fa-times {
+    color: white;
+    opacity: .5; }
+
+.power-modal {
+  border: 10px solid #FFF; }
+  .power-modal .modal-title {
+    color: white;
+    padding: 5px 10px;
+    margin: 0; }
+  .power-modal .encounterpower .modal-title {
+    background: #961334; }
+  .power-modal .atwillpower .modal-title {
+    background: #4a8b4a; }
+  .power-modal .dailypower .modal-title {
+    background: #2d2d2d; }
+  .power-modal .description {
+    background: #ECECBA;
+    color: #413623;
+    font-style: italic;
+    padding: 5px 10px;
+    font-size: 14px;
+    margin: 0; }
+  .power-modal .trait {
+    padding: 5px 10px;
+    font-size: 14px;
+    color: #212121;
+    background-color: #F7F7ED; }
 
 /*# sourceMappingURL=app.css.map */

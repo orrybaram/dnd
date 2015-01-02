@@ -819,18 +819,40 @@
                 </section>
                 <section>
                     <h2 class="section-header">Powers</h2>
-                    <pre>Model: {{new_power | json}}</pre>
-                    <input type="text" ng-model="new_power" typeahead="power as power.name for power in powers | filter:{name:$viewValue} | limitTo:8" class="form-control">
-                    <button ng-click="add_power()">add</button>
-
-                    <ul>
-                        <li ng-repeat="power in character.powers">
-                            {{ power.name }}
+                    <ul class="item-list">
+                        <li class="at-will-power power" ng-repeat="power in character.powers | filter:{type: 'atwillpower'}">
+                            <a ng-click="open_modal(power.id)">{{ power.name }}</a>
+                                <i class="fa fa-times" ng-click="delete_power(power.id)"></i>
                         </li>
                     </ul>
+
+                    <ul class="item-list">
+                        <li class="encounter-power power" ng-repeat="power in character.powers | filter:{type: 'encounterpower'}">
+                            <a ng-click="open_modal(power.id)">{{ power.name }}</a>
+                            <i class="fa fa-times" ng-click="delete_power(power.id)"></i>
+                        </li>
+                    </ul>    
+
+                    <ul class="item-list margin-bottom">
+                        <li class="daily-power power" ng-repeat="power in character.powers | filter:{type: 'dailypower'}">
+                            <a ng-click="open_modal(power.id)">{{ power.name }}</a>
+                                <i class="fa fa-times" ng-click="delete_power(power.id)"></i>
+                        </li>
+                    </ul>                        
+
+                    <div class="row">
+                        <div class="columns small-9">
+                            <input type="text" ng-model="new_power" typeahead="power as power.name for power in powers | filter:{name:$viewValue} | limitTo:8" class="width-100">
+                        </div>
+                        <div class="columns small-3">
+                            <button ng-click="add_power()" class="width-100">add</button>
+                        </div>
+                    </div>
 
                 </section>
             </div>
         </div>
     </div>
 </form>
+
+

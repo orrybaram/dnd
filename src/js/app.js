@@ -5,7 +5,9 @@ angular.module('dnd', [
     'ui.router',
     'app.controllers',
     'directives',
-    'ui.bootstrap'
+    'ui.bootstrap',
+    'angular.filter',
+    'app.filters'
 ])
 
 .config(function($stateProvider, $urlRouterProvider, $locationProvider) {

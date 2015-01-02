@@ -85,10 +85,12 @@ section {
 button {
 	border: 0;
 	background: $accentColor;
-	color: white;
+	color: $primaryText;
 	border-radius: 3px;
 	padding: 5px 10px;
-	font-size: 16px;
+	font-size: 12px;
+	text-transform: uppercase;
+	font-weight: bold;
 }
 
 a {
@@ -101,12 +103,20 @@ a {
 	position:relative;
 }
 
+.width-100 {
+	width: 100%;
+}
+
 .hidden {
 	display: none;
 }
 
 .row {
 	max-width: 80em;
+}
+
+.margin-bottom {
+	margin-bottom: 15px;
 }
 
 .toolbar {
@@ -314,5 +324,84 @@ input.highlighted {
 	right: 15px;
 	color: #888;
 	font-weight: bold;
+}
+
+.item-list {
+	.group-header {
+		font-size: 12px;
+		text-transform: uppercase;		
+	}
+	
+	li {
+		font-size: 14px;
+		.fa-times {
+			float:right;
+			font-size: 10px;
+			color: gray;
+			cursor: pointer;
+		}
+		&.at-will-power {
+			background-color: $atWillPower;
+		}
+		&.encounter-power {
+			background-color: $encounterPower;
+		}
+		&.daily-power {
+			background-color: $dailyPower;
+		}
+	}
+	.power {
+		cursor: pointer;
+		color: white;
+		font-weight: bold;
+		padding: 3px;
+		margin-bottom: 2px;
+
+		.fa-times {
+			color: white;
+			opacity: .5;
+		}
+	}
+}
+
+.power-modal {
+	border: 10px solid #FFF;
+
+	.modal-title {
+		color: white;
+		padding: 5px 10px;
+		margin:0;
+	}
+
+	.encounterpower {
+		.modal-title {
+			background: $encounterPower;
+		}
+	}
+	.atwillpower {
+		.modal-title {
+			background: $atWillPower;
+		}
+	}
+	.dailypower {
+		.modal-title {
+			background: $dailyPower;
+		}
+	}
+	.description {
+		background: #ECECBA;
+		color: #413623;
+		font-style: italic;
+		padding: 5px 10px;
+		font-size: 14px;
+		margin:0;
+	}
+
+	.trait {
+		padding: 5px 10px;
+		font-size: 14px;
+		color: $primaryText;
+		background-color: #F7F7ED;
+	}
 }
 

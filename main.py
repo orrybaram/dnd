@@ -17,6 +17,7 @@
 from google.appengine.api import users
 from google.appengine.ext.webapp import template
 from google.appengine.api import channel
+from google.appengine.api.datastore import Key
 
 import webapp2
 import os
@@ -179,16 +180,13 @@ class CharacterUpdate(webapp2.RequestHandler):
 class CharacterDetail(webapp2.RequestHandler):
     def get(self, character_key):
         character = Character.get(character_key)
+        _powers = character.powers
 
-        _powers = []
-        for power in character.powers:
-            _powers.append(power.serializable())
 
-        _character = character.serializable()
-        _character['powers'] = _powers
+        logging.info(_powers)
 
         values = {
-            'character': _character
+            'character': character.serializable()
         }
 
         self.response.headers['Content-Type'] = 'application/json'
@@ -209,9 +207,8 @@ class CharacterAddPower(webapp2.RequestHandler):
         else:
             power = Power()
             power.character = Character.get(character_key)
-            for k, v in data.iteritems():
-                setattr(power, k, v)
-
+            
+            power.json_string = self.request.body;
             power.put()
 
         self.response.headers['Content-Type'] = 'application/json'
@@ -229,6 +226,11 @@ class CharacterLoadPowers(webapp2.RequestHandler):
         self.response.headers['Content-Type'] = 'application/json'
         self.response.out.write(json.dumps({'powers': _powers}))
 
+class CharacterDeletePower(webapp2.RequestHandler):
+    def post(self, character_key, power_key):
+        character = Character.get(character_key)
+        character.powers.filter('__key__ =', Key(power_key)).get().delete()
+
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
     ('/api/v1/character/create/?', CharacterCreate),
@@ -239,6 +241,7 @@ app = webapp2.WSGIApplication([
     ('/api/v1/character/(?P<character_key>[^/]+)/update/?', CharacterUpdate),
     ('/api/v1/character/(?P<character_key>[^/]+)/powers/add/?', CharacterAddPower),
     ('/api/v1/character/(?P<character_key>[^/]+)/powers/?', CharacterLoadPowers),
+    ('/api/v1/character/(?P<character_key>[^/]+)/powers/(?P<power_key>[^/]+)/delete/?', CharacterDeletePower),
     
 
 ], debug=True)

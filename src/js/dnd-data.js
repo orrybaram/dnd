@@ -30,3 +30,14 @@ var XP_LEVELS = [
 	825000,
 	1000000
 ]
+
+var RESERVED_POWER_TRAITS = [
+    'key', 
+    'id',
+    'name', 
+    'secondary_name',
+    'description',
+    'type',
+    'level',
+    'info',
+];
