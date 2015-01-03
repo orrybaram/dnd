@@ -235,6 +235,17 @@ angular.module('app.controllers', [])
         })
     }
 
+    $scope.upload_avatar = function() {
+        console.log('upload')
+        
+        console.log($scope);
+        console.log($scope.new_avatar);
+
+        $http.post('/api/v1/character/' + character_key + '/avatar/?avatar=' + $scope.new_avatar).then(function(data) {
+            console.log(data);
+        })
+    }
+
     $scope.add_power = function() {
         var data = $scope.new_power;
         $http.post('/api/v1/character/' + character_key + '/powers/add/', data).then(function(response) {

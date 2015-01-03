@@ -134,6 +134,21 @@ class CharacterCreate(webapp2.RequestHandler):
             self.response.headers['Content-Type'] = 'application/json'
             self.response.out.write(json.dumps(values))
 
+class AvatarUpload(webapp2.RequestHandler):
+    def post(self, character_key):
+        character = Character.get(character_key)
+        avatar = self.request.get('avatar')
+
+        logging.info(character)
+
+        logging.info(avatar)
+
+        character.avatar = db.Blob(avatar)
+        character.put()
+
+        self.response.headers['Content-Type'] = 'application/json'
+        self.response.out.write(json.dumps({'success': True}))
+
 class CharacterUpdate(webapp2.RequestHandler):
     def post(self, character_key):
         data = json.loads(self.request.body)
@@ -149,7 +164,7 @@ class CharacterUpdate(webapp2.RequestHandler):
             if k == 'date_created' or k == 'key':
                 continue
             if k == 'avatar':
-                value = db.Blob(str(char_data.get('avatar')))
+                continue
             else:
                 value = char_data.get(k)
             if isinstance(value, basestring) and value.isdigit():
@@ -181,10 +196,6 @@ class CharacterDetail(webapp2.RequestHandler):
     def get(self, character_key):
         character = Character.get(character_key)
         _powers = character.powers
-
-
-        logging.info(_powers)
-
         values = {
             'character': character.serializable()
         }
@@ -243,14 +254,35 @@ class CharacterDeleteItem(webapp2.RequestHandler):
         character = Character.get(character_key)
         character.items.filter('__key__ =', Key(item_key)).get().delete()
 
+
+class Image(webapp2.RequestHandler):
+    def get(self):
+        character = Character.get(self.request.get('character_key'))
+        
+        logging.info(character.avatar)
+        
+
+
+        if character.avatar:
+            
+
+
+            self.response.headers['Content-Type'] = 'image/png'
+            self.response.out.write(character.avatar)
+        else:
+            self.error(404)
+
+
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
+    ('/images/?', Image),
     ('/api/v1/character/create/?', CharacterCreate),
     ('/api/v1/groups/create/?', GroupCreate),
     ('/api/v1/groups/list/?', GroupList),
     ('/api/v1/groups/(?P<group_key>[^/]+)/?', GroupDetail),
     ('/api/v1/character/(?P<character_key>[^/]+)/?', CharacterDetail),
     ('/api/v1/character/(?P<character_key>[^/]+)/update/?', CharacterUpdate),
+    ('/api/v1/character/(?P<character_key>[^/]+)/avatar/?', AvatarUpload),
     ('/api/v1/character/(?P<character_key>[^/]+)/powers/add/?', CharacterAddPower),
     ('/api/v1/character/(?P<character_key>[^/]+)/powers/(?P<power_key>[^/]+)/delete/?', CharacterDeletePower),
     ('/api/v1/character/(?P<character_key>[^/]+)/items/add/?', CharacterAddItem),

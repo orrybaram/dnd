@@ -204,6 +204,9 @@ class Character(db.Model):
     feats = db.TextProperty()
     languages = db.TextProperty()
 
+    def get_avatar_url(self):
+        return '/images?character_key=%s' % (str(self.key()))
+
     def serializable(self):
         _powers = []
         for power in self.powers:
@@ -234,7 +237,7 @@ class Character(db.Model):
             'alignment': self.alignment,
             'deity': self.deity,
             'affiliations': self.affiliations,
-            'avatar': self.avatar,
+            'avatar': self.get_avatar_url(),
             
             # Initiative
             'initiative_score': self.initiative_score,

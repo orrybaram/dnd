@@ -4,7 +4,7 @@
     <div class="toolbar">
         <a ui-sref="group-detail.dashboard({group_key: character.group_key})"><i class="fa fa-arrow-left"></i></a>
         <div>
-            <div fake-click="avatar-input" class="avatar" style="background-image: url('{{character.avatar}}')">
+            <div fake-click="avatar-input" class="avatar" style="background-image: url('{{character.get_avatar_url}}')">
                 <p ng-show="!character.avatar">Upload Image</p>
             </div>
             <input class="title-input" ng-model="character.name" />
