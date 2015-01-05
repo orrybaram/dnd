@@ -1,5 +1,6 @@
 from google.appengine.ext import db
 import json
+import logging
 
 class User(db.Model):
     user_id = db.StringProperty()
@@ -9,23 +10,27 @@ class User(db.Model):
     def serializable(self):
         result = {}
         result["key"] = str(self.key())
-        result["name"] = self.name
-        result["user_id"] = self.user_id
+        result["name"] = str(self.name)
+        result["user_id"] = str(self.user_id)
+        return result
 
 class Group(db.Model):
     date_created = db.DateTimeProperty(auto_now_add=True)
     name = db.StringProperty()
-    dm = db.UserProperty()
-
+    dm = db.ReferenceProperty(User, default=None)
+    
     def serializable(self):
-        return {
+        values = {
             'date_created': self.date_created.isoformat(),
             'key': str(self.key()),
             'name': self.name,
         }
+        if self.dm:
+            values['dm'] = self.dm.serializable()
+        return values
+
 
 class Character(db.Model):
-    
     date_created = db.DateTimeProperty(auto_now_add=True)
     group = db.ReferenceProperty(Group, collection_name="players", default=None)
     user = db.UserProperty()

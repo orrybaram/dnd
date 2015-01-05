@@ -69,15 +69,12 @@ class MainHandler(webapp2.RequestHandler):
         template = JINJA_ENVIRONMENT.get_template('src/index.html')
         self.response.write(template.render(values))
 
-
-
 class GroupCreate(webapp2.RequestHandler):
     def post(self):
         data = json.loads(self.request.body)
 
         group = Group()
         group.name = data.get('name')
-        group.db = current_user
         group.put()
         
         self.response.headers['Content-Type'] = 'application/json'
@@ -94,6 +91,24 @@ class GroupList(webapp2.RequestHandler):
         self.response.headers['Content-Type'] = 'application/json'
         self.response.out.write(json.dumps(values))
 
+class SetDungeonMaster(webapp2.RequestHandler):
+    def post(self, group_key):
+
+        data = json.loads(self.request.body)
+
+        user = User.all().filter('user_id =', data.get('user_id')).get()
+        group = Group.get(group_key)
+        
+        group.dm = user
+        group.put()
+        
+        values = {
+            'info': 'dm set'
+        }
+
+        self.response.headers['Content-Type'] = 'application/json'
+        self.response.out.write(json.dumps(values))
+
 class GroupDetail(webapp2.RequestHandler):
     def get(self, group_key):
         group = Group.get(group_key)
@@ -104,7 +119,7 @@ class GroupDetail(webapp2.RequestHandler):
 
         values = {
             'group': group.serializable(),
-            'players': players
+            'players': players,
         }
 
         self.response.headers['Content-Type'] = 'application/json'
@@ -187,7 +202,11 @@ class CharacterUpdate(webapp2.RequestHandler):
         for k, v in char_data.iteritems():
             if k == 'date_created' or k == 'key':
                 continue
-            if k == 'avatar':
+            if k == 'avatar_url':
+                continue
+            if k == 'powers':
+                continue
+            if k == 'items':
                 continue
             else:
                 value = char_data.get(k)
@@ -209,6 +228,9 @@ class CharacterUpdate(webapp2.RequestHandler):
 
             for player in group.players:
                 channel.send_message(player.user.user_id(), json.dumps(message))
+            
+            if group.dm:
+                channel.send_message(group.dm.user_id, json.dumps(message))
 
         except Exception, e:
             values = {'error': e}
@@ -297,6 +319,7 @@ app = webapp2.WSGIApplication([
     ('/api/v1/groups/create/?', GroupCreate),
     ('/api/v1/groups/list/?', GroupList),
     ('/api/v1/groups/(?P<group_key>[^/]+)/?', GroupDetail),
+    ('/api/v1/groups/(?P<group_key>[^/]+)/dm?', SetDungeonMaster),
     ('/api/v1/character/(?P<character_key>[^/]+)/?', CharacterDetail),
     ('/api/v1/character/(?P<character_key>[^/]+)/update/?', CharacterUpdate),
     ('/api/v1/character/(?P<character_key>[^/]+)/delete/?', CharacterDelete),

@@ -26,6 +26,9 @@ angular.module('app.controllers', [])
 .controller('GroupDetailCtrl', function($scope, $http, $state, $stateParams, $modal) {
     $scope.ui = {};
     $scope.ui.loading = false;
+
+    $scope.is_admin = template_values.is_admin;
+    
     var group_key = $stateParams.group_key;
 
     console.log($scope)
@@ -184,6 +187,20 @@ angular.module('app.controllers', [])
         });
     };
 
+})
+
+.controller('GroupDetailAdminCtrl', function($scope, $rootScope, $state, $http, $timeout, $stateParams, $modal, $log) {
+    if (!template_values.is_admin) {
+        $state.go('group-detail');
+    }
+
+    $scope.set_dm = function(user_id) {
+        console.log(user_id)
+
+        $http.post('/api/v1/groups/' + $scope.group.key + '/dm', {'user_id': user_id}).then(function(data) {
+            console.log(data);
+        })
+    }
 })
 
 .controller('CharacterDetailCtrl', function($scope, $rootScope, $state, $http, $timeout, $stateParams, $modal, $log) {

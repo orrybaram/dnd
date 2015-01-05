@@ -4,8 +4,9 @@
 </div>
 <div class="secondary-toolbar">
 	<div class="tabs">
-	<a ng-class="{active: state.current.name === 'group-detail.dashboard'}" ui-sref="group-detail.dashboard">Dashboard</a>
+		<a ng-class="{active: state.current.name === 'group-detail.dashboard'}" ui-sref="group-detail.dashboard">Dashboard</a>
 		<a ng-class="{active: state.current.name === 'group-detail.encounter'}" ui-sref="group-detail.encounter">Encounter</a>
+		<a ng-if="is_admin" ng-class="{active: state.current.name === 'group-detail.admin'}" ui-sref="group-detail.admin">Admin</a>
 	</div>
 </div>
 
