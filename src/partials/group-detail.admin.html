@@ -1,0 +1,16 @@
+<div class="content-view">
+	<div class="row">
+		<div class="columns medium-12">
+			<h2>Admin</h2>
+
+			<div><strong>Dungeon Master:</strong> {{ group.dm.name }}</div>
+
+			<div ng-repeat="character in characters">
+				<div>{{character.name }} -- {{ character.user_name }} | <a ng-click="delete_character()">delete</a> | <a ng-click="set_dm(character.user_id)"> make dm</a></div>
+			</div>
+
+			<h2>Invite</h2>
+			<p>Soon...</p>
+		</div>
+	</div>
+</div>
