@@ -6,13 +6,16 @@
 			
 			<button ng-click="sort_by_initiative()">Sort</button>
 			<button ng-click="reset_encounter()">Reset</button>
+
+			<input placeholder="Enemy Class" ng-model="new_enemy_class.name" />
+			<button ng-click="add_enemy_class()">Add Enemy</button>
 			
 			<ul class="characters" dnd-list="encounter_characters">
 				<li class="character-card card" ng-class="{enemy: character.type === 'enemy'}" ng-repeat="character in encounter_characters">
 					<div class="toolbar">
 						<a ui-sref="character-detail({character_key: character.key})">
-							<div ng-if="character.avatar && character.avatar !== 'None'" class="avatar mini" style="background-image: url('{{character.avatar}}')"></div>
-							<div ng-if="!character.avatar || character.avatar === 'None'" class="avatar mini default">
+							<div ng-if="character.avatar_url && character.avatar_url !== 'None'" class="avatar mini" style="background-image: url('{{character.avatar_url}}')"></div>
+							<div ng-if="!character.avatar_url || character.avatar_url === 'None'" class="avatar mini default">
 								<span>{{character.name[0]}}</span>
 							</div>
 							<h1>{{ character.name }}</h1>
@@ -101,6 +104,4 @@
 			</ul>
 		</div>
 	</div>
-	<input placeholder="Enemy Class" ng-model="new_enemy_class.name" />
-	<button ng-click="add_enemy_class()">Add Enemy</button>
 </div>

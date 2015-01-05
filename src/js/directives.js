@@ -12,7 +12,7 @@ angular.module('directives', [])
 		}
 	}
 })
-.directive("fileread",function () {
+.directive("fileread", function () {
     return {
         scope: {
             fileread: "="

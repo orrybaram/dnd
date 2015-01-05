@@ -11,7 +11,7 @@ angular.module('app.controllers', [])
     $scope.create_group = function() {
     	$http.post('/api/v1/groups/create/', $scope.new_group).then(function(response) {
     		console.log(response)
-    		$state.go('group-detail', {group_key: response.data.key})
+    		$state.go('group-detail.dashboard', {group_key: response.data.key})
     	})
     }
 
@@ -148,14 +148,11 @@ angular.module('app.controllers', [])
     }
 
     $scope.reset_encounter = function() {
+        localStorage.removeItem('encounter');
         $scope.encounter_characters.forEach(function(character, i) {
             character.encounter_initiative = 0;
-
-            if(character.type === 'enemy') {
-                $scope.encounter_characters.splice(i, 1);
-            }
-
         })
+        $scope.encounter_characters = $scope.characters;
     }
 
     $scope.add_enemy_class = function() {
@@ -172,6 +169,9 @@ angular.module('app.controllers', [])
     $scope.ui = {};
     $scope.powers = DND_POWERS;
     $scope.items = DND_ITEMS
+
+    $scope.upload = {};
+
     var is_editting = false;
     var character_key = $stateParams.character_key;
     var _characters = angular.fromJson(localStorage.getItem('characters'));
@@ -239,9 +239,9 @@ angular.module('app.controllers', [])
         console.log('upload')
         
         console.log($scope);
-        console.log($scope.new_avatar);
+        console.log($scope.upload);
 
-        $http.post('/api/v1/character/' + character_key + '/avatar/?avatar=' + $scope.new_avatar).then(function(data) {
+        $http.post('/api/v1/character/' + character_key + '/avatar/?avatar=' + $scope.upload.avatar).then(function(data) {
             console.log(data);
         })
     }
@@ -387,6 +387,22 @@ angular.module('app.controllers', [])
             resolve: {
                 item: function () {
                     return item;
+                }
+            }
+        });
+    };
+
+    // Item Modal
+    $scope.open_upload_modal = function(id) {
+        var character = angular.copy($scope.character)
+
+        var modalInstance = $modal.open({
+            templateUrl: 'partials/upload-modal.html',
+            controller: 'ModalInstanceCtrl',
+            size: 'sm',
+            resolve: {
+                item: function () {
+                    return character;
                 }
             }
         });

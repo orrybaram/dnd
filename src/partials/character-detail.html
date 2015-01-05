@@ -4,12 +4,10 @@
     <div class="toolbar">
         <a ui-sref="group-detail.dashboard({group_key: character.group_key})"><i class="fa fa-arrow-left"></i></a>
         <div>
-            <div fake-click="avatar-input" class="avatar" style="background-image: url('{{character.get_avatar_url}}')">
-                <p ng-show="!character.avatar">Upload Image</p>
+            <div ng-click="open_upload_modal()" class="avatar" style="background-image: url('{{character.avatar_url}}')">
+                <p ng-show="!character.avatar_url">Upload Image</p>
             </div>
             <input class="title-input" ng-model="character.name" />
-            <input id="avatar-input" type="file" ng-model="character.avatar" fileread="character.avatar" filereadcallback="save_character()" class="hidden" />
-
             <p class="char-bio">
                 A level {{character.level}} {{character.char_race || 'noob'}} {{character.char_class}}
             </p>

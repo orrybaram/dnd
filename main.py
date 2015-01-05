@@ -139,15 +139,12 @@ class AvatarUpload(webapp2.RequestHandler):
         character = Character.get(character_key)
         avatar = self.request.get('avatar')
 
-        logging.info(character)
+        logging.info('upload the image')
 
-        logging.info(avatar)
-
-        character.avatar = db.Blob(avatar)
+        character.avatar = db.Blob(str(avatar))
         character.put()
 
-        self.response.headers['Content-Type'] = 'application/json'
-        self.response.out.write(json.dumps({'success': True}))
+        self.redirect("/#/character/%s" % (character.key()))
 
 class CharacterUpdate(webapp2.RequestHandler):
     def post(self, character_key):
@@ -259,14 +256,7 @@ class Image(webapp2.RequestHandler):
     def get(self):
         character = Character.get(self.request.get('character_key'))
         
-        logging.info(character.avatar)
-        
-
-
         if character.avatar:
-            
-
-
             self.response.headers['Content-Type'] = 'image/png'
             self.response.out.write(character.avatar)
         else:
