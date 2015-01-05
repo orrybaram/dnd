@@ -5,6 +5,11 @@ api_version: 1
 threadsafe: yes
 
 handlers:
+- url: /update_schema
+  script: update_handler.app
+  # login: admin
+  secure: always
+
 - url: /favicon\.ico
   static_files: favicon.ico
   upload: favicon\.ico
@@ -34,3 +39,5 @@ libraries:
   version: latest
 - name: PIL
   version: latest
+
+

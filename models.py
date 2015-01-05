@@ -50,7 +50,7 @@ class Character(db.Model):
     alignment = db.StringProperty()
     deity = db.StringProperty()
     affiliations = db.StringProperty()
-    avatar = db.BlobProperty()
+    avatar = db.BlobProperty(default=None)
     
     # Initiative
     initiative_score = db.IntegerProperty(default=0)
