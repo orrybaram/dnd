@@ -18,6 +18,7 @@ from google.appengine.api import users
 from google.appengine.ext.webapp import template
 from google.appengine.api import channel
 from google.appengine.api.datastore import Key
+from google.appengine.api import images
 
 import webapp2
 import os
@@ -141,7 +142,12 @@ class AvatarUpload(webapp2.RequestHandler):
 
         logging.info('upload the image')
 
-        character.avatar = db.Blob(str(avatar))
+        avatar = db.Blob(str(avatar))
+        avatar = images.Image(avatar)
+        avatar.resize(width=150)
+        avatar = avatar.execute_transforms(output_encoding=images.PNG)
+
+        character.avatar = avatar
         character.put()
 
         self.redirect("/#/character/%s" % (character.key()))

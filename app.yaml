@@ -32,3 +32,5 @@ libraries:
   version: "2.5.2"
 - name: jinja2
   version: latest
+- name: PIL
+  version: latest
