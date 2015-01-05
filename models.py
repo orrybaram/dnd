@@ -4,6 +4,7 @@ import json
 class User(db.Model):
     user_id = db.StringProperty()
     name = db.StringProperty()
+    is_admin = db.BooleanProperty(default=False)
     
     def serializable(self):
         result = {}

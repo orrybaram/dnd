@@ -76,21 +76,21 @@
 	                        </div>
 
 	                        <ul class="item-list">
-	                            <li class="at-will-power power" ng-repeat="power in character.powers | filter:{type: 'atwillpower'}" ng-click="open_modal(character.key, power.id)">
+	                            <li class="at-will-power power" ng-repeat="power in character.powers | filter:{type: 'atwillpower'}" ng-click="open_power_modal(character.key, power.id)">
 	                                {{ power.name }}
 	                                    
 								</li>
 	                        </ul>
 
 	                        <ul class="item-list">
-	                            <li class="encounter-power power" ng-repeat="power in character.powers | filter:{type: 'encounterpower'}" ng-click="open_modal(character.key, power.id)">
+	                            <li class="encounter-power power" ng-repeat="power in character.powers | filter:{type: 'encounterpower'}" ng-click="open_power_modal(character.key, power.id)">
 	                                {{ power.name }}
 	                                
 								</li>
 	                        </ul>    
 
 	                        <ul class="item-list margin-bottom">
-	                            <li class="daily-power power" ng-repeat="power in character.powers | filter:{type: 'dailypower'}" ng-click="open_modal(character.key, power.id)">
+	                            <li class="daily-power power" ng-repeat="power in character.powers | filter:{type: 'dailypower'}" ng-click="open_power_modal(character.key, power.id)">
 	                                {{ power.name }}
 	                                    
 								</li>

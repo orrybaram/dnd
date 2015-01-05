@@ -103,7 +103,7 @@ angular.module('app.controllers', [])
     }
 
     // Power Modal
-    $scope.open_modal = function(key, id) {
+    $scope.open_power_modal = function(key, id) {
 
         var character = getCharacter(key)
 
@@ -125,9 +125,9 @@ angular.module('app.controllers', [])
 
 .controller('GroupDetailEncounterCtrl', function($scope, $rootScope, $filter, $http, $state, $stateParams, $modal) {
     $rootScope.state = $state;
-    $scope.encounter_characters = angular.fromJson(localStorage.getItem('encounter')) || $scope.characters;
+    $scope.encounter_characters = angular.fromJson(localStorage.getItem('encounter')) || angular.copy($scope.characters);
 
-    $scope.characters.forEach(function(character) {
+    $scope.encounter_characters.forEach(function(character) {
         character.encounter_initiative = 0;
     })    
 
@@ -148,11 +148,12 @@ angular.module('app.controllers', [])
     }
 
     $scope.reset_encounter = function() {
+    
         localStorage.removeItem('encounter');
+        $scope.encounter_characters = angular.copy($scope.characters);
         $scope.encounter_characters.forEach(function(character, i) {
             character.encounter_initiative = 0;
         })
-        $scope.encounter_characters = $scope.characters;
     }
 
     $scope.add_enemy_class = function() {
@@ -162,9 +163,30 @@ angular.module('app.controllers', [])
         $scope.new_enemy_class = {};
     }
 
+    // Power Modal
+    $scope.open_power_modal = function(char_key, id) {
+        
+        var charIdx = _.findIndex($scope.encounter_characters, {key: char_key})
+        var character = $scope.encounter_characters[charIdx]
+
+        var index = _.findIndex(character.powers, {id: id})
+        var power = angular.copy(character.powers[index])
+
+        var modalInstance = $modal.open({
+            templateUrl: 'partials/power-modal.html',
+            controller: 'ModalInstanceCtrl',
+            size: 'sm',
+            resolve: {
+                item: function () {
+                    return power;
+                }
+            }
+        });
+    };
+
 })
 
-.controller('CharacterDetailCtrl', function($scope, $rootScope, $http, $timeout, $stateParams, $modal, $log) {
+.controller('CharacterDetailCtrl', function($scope, $rootScope, $state, $http, $timeout, $stateParams, $modal, $log) {
     
     $scope.ui = {};
     $scope.powers = DND_POWERS;
@@ -205,6 +227,15 @@ angular.module('app.controllers', [])
         $scope.xp_in_level = $scope.next_level_xp - $scope.current_level_xp
         $scope.xp_level_progress = Math.floor(($scope.your_xp_in_this_level / $scope.xp_in_level) * 100).toFixed(0);
     }, true)
+
+    $scope.delete_character = function() {
+        $http.post('/api/v1/character/'+$scope.character.key+'/delete').then(function(response) {
+            console.log(response)
+            $state.go('group-detail.dashboard', {group_key: $scope.character.group_key })
+        }, function(err) {
+            alert(err.data.error);
+        })
+    }
 
     $scope.save_character = function() {
         is_editting = true;
@@ -359,7 +390,7 @@ angular.module('app.controllers', [])
 
 
     // Power Modal
-    $scope.open_modal = function(id) {
+    $scope.open_power_modal = function(id) {
         var index = _.findIndex($scope.character.powers, {id: id})
         var power = angular.copy($scope.character.powers[index])
 

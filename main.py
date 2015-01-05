@@ -47,7 +47,6 @@ class MainHandler(webapp2.RequestHandler):
         
         if current_user:
             values["logout_url"] = users.create_logout_url('/')
-            
             user = User.all().filter('user_id =', current_user.user_id()).get()
 
             if not user:
@@ -61,6 +60,7 @@ class MainHandler(webapp2.RequestHandler):
             values["user"] = user
             values["template_values"] = {
                 'user_id': user.user_id,
+                'is_admin': user.is_admin,
                 'channel_token': token
             }
         else:
@@ -68,6 +68,8 @@ class MainHandler(webapp2.RequestHandler):
 
         template = JINJA_ENVIRONMENT.get_template('src/index.html')
         self.response.write(template.render(values))
+
+
 
 class GroupCreate(webapp2.RequestHandler):
     def post(self):
@@ -108,6 +110,25 @@ class GroupDetail(webapp2.RequestHandler):
         self.response.headers['Content-Type'] = 'application/json'
         self.response.out.write(json.dumps(values))
 
+class CharacterDelete(webapp2.RequestHandler):
+    def post(self, character_key):
+        current_user = users.get_current_user()
+        user = User.all().filter('user_id =', current_user.user_id()).get()
+
+        if user.is_admin:
+            character = Character.get(character_key)
+            character.delete()
+
+            values = {
+                'info':'character deleted'
+            }
+        else:
+            values = {
+                "error": "You don't have permission"
+            }
+
+        self.response.headers['Content-Type'] = 'application/json'
+        self.response.out.write(json.dumps(values))
 
 class CharacterCreate(webapp2.RequestHandler):
     def post(self):
@@ -278,6 +299,7 @@ app = webapp2.WSGIApplication([
     ('/api/v1/groups/(?P<group_key>[^/]+)/?', GroupDetail),
     ('/api/v1/character/(?P<character_key>[^/]+)/?', CharacterDetail),
     ('/api/v1/character/(?P<character_key>[^/]+)/update/?', CharacterUpdate),
+    ('/api/v1/character/(?P<character_key>[^/]+)/delete/?', CharacterDelete),
     ('/api/v1/character/(?P<character_key>[^/]+)/avatar/?', AvatarUpload),
     ('/api/v1/character/(?P<character_key>[^/]+)/powers/add/?', CharacterAddPower),
     ('/api/v1/character/(?P<character_key>[^/]+)/powers/(?P<power_key>[^/]+)/delete/?', CharacterDeletePower),

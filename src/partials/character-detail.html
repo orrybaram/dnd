@@ -17,10 +17,6 @@
     <div class="content-view">
     <!-- BASIC INFO
     ========================================= -->
-        <div ng-if="template_values.user_id === character.user_id">
-            This is your character
-        </div>
-
         <div class="row">
             <div class="column medium-12">
                 <section class="card">
@@ -826,21 +822,21 @@
                     <h2 class="section-header">Powers</h2>
                     <ul class="item-list">
                         <li class="at-will-power power" ng-repeat="power in character.powers | filter:{type: 'atwillpower'}">
-                            <a ng-click="open_modal(power.id)">{{ power.name }}</a>
+                            <a ng-click="open_power_modal(power.id)">{{ power.name }}</a>
                                 <i class="fa fa-times" ng-click="delete_power(power.id)"></i>
                         </li>
                     </ul>
 
                     <ul class="item-list">
                         <li class="encounter-power power" ng-repeat="power in character.powers | filter:{type: 'encounterpower'}">
-                            <a ng-click="open_modal(power.id)">{{ power.name }}</a>
+                            <a ng-click="open_power_modal(power.id)">{{ power.name }}</a>
                             <i class="fa fa-times" ng-click="delete_power(power.id)"></i>
                         </li>
                     </ul>    
 
                     <ul class="item-list margin-bottom">
                         <li class="daily-power power" ng-repeat="power in character.powers | filter:{type: 'dailypower'}">
-                            <a ng-click="open_modal(power.id)">{{ power.name }}</a>
+                            <a ng-click="open_power_modal(power.id)">{{ power.name }}</a>
                                 <i class="fa fa-times" ng-click="delete_power(power.id)"></i>
                         </li>
                     </ul>                        
@@ -875,6 +871,15 @@
             </div>
         </div>
     </div>
+
+    <div ng-if="template_values.is_admin">
+        <section class="card">
+            <h2 class="section-header">Admin Action</h2>
+            <a ng-click="delete_character()">Delete Character</a>
+        </section>
+        
+    </div>
+
 </form>
 
 
