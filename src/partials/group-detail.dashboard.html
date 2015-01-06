@@ -32,6 +32,11 @@
 			</div>
 			<input placeholder="Character name" ng-model="new_character.name" />
 			<button ng-click="create_character(group.key)">Join</button>
+
+			<div ng-show="group.dm">
+				<h3>Dungeon Master</h3>
+				<p>{{ group.dm.name }}</p>
+			</div>
 		</div>
 	</div>
 </div>

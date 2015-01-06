@@ -26,6 +26,7 @@ angular.module('app.controllers', [])
 .controller('GroupDetailCtrl', function($scope, $http, $state, $stateParams, $modal) {
     $scope.ui = {};
     $scope.ui.loading = false;
+    $scope.group = {};
 
     $scope.is_admin = template_values.is_admin;
     
@@ -38,6 +39,7 @@ angular.module('app.controllers', [])
         $scope.ui.loading = true;
         $http.get('/api/v1/groups/' + group_key).then(function(response) {
             console.log(response)
+            
             $scope.group = response.data.group;
             $scope.characters = response.data.players;
             $scope.ui.loading = false;
@@ -54,7 +56,6 @@ angular.module('app.controllers', [])
 })
 .controller('GroupDetailDashboardCtrl', function($scope, $rootScope, $http, $state, $stateParams, $modal) {
     $rootScope.state = $state;
-    $scope.group = {};
     $scope.new_character = {};
 
     console.log($state)
