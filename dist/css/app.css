@@ -3279,6 +3279,9 @@ h2 {
 .modal.upload-form {
   display: block; }
 
+a {
+  color: #607d8b; }
+
 h3 {
   margin: 0 0 5px;
   font-size: 16px;

@@ -13,14 +13,20 @@ angular.module('app.controllers', [])
     		console.log(response)
     		$state.go('group-detail.dashboard', {group_key: response.data.key})
     	})
-    }
+    };
 
     $scope.get_groups = function() {
     	$http.get('/api/v1/groups/list').then(function(response) {
     		console.log(response)
     		$scope.groups = response.data;
     	})
-    }
+    };
+
+    $scope.groups.forEach(function(group) {
+        console.log(group);
+    });
+
+
     $scope.get_groups();
 })
 .controller('GroupDetailCtrl', function($scope, $http, $state, $stateParams, $modal) {
@@ -32,13 +38,13 @@ angular.module('app.controllers', [])
     
     var group_key = $stateParams.group_key;
 
-    console.log($scope)
+    console.log($scope);
     $scope.characters = angular.fromJson(localStorage.getItem('characters')) || []
 
     $scope.get_group_detail = function() {
         $scope.ui.loading = true;
         $http.get('/api/v1/groups/' + group_key).then(function(response) {
-            console.log(response)
+            console.log(response);
             
             $scope.group = response.data.group;
             $scope.characters = response.data.players;
@@ -47,7 +53,7 @@ angular.module('app.controllers', [])
             var _cache = [];
             $scope.characters.forEach(function(character) {
                 _cache.push(character);
-            })
+            });
             localStorage.setItem('characters', angular.toJson(_cache));
         })
     }
@@ -58,13 +64,13 @@ angular.module('app.controllers', [])
     $rootScope.state = $state;
     $scope.new_character = {};
 
-    console.log($state)
+    console.log($state);
 
     $scope.ui = {};
     $scope.ui.loading = false;
 
     $scope.$on('character-updated', function(event, args) {
-        console.log(args)
+        console.log(args);
         
         var updated_char = args.character;
 
@@ -86,7 +92,7 @@ angular.module('app.controllers', [])
             if ($scope.characters[i].key === key) {
                 return $scope.characters[i];
             }
-        };
+        }
     }
 
     $scope.new_character.group = group_key;
@@ -95,8 +101,8 @@ angular.module('app.controllers', [])
 
         var data = {
             'name': $scope.new_character.name,  
-            'group_key': group_key, 
-        }
+            'group_key': group_key
+        };
 
         $http.post('/api/v1/character/create/', data).then(function(response) {
             console.log(response)
@@ -104,7 +110,7 @@ angular.module('app.controllers', [])
         }, function(err) {
             alert(err.data.error);
         })
-    }
+    };
 
     // Power Modal
     $scope.open_power_modal = function(key, id) {
@@ -133,7 +139,7 @@ angular.module('app.controllers', [])
 
     $scope.encounter_characters.forEach(function(character) {
         character.encounter_initiative = 0;
-    })    
+    });
 
     $scope.$watch('encounter_characters', function() {
         var _cache = [];
