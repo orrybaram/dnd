@@ -413,6 +413,9 @@ input.highlighted {
 			color: gray;
 			cursor: pointer;
 		}
+		a {
+			color: white;
+		}
 		&.at-will-power {
 			background-color: $atWillPower;
 		}

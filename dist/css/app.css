@@ -3179,6 +3179,7 @@ select {
   position: absolute;
   background: #FFF;
   z-index: 1000;
+  width: 100%;
   border: 1px solid #DFDFDF;
   box-shadow: 0 2px rgba(60, 60, 60, 0.02); }
   .dropdown-menu li {
@@ -3186,6 +3187,8 @@ select {
     .dropdown-menu li.active {
       background: #607d8b;
       color: white; }
+      .dropdown-menu li.active a {
+        color: white; }
 
 .modal-open {
   overflow: hidden; }
@@ -3586,6 +3589,8 @@ input.highlighted {
     font-size: 10px;
     color: gray;
     cursor: pointer; }
+  .item-list li a {
+    color: white; }
   .item-list li.at-will-power {
     background-color: #4a8b4a; }
   .item-list li.encounter-power {
