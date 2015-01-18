@@ -1,0 +1,42 @@
+<div class="content-view">
+    <div class="row">
+        <div class="column medium-12">
+        	<div class="column medium-4">
+    			<section class="card">
+    		        <h2 class="section-header">At-Will Powers</h2>
+    		        <ul class="item-list">
+    		            <li class="at-will-power power" ng-repeat="power in character.powers | filter:{type: 'atwillpower'}">
+    		                <a ng-click="open_power_modal(power.id)">{{ power.name }}</a>
+    		                    <i class="fa fa-times" ng-click="delete_power(power.id)"></i>
+    		            </li>
+    		        </ul>
+    		    </section>
+        	</div>
+
+        	<div class="column medium-4">
+	        	<section class="card">
+	                <h2 class="section-header">Encounter Powers</h2>
+	                <ul class="item-list">
+	                    <li class="encounter-power power" ng-repeat="power in character.powers | filter:{type: 'encounterpower'}">
+	                        <a ng-click="open_power_modal(power.id)">{{ power.name }}</a>
+	                        <i class="fa fa-times" ng-click="delete_power(power.id)"></i>
+	                    </li>
+	                </ul>    
+	            </section>
+            </div>
+
+            <div class="column medium-4">
+            	<section class="card">
+            		<h2 class="section-header">Daily Powers</h2>
+            		<ul class="item-list margin-bottom">
+            		    <li class="daily-power power" ng-repeat="power in character.powers | filter:{type: 'dailypower'}">
+            		        <a ng-click="open_power_modal(power.id)">{{ power.name }}</a>
+            		            <i class="fa fa-times" ng-click="delete_power(power.id)"></i>
+            		    </li>
+            		</ul>     
+            	</section>
+            </div>
+
+        </div>
+    </div>
+</div>

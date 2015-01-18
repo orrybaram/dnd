@@ -238,10 +238,12 @@ angular.module('app.controllers', [])
 
 .controller('CharacterDetailCtrl', function($scope, $rootScope, $state, $http, $timeout, $stateParams, $modal, $log) {
     
+    $state.go('character-detail.advanced');
+
     $scope.ui = {};
     $scope.powers = DND_POWERS;
     $scope.items = DND_ITEMS
-
+    $scope.state = $state;
     $scope.upload = {};
 
     var is_editting = false;
@@ -317,54 +319,12 @@ angular.module('app.controllers', [])
     }
 
     $scope.upload_avatar = function() {
-        console.log('upload')
-        
-        console.log($scope);
-        console.log($scope.upload);
-
         $http.post('/api/v1/character/' + character_key + '/avatar/?avatar=' + $scope.upload.avatar).then(function(data) {
             console.log(data);
         })
     }
 
-    $scope.add_power = function() {
-        var data = $scope.new_power;
-        $http.post('/api/v1/character/' + character_key + '/powers/add/', data).then(function(response) {
-            $scope.character.powers.push(response.data);
-            $scope.new_power = '';
-        })
-    }
-
-    $scope.delete_power = function(id) {
-        var index = _.findIndex($scope.character.powers, {id: id})
-        var power = $scope.character.powers[index]
-
-        $scope.character.powers.splice(index, 1);
-
-        $http.post('/api/v1/character/' + character_key + '/powers/' + power.key + '/delete/').then(function(response) {
-            console.log(response)
-        })
-    }
-
-    $scope.add_item = function() {
-        var data = $scope.new_item;
-        $http.post('/api/v1/character/' + character_key + '/items/add/', data).then(function(response) {
-            console.log(response)
-            $scope.character.items.push(response.data);
-            $scope.new_item = '';
-        })
-    }
-
-    $scope.delete_item = function(id) {
-        var index = _.findIndex($scope.character.items, {id: id})
-        var item = $scope.character.items[index]
-
-        $scope.character.items.splice(index, 1);
-
-        $http.post('/api/v1/character/' + character_key + '/items/' + item.key + '/delete/').then(function(response) {
-            console.log(response)
-        })
-    }
+    
 
     
 
@@ -488,6 +448,55 @@ angular.module('app.controllers', [])
             }
         });
     };
+})
+
+.controller('CharacterDetailAdvancedCtrl', function($scope, $rootScope, $state, $http, $timeout, $stateParams, $modal, $log) {
+
+    var character_key = $scope.$parent.character.key;
+
+    $scope.add_power = function() {
+        var data = $scope.new_power;
+
+        $http.post('/api/v1/character/' + character_key + '/powers/add/', data).then(function(response) {
+            $scope.character.powers.push(response.data);
+            $scope.new_power = '';
+        })
+    }
+
+    $scope.delete_power = function(id) {
+        var index = _.findIndex($scope.character.powers, {id: id})
+        var power = $scope.character.powers[index]
+
+        $scope.character.powers.splice(index, 1);
+
+        $http.post('/api/v1/character/' + character_key + '/powers/' + power.key + '/delete/').then(function(response) {
+            console.log(response)
+        })
+    }
+
+    $scope.add_item = function() {
+        var data = $scope.new_item;
+        $http.post('/api/v1/character/' + character_key + '/items/add/', data).then(function(response) {
+            console.log(response)
+            $scope.character.items.push(response.data);
+            $scope.new_item = '';
+        })
+    }
+
+    $scope.delete_item = function(id) {
+        var index = _.findIndex($scope.character.items, {id: id})
+        var item = $scope.character.items[index]
+
+        $scope.character.items.splice(index, 1);
+
+        $http.post('/api/v1/character/' + character_key + '/items/' + item.key + '/delete/').then(function(response) {
+            console.log(response)
+        })
+    }
+})
+
+.controller('CharacterDetailSimpleCtrl', function($scope, $rootScope, $state, $http, $timeout, $stateParams, $modal, $log) {
+    
 })
 
 .controller('ModalInstanceCtrl', function ($scope, $modalInstance, item) {

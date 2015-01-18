@@ -56,6 +56,17 @@ angular.module('dnd', [
         templateUrl: "/partials/character-detail.html",
         controller: 'CharacterDetailCtrl'
     })
+
+    .state('character-detail.advanced', {
+        url: "/advanced",
+        templateUrl: "/partials/character-detail.advanced.html",
+        controller: 'CharacterDetailAdvancedCtrl as detail'
+    })
+    .state('character-detail.simple', {
+        url: "/simple",
+        templateUrl: "/partials/character-detail.simple.html",
+        controller: 'CharacterDetailSimpleCtrl'
+    })
 })
 .run(function($rootScope) {
     $rootScope.template_values = template_values;
