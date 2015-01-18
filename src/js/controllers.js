@@ -135,8 +135,17 @@ angular.module('app.controllers', [])
 
 .controller('GroupDetailEncounterCtrl', function($scope, $rootScope, $filter, $http, $state, $stateParams, $modal) {
     $rootScope.state = $state;
-    $scope.encounter_characters = angular.fromJson(localStorage.getItem('encounter')) || angular.copy($scope.characters);
 
+    var cached_encounter_characters = angular.fromJson(localStorage.getItem('encounter'));
+
+    if (cached_encounter_characters && cached_encounter_characters.length) {
+        $scope.encounter_characters = cached_encounter_characters;        
+    } else {
+        $scope.encounter_characters = angular.copy($scope.characters);    
+    }
+
+    $scope.dead_guys = [];
+    
     $scope.encounter_characters.forEach(function(character) {
         character.encounter_initiative = 0;
     });
@@ -164,6 +173,7 @@ angular.module('app.controllers', [])
         $scope.encounter_characters.forEach(function(character, i) {
             character.encounter_initiative = 0;
         })
+        $scope.dead_guys = [];
     }
 
     $scope.add_enemy_class = function() {
@@ -171,6 +181,11 @@ angular.module('app.controllers', [])
         $scope.new_enemy_class.encounter_initiative = 0;
         $scope.encounter_characters.push($scope.new_enemy_class)
         $scope.new_enemy_class = {};
+    }
+
+    $scope.kill_character = function(idx) {
+        $scope.dead_guys.push($scope.encounter_characters[idx]);
+        $scope.encounter_characters.splice(idx, 1);
     }
 
     // Power Modal

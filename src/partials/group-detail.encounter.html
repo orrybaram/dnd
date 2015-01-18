@@ -1,21 +1,13 @@
 <div class="content-view">
 	<div class="row">
-		<div class="columns medium-12">
-			<h2>Encounter</h2>
+		<div class="columns medium-6">
 			<div class="empty-message" ng-show="ui.loading && !characters.length">Loading...</div>
-			
-			<button ng-click="sort_by_initiative()">Sort</button>
-			<button ng-click="reset_encounter()">Reset</button>
-
-			<input placeholder="Enemy Class" ng-model="new_enemy_class.name" />
-			<button ng-click="add_enemy_class()">Add Enemy</button>
-			
 			<ul class="characters" dnd-list="encounter_characters">
-				<li class="character-card card" ng-class="{enemy: character.type === 'enemy'}" ng-repeat="character in encounter_characters">
+				<li class="character-card--encounter card" ng-if="character.type !== 'enemy'" ng-repeat="character in encounter_characters">
 					<div class="toolbar">
 						<a ui-sref="character-detail({character_key: character.key})">
-							<div ng-if="character.avatar_url && character.avatar_url !== 'None'" class="avatar mini" style="background-image: url('{{character.avatar_url}}')"></div>
-							<div ng-if="!character.avatar_url || character.avatar_url === 'None'" class="avatar mini default">
+							<div ng-if="character.avatar_url && character.avatar_url !== 'None'" class="avatar micro" style="background-image: url('{{character.avatar_url}}')"></div>
+							<div ng-if="!character.avatar_url || character.avatar_url === 'None'" class="avatar micro default">
 								<span>{{character.name[0]}}</span>
 							</div>
 							<h1>{{ character.name }}</h1>
@@ -29,79 +21,39 @@
 			            <div class="encounter-initiative">
 			            	<input type="number" class="total-box highlighted encounter-initiative" ng-model="character.encounter_initiative" />
 			            </div>
-			            
-					</div>
-					<div class="card-content" ng-if="character.type !== 'enemy'">
-						<div ng-show="character.show_details" class="card-details">
-							<div class="inline-block">
-							    <h3 class="item-name">HP</h3>
-							    <input class="small-input highlighted total-box" ng-class="{warning: character.hp_current <= character.hp_bloodied}" ng-model="character.hp_current" />
-							    <input disabled class="small-input highlighted total-box secondary" ng-model="character.hp_max" />
-							</div>
-							<h3 class="item-name">XP</h3>
-							<input disabled class="medium-input total-box wide highlighted" ng-model="character.total_xp" />
+			        </div>
+				</li>
+				<li class="character-card--encounter card enemy" ng-if="character.type === 'enemy'" ng-repeat="character in encounter_characters">
+					<div class="toolbar">
+						<div class="avatar micro default">
+							<span>{{character.name[0]}}</span>
+						</div>
+						
+						<button class="right button-muted" ng-click="kill_character($index)">Kill</button>
 
-							<div class="inline-block">
-								<h3 class="item-name">INIT</h3>
-								<input disabled class="tiny-input highlighted total-box" value="{{ character.initiative_score }}" />
-							</div>
-
-							<div class="inline-block">
-								<h3 class="item-name">Str</h3>
-								<input disabled class="tiny-input highlighted total-box" ng-model="character.strength" />
-	                        </div>
-	                        <div class="inline-block">
-	                        	<h3 class="item-name">Con</h3>
-	                    
-	                        	<input disabled class="tiny-input highlighted total-box" ng-model="character.constitution" />
-	                    	</div>
-	                    	<div class="inline-block">
-	                        	<h3 class="item-name">Dex</h3>
-	                        	<input disabled class="tiny-input highlighted total-box" ng-model="character.dexterity" />
-	                        </div>
-
-
-	                        <div class="inline-block">
-	                            <h3 class="item-name">Int</h3>
-	                            <input disabled class="tiny-input highlighted total-box" ng-model="character.intelligence" />
-	                        </div>
-
-	                        <div class="inline-block">
-	                        	<h3 class="item-name">Wis</h3>
-	                        	<input disabled class="tiny-input highlighted total-box" ng-model="character.wisdom" />
-	                        </div>
-	                        <div class="inline-block">
-	                        	<h3 class="item-name">Cha</h3>
-	                        	<input disabled class="tiny-input highlighted total-box" ng-model="character.charisma" />
-	                        </div>
-
-	                        <ul class="item-list">
-	                            <li class="at-will-power power" ng-repeat="power in character.powers | filter:{type: 'atwillpower'}" ng-click="open_power_modal(character.key, power.id)">
-	                                {{ power.name }}
-	                                    
-								</li>
-	                        </ul>
-
-	                        <ul class="item-list">
-	                            <li class="encounter-power power" ng-repeat="power in character.powers | filter:{type: 'encounterpower'}" ng-click="open_power_modal(character.key, power.id)">
-	                                {{ power.name }}
-	                                
-								</li>
-	                        </ul>    
-
-	                        <ul class="item-list margin-bottom">
-	                            <li class="daily-power power" ng-repeat="power in character.powers | filter:{type: 'dailypower'}" ng-click="open_power_modal(character.key, power.id)">
-	                                {{ power.name }}
-	                                    
-								</li>
-	                        </ul>      
-	                    </div> 
-	                    <p class="center-text">
-							<i ng-click="character.show_details = !character.show_details" ng-class="{active: character.show_details}" class="fa fa-angle-double-down"></i>
-						</p>
-                    </div>
+						<h1>{{ character.name }}</h1>
+						<p ng-if="character.type === 'enemy'" class="char-bio">
+			            	Enemy
+			            </p>
+			        </div>
 				</li>
 			</ul>
+		</div>
+		<div class="columns medium-6">
+			<button ng-click="sort_by_initiative()">Sort</button>
+			<button ng-click="reset_encounter()">Reset</button>
+
+			<input placeholder="Enemy Class" ng-model="new_enemy_class.name" />
+			<button ng-click="add_enemy_class()">Add Enemy</button>
+
+
+
+			<ul ng-show="dead_guys.length">
+				<strong>RIP</strong>
+				<li ng-repeat="guy in dead_guys">{{guy.name}}</li>
+			</ul>
+
+
 		</div>
 	</div>
 </div>

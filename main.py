@@ -304,12 +304,12 @@ class CharacterDeleteItem(webapp2.RequestHandler):
 class Image(webapp2.RequestHandler):
     def get(self):
         character = Character.get(self.request.get('character_key'))
-        
-        if character.avatar:
-            self.response.headers['Content-Type'] = 'image/png'
-            self.response.out.write(character.avatar)
-        else:
-            self.error(404)
+        if character:
+            if character.avatar:
+                self.response.headers['Content-Type'] = 'image/png'
+                self.response.out.write(character.avatar)
+            else:
+                self.error(404)
 
 
 app = webapp2.WSGIApplication([

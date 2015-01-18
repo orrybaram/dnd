@@ -68,14 +68,6 @@ h3 {
 			color:white;
 		}
 
-		.card-details {
-			
-			
-			
-			
-			
-		}
-
 		.fa-angle-double-down {
 			font-size: 20px;
 			cursor: pointer;
@@ -83,7 +75,16 @@ h3 {
 			&.active {
 				@include rotate(180deg)
 			}
+		}
+	}
+	&.character-card--encounter {
+		display: block;
+		padding: 0;
+		margin-bottom: 10px;
 
+		.toolbar {
+			margin: 0;
+			padding:5px;
 		}
 	}
 	.toolbar {
@@ -109,7 +110,7 @@ h3 {
 				border-color: darken(#D33450, 10%);
 			}
 		}
-		.encounter-initiative {display: none;}
+		
 	}
 }
 
@@ -134,6 +135,11 @@ button {
 	font-size: 12px;
 	text-transform: uppercase;
 	font-weight: bold;
+	cursor: pointer;
+
+	&.button-muted {
+		background: rgba(0, 0, 0, .2);
+	}
 }
 
 a {
@@ -273,6 +279,15 @@ label {
 	&.mini {
 		height: 50px;
 		width: 50px;
+	}
+
+	&.micro {
+		width:40px;
+		height: 40px;
+
+		&.default span {
+			top: -5px
+		}
 	}
 
 	&.default {

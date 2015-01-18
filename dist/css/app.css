@@ -3332,6 +3332,13 @@ h3 {
         -ms-transform: rotate(180deg);
         -o-transform: rotate(180deg);
         transform: rotate(180deg); }
+  .card.character-card--encounter {
+    display: block;
+    padding: 0;
+    margin-bottom: 10px; }
+    .card.character-card--encounter .toolbar {
+      margin: 0;
+      padding: 5px; }
   .card .toolbar {
     margin: -10px -10px 10px; }
     .card .toolbar .avatar {
@@ -3348,8 +3355,6 @@ h3 {
     .card.enemy .toolbar .avatar {
       background-color: #ae263e;
       border-color: #ae263e; }
-  .card.enemy .encounter-initiative {
-    display: none; }
 
 .section-header {
   margin: -10px -10px 10px;
@@ -3368,7 +3373,10 @@ button {
   padding: 5px 10px;
   font-size: 12px;
   text-transform: uppercase;
-  font-weight: bold; }
+  font-weight: bold;
+  cursor: pointer; }
+  button.button-muted {
+    background: rgba(0, 0, 0, 0.2); }
 
 a:visited {
   color: inherit; }
@@ -3478,6 +3486,11 @@ label {
   .avatar.mini {
     height: 50px;
     width: 50px; }
+  .avatar.micro {
+    width: 40px;
+    height: 40px; }
+    .avatar.micro.default span {
+      top: -5px; }
   .avatar.default {
     background-color: #607d8b; }
     .avatar.default span {
