@@ -7,6 +7,10 @@
     		        <ul class="item-list">
     		            <li class="at-will-power power" ng-repeat="power in character.powers | filter:{type: 'atwillpower'}">
     		                <a ng-click="open_power_modal(power.id)">{{ power.name }}</a>
+<<<<<<< HEAD
+=======
+    		                    <i class="fa fa-times" ng-click="delete_power(power.id)"></i>
+>>>>>>> combat view
     		            </li>
     		        </ul>
     		    </section>
@@ -18,6 +22,10 @@
 	                <ul class="item-list">
 	                    <li class="encounter-power power" ng-repeat="power in character.powers | filter:{type: 'encounterpower'}">
 	                        <a ng-click="open_power_modal(power.id)">{{ power.name }}</a>
+<<<<<<< HEAD
+=======
+	                        <i class="fa fa-times" ng-click="delete_power(power.id)"></i>
+>>>>>>> combat view
 	                    </li>
 	                </ul>    
 	            </section>
@@ -29,6 +37,10 @@
             		<ul class="item-list margin-bottom">
             		    <li class="daily-power power" ng-repeat="power in character.powers | filter:{type: 'dailypower'}">
             		        <a ng-click="open_power_modal(power.id)">{{ power.name }}</a>
+<<<<<<< HEAD
+=======
+            		            <i class="fa fa-times" ng-click="delete_power(power.id)"></i>
+>>>>>>> combat view
             		    </li>
             		</ul>     
             	</section>
