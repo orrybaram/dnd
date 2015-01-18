@@ -91,6 +91,19 @@ class GroupList(webapp2.RequestHandler):
         self.response.headers['Content-Type'] = 'application/json'
         self.response.out.write(json.dumps(values))
 
+class GroupUpdate(webapp2.RequestHandler):
+    def post(self, group_key):
+        data = json.loads(self.request.body)
+        group = Group.get(group_key)
+        
+        group.story = data.get('story')
+        group.notes = data.get('notes')
+        group.put()
+
+        self.response.headers['Content-Type'] = 'application/json'
+        self.response.out.write(json.dumps({"success": True}))
+
+
 class SetDungeonMaster(webapp2.RequestHandler):
     def post(self, group_key):
 
@@ -319,7 +332,8 @@ app = webapp2.WSGIApplication([
     ('/api/v1/groups/create/?', GroupCreate),
     ('/api/v1/groups/list/?', GroupList),
     ('/api/v1/groups/(?P<group_key>[^/]+)/?', GroupDetail),
-    ('/api/v1/groups/(?P<group_key>[^/]+)/dm?', SetDungeonMaster),
+    ('/api/v1/groups/(?P<group_key>[^/]+)/update/?', GroupUpdate),
+    ('/api/v1/groups/(?P<group_key>[^/]+)/dm/?', SetDungeonMaster),
     ('/api/v1/character/(?P<character_key>[^/]+)/?', CharacterDetail),
     ('/api/v1/character/(?P<character_key>[^/]+)/update/?', CharacterUpdate),
     ('/api/v1/character/(?P<character_key>[^/]+)/delete/?', CharacterDelete),

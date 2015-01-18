@@ -208,7 +208,18 @@ angular.module('app.controllers', [])
             }
         });
     };
+})
 
+.controller('GroupDetailStoryCtrl', function($scope, $rootScope, $state, $http, $timeout, $stateParams, $modal, $log) {
+    console.log($scope);
+    $scope.save_group = function() {
+        $scope.ui.saving = true;
+        $http.post('/api/v1/groups/' + $scope.group.key + '/update/', $scope.group).then(function(response) {
+            $timeout(function() {
+                $scope.ui.saving = false;
+            }, 3000)
+        })
+    }
 })
 
 .controller('GroupDetailAdminCtrl', function($scope, $rootScope, $state, $http, $timeout, $stateParams, $modal, $log) {
@@ -278,7 +289,7 @@ angular.module('app.controllers', [])
 
     $scope.save_character = function() {
         is_editting = true;
-        $scope.ui.saving = true;        
+        $scope.ui.saving = true;
         
         var data = {
             'character': $scope.character,

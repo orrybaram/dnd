@@ -3282,6 +3282,9 @@ h2 {
 .modal.upload-form {
   display: block; }
 
+.full-height {
+  height: 100%; }
+
 a {
   color: #607d8b; }
 
@@ -3602,7 +3605,7 @@ input.highlighted {
     font-size: 10px;
     color: gray;
     cursor: pointer; }
-  .item-list li a {
+  .item-list li.power a {
     color: white; }
   .item-list li.at-will-power {
     background-color: #4a8b4a; }

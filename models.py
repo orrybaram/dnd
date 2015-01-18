@@ -17,6 +17,8 @@ class User(db.Model):
 class Group(db.Model):
     date_created = db.DateTimeProperty(auto_now_add=True)
     name = db.StringProperty()
+    story = db.TextProperty()
+    notes = db.TextProperty()
     dm = db.ReferenceProperty(User, default=None)
     
     def serializable(self):
@@ -24,6 +26,8 @@ class Group(db.Model):
             'date_created': self.date_created.isoformat(),
             'key': str(self.key()),
             'name': self.name,
+            'story': self.story,
+            'notes': self.notes
         }
         if self.dm:
             values['dm'] = self.dm.serializable()
@@ -209,6 +213,10 @@ class Character(db.Model):
     other_features = db.TextProperty()
     feats = db.TextProperty()
     languages = db.TextProperty()
+
+    gold = db.IntegerProperty(default=0)
+    silver = db.IntegerProperty(default=0)
+    copper = db.IntegerProperty(default=0)
 
     def get_avatar_url(self):
         logging.info(self.avatar)
@@ -406,6 +414,10 @@ class Character(db.Model):
             'other_features': self.other_features,
             'feats': self.feats,
             'languages': self.languages,
+
+            'gold': self.gold,
+            'silver': self.silver,
+            'copper': self.copper,
 
             'powers': _powers,
             'items': _items,

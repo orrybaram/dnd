@@ -19,6 +19,8 @@ h2 {
 	display: block;
 }
 
+.full-height {height: 100%;}
+
 a {
 	color: $primary;
 }
@@ -428,8 +430,10 @@ input.highlighted {
 			color: gray;
 			cursor: pointer;
 		}
-		a {
-			color: white;
+		&.power {
+			a {
+				color: white;
+			}	
 		}
 		&.at-will-power {
 			background-color: $atWillPower;
