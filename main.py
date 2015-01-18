@@ -264,7 +264,6 @@ class CharacterDetail(webapp2.RequestHandler):
 
 class CharacterAddPower(webapp2.RequestHandler):
     def post(self, character_key):
-        logging.info(self.request.body)
         data = json.loads(self.request.body)
         try:
             power = db.Query(Power).filter('name', data.get('name'))[0]

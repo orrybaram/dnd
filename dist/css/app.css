@@ -3180,6 +3180,8 @@ select {
   background: #FFF;
   z-index: 1000;
   width: 100%;
+  max-height: 220px;
+  overflow: auto;
   border: 1px solid #DFDFDF;
   box-shadow: 0 2px rgba(60, 60, 60, 0.02); }
   .dropdown-menu li {
