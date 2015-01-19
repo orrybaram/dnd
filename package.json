@@ -1,0 +1,19 @@
+{
+    "name": "dnd-buddy",
+    "version": "1.0.0",
+    "description": "D&D Buddy for Dungeoneering and Dragoning",
+    "dependencies": {
+        "gulp": "latest",
+        "gulp-ruby-sass": "latest"
+    },
+    "author": "https://github.com/orrybaram",
+    "contributors": [{
+      "name": "Mike Barrett",
+      "email": "radmike@gmail.com"
+    }],
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/orrybaram/dnd"
+    },
+    "private": true
+}
