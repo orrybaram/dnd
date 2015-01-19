@@ -1,3 +1,7 @@
+#################
+#  python       #
+#################
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -54,7 +58,9 @@ docs/_build/
 target/
 
 
-
+#################
+#  node         #
+#################
 
 # Logs
 logs
@@ -89,10 +95,10 @@ npm-debug.log
 
 
 
+#################
+#  bower        #
+#################
 
-# bower
-/node_modules
-/npm-debug.log
 
 /test/assets/package-*/
 /test/assets/temp-*/
