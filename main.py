@@ -312,6 +312,39 @@ class CharacterDeleteItem(webapp2.RequestHandler):
         character = Character.get(character_key)
         character.items.filter('__key__ =', Key(item_key)).get().delete()
 
+class CharacterAddWeapon(webapp2.RequestHandler):
+    def post(self, character_key):
+        logging.info(self.request.body)
+        data = json.loads(self.request.body)
+        
+        weapon = Weapon()
+        weapon.character = Character.get(character_key)
+        weapon.json_string = unicode(self.request.body, 'utf-8');
+        weapon.put()
+
+        self.response.headers['Content-Type'] = 'application/json'
+        self.response.out.write(json.dumps(weapon.serializable()))
+
+class CharacterUpdateWeapon(webapp2.RequestHandler):
+    def post(self, character_key, weapon_key):
+        logging.info(self.request.body)
+        data = json.loads(self.request.body)
+
+        weapon = Weapon.get(weapon_key)
+        if weapon:
+            weapon.attack = data.get('attack')
+            weapon.defense = data.get('defense')
+            weapon.damage = data.get('damage')
+            weapon.put()
+
+        self.response.headers['Content-Type'] = 'application/json'
+        self.response.out.write(json.dumps(weapon.serializable()))
+
+class CharacterDeleteWeapon(webapp2.RequestHandler):
+    def post(self, character_key, weapon_key):
+        character = Character.get(character_key)
+        character.weapons.filter('__key__ =', Key(weapon_key)).get().delete()
+
 
 class Image(webapp2.RequestHandler):
     def get(self):
@@ -341,6 +374,9 @@ app = webapp2.WSGIApplication([
     ('/api/v1/character/(?P<character_key>[^/]+)/powers/(?P<power_key>[^/]+)/delete/?', CharacterDeletePower),
     ('/api/v1/character/(?P<character_key>[^/]+)/items/add/?', CharacterAddItem),
     ('/api/v1/character/(?P<character_key>[^/]+)/items/(?P<item_key>[^/]+)/delete/?', CharacterDeleteItem),
+    ('/api/v1/character/(?P<character_key>[^/]+)/weapons/add/?', CharacterAddWeapon),
+    ('/api/v1/character/(?P<character_key>[^/]+)/weapons/(?P<weapon_key>[^/]+)/update/?', CharacterUpdateWeapon),
+    ('/api/v1/character/(?P<character_key>[^/]+)/weapons/(?P<weapon_key>[^/]+)/delete/?', CharacterDeleteWeapon),
     
 
 ], debug=True)

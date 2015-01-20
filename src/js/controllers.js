@@ -433,6 +433,23 @@ angular.module('app.controllers', [])
         });
     };
 
+    // Weapon Modal
+    $scope.open_weapon_modal = function(id) {
+        var index = _.findIndex($scope.character.weapons, {id: id})
+        var weapon = angular.copy($scope.character.weapons[index])
+
+        var modalInstance = $modal.open({
+            templateUrl: 'partials/item-modal.html',
+            controller: 'ModalInstanceCtrl',
+            size: 'sm',
+            resolve: {
+                item: function () {
+                    return weapon;
+                }
+            }
+        });
+    };
+
     // Item Modal
     $scope.open_upload_modal = function(id) {
         var character = angular.copy($scope.character)
@@ -452,7 +469,7 @@ angular.module('app.controllers', [])
 
 .controller('CharacterDetailAdvancedCtrl', function($scope, $rootScope, $state, $http, $timeout, $stateParams, $modal, $log) {
 
-    var character_key = $scope.$parent.character.key;
+    var character_key = $stateParams.character_key;
 
     $scope.add_power = function() {
         var data = $scope.new_power;
@@ -493,6 +510,33 @@ angular.module('app.controllers', [])
             console.log(response)
         })
     }
+
+    $scope.add_weapon = function() {
+        var data = $scope.new_weapon;
+        $http.post('/api/v1/character/' + character_key + '/weapons/add/', data).then(function(response) {
+            console.log(response)
+            $scope.character.weapons.push(response.data);
+            $scope.new_weapon = '';
+        })
+    }
+
+    $scope.update_weapon = function(weapon_idx) {
+        var weapon_data = $scope.$parent.character.weapons[weapon_idx];
+        $http.post('/api/v1/character/' + character_key + '/weapons/' + weapon_data.key + '/update/', weapon_data).then(function(response) {
+            console.log(response)
+        })
+    }
+
+    $scope.delete_weapon = function(id) {
+        var index = _.findIndex($scope.character.weapons, {id: id})
+        var weapon = $scope.character.weapons[index]
+
+        $scope.character.weapons.splice(index, 1);
+
+        $http.post('/api/v1/character/' + character_key + '/weapons/' + item.key + '/delete/').then(function(response) {
+            console.log(response)
+        })
+    }
 })
 
 .controller('CharacterDetailSimpleCtrl', function($scope, $rootScope, $state, $http, $timeout, $stateParams, $modal, $log) {
@@ -501,7 +545,6 @@ angular.module('app.controllers', [])
 
 .controller('ModalInstanceCtrl', function ($scope, $modalInstance, item) {
     $scope.item = item;
-    
     $scope.close = function () {
         $modalInstance.close();
     };

@@ -736,6 +736,46 @@
                         </div>
                     </div>
                 </section>
+
+                <section class="card">
+                    <h2 class="section-header">Weapons</h2>
+                    
+                    <ul class="item-list">
+                        <li class="item" on-form-change="update_weapon($index)" ng-repeat="weapon in character.weapons" ng-form="weaponForm{{$index}}">
+                            <div class="inline-block">
+                                <label>Attack</label>
+                                <input class="tiny-input" ng-model="weapon.attack" />
+                            </div>
+                            <div class="inline-block">
+                                vs
+                            </div>
+                            <div class="inline-block">
+                                <label>Defense</label>
+                                <input class="tiny-input" ng-model="weapon.defense" />
+                            </div>
+                            <div class="inline-block weapon-name">
+                                <a ng-click="open_weapon_modal(weapon.id)">{{ weapon.name }}</a>
+                            </div>
+                            <div class="inline-block">
+                                <label>Damage</label>
+                                <input class="tiny-input" ng-model="weapon.damage" />
+                            </div>
+                            <i class="fa fa-times" ng-click="delete_weapon(weapon.id)"></i>
+                            
+                        </li>
+                    </ul>
+                    
+                    <div class="row">
+                        <div class="columns small-9">
+                            <input type="text" ng-model="new_weapon" typeahead="item as item.name for item in items | filter:{name:$viewValue} | limitTo:20" class="width-100">
+                        </div>
+                        <div class="columns small-3">
+                            <button ng-click="add_weapon()" class="width-100">add</button>
+                        </div>
+                    </div>
+                </section>
+
+
                 <section class="card">
                     <h2 class="section-header">Race Features</h2>
                     <textarea ng-model="character.race_features"></textarea>
@@ -852,8 +892,9 @@
                     </div>
 
                 </section>
+                
                 <section class="card">
-                    <h2 class="section-header">Weapons / Items</h2>
+                    <h2 class="section-header">Items</h2>
                     <ul class="item-list">
                         <li class="item" ng-repeat="item in character.items">
                             <a ng-click="open_item_modal(item.id)">{{ item.name }}</a>

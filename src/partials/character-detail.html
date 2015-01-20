@@ -1,6 +1,6 @@
 <div ng-show="ui.saving" class="toast">Saving...</div>
 
-<form on-form-change="save_character()">
+<form name="characterDetail" on-form-change="save_character()">
     <div class="toolbar">
         <a ui-sref="group-detail.dashboard({group_key: character.group_key})"><i class="fa fa-arrow-left"></i></a>
         <div>
