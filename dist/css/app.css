@@ -3445,9 +3445,10 @@ a:visited {
   .item:nth-child(even) {
     background-color: rgba(0, 0, 0, 0.02); }
   .item.item--weapon .weapon-name {
-    width: 135px;
+    width: 130px;
     font-weight: bold;
-    padding: 5px; }
+    padding: 5px;
+    font-size: 14px; }
 
 .title-input {
   background: none;
@@ -3641,7 +3642,7 @@ input.highlighted {
   top: 14px;
   font-size: 10px;
   font-weight: bold;
-  margin: 0 5px; }
+  margin: 0 2px; }
 
 .power-modal {
   border: 10px solid #FFF; }
