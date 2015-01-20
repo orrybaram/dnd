@@ -213,6 +213,7 @@ class Character(db.Model):
     other_features = db.TextProperty()
     feats = db.TextProperty()
     languages = db.TextProperty()
+    notes = db.TextProperty()
 
     gold = db.IntegerProperty(default=0)
     silver = db.IntegerProperty(default=0)
@@ -418,6 +419,7 @@ class Character(db.Model):
             'other_features': self.other_features,
             'feats': self.feats,
             'languages': self.languages,
+            'notes': self.notes,
 
             'gold': self.gold,
             'silver': self.silver,
