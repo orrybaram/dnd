@@ -741,12 +741,12 @@
                     <h2 class="section-header">Weapons</h2>
                     
                     <ul class="item-list">
-                        <li class="item" on-form-change="update_weapon($index)" ng-repeat="weapon in character.weapons" ng-form="weaponForm{{$index}}">
+                        <li class="item item--weapon" on-form-change="update_weapon($index)" ng-repeat="weapon in character.weapons" ng-form="weaponForm{{$index}}">
                             <div class="inline-block">
                                 <label>Attack</label>
                                 <input class="tiny-input" ng-model="weapon.attack" />
                             </div>
-                            <div class="inline-block">
+                            <div class="inline-block versus-label">
                                 vs
                             </div>
                             <div class="inline-block">
@@ -758,10 +758,9 @@
                             </div>
                             <div class="inline-block">
                                 <label>Damage</label>
-                                <input class="tiny-input" ng-model="weapon.damage" />
+                                <input class="medium-input" ng-model="weapon.damage" />
                             </div>
                             <i class="fa fa-times" ng-click="delete_weapon(weapon.id)"></i>
-                            
                         </li>
                     </ul>
                     

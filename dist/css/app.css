@@ -3444,6 +3444,10 @@ a:visited {
   padding: 2px 0; }
   .item:nth-child(even) {
     background-color: rgba(0, 0, 0, 0.02); }
+  .item.item--weapon .weapon-name {
+    width: 150px;
+    font-weight: bold;
+    padding: 5px; }
 
 .title-input {
   background: none;
@@ -3520,7 +3524,14 @@ label {
     color: white; }
 
 .content-view {
-  padding: 25px 0; }
+  padding: 25px 0;
+  height: 100%; }
+
+.row {
+  height: 100%; }
+
+.column, .columns {
+  height: 100%; }
 
 input {
   font-size: 16px;
@@ -3624,6 +3635,13 @@ input.highlighted {
   .item-list .power .fa-times {
     color: white;
     opacity: .5; }
+
+.versus-label {
+  position: relative;
+  top: 14px;
+  font-size: 10px;
+  font-weight: bold;
+  margin: 0 5px; }
 
 .power-modal {
   border: 10px solid #FFF; }

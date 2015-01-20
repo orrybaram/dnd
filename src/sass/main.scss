@@ -227,6 +227,14 @@ a {
 	&:nth-child(even) {
 		background-color: rgba(0, 0, 0, 0.02);
 	}
+
+	&.item--weapon {
+		.weapon-name {
+			width: 150px;
+			font-weight: bold;
+			padding: 5px;
+		}
+	}
 }
 .title-input {
 	background: none;
@@ -326,7 +334,11 @@ label {
 
 .content-view {
 	padding: 25px 0;
+	height: 100%;
 }
+
+.row {height: 100%;}
+.column, .columns {height: 100%;}
 
 input {
 	font-size: 16px;
@@ -457,6 +469,14 @@ input.highlighted {
 			opacity: .5;
 		}
 	}
+}
+
+.versus-label {
+	position: relative;
+	top: 14px;
+	font-size: 10px;
+	font-weight: bold;
+	margin: 0 5px;
 }
 
 .power-modal {
