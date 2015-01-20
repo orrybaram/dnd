@@ -345,7 +345,7 @@ angular.module('app.controllers', [])
     }
 
     $scope.getInitiativeTotal =function() {
-        var total = parseInt($scope.character.dexterity);
+        var total = parseInt($scope.getAbilModifier($scope.character.dexterity));
         total += parseInt($scope.getHalfLevel());
         total += parseInt($scope.character.initiative_misc);
         $scope.character.initiative_score = total;
