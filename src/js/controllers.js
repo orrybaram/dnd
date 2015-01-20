@@ -238,8 +238,6 @@ angular.module('app.controllers', [])
 
 .controller('CharacterDetailCtrl', function($scope, $rootScope, $state, $http, $timeout, $stateParams, $modal, $log) {
     
-    $state.go('character-detail.advanced');
-
     $scope.ui = {};
     $scope.powers = DND_POWERS;
     $scope.items = DND_ITEMS

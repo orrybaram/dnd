@@ -7,7 +7,7 @@
 			<div class="characters">
 				<section class="character-card card" ng-repeat="character in characters">
 					<div class="toolbar">
-						<a ui-sref="character-detail({character_key: character.key})">
+						<a ui-sref="character-detail.advanced({character_key: character.key})">
 							<div ng-if="character.avatar_url && character.avatar_url !== 'None'" class="avatar mini" style="background-image: url('{{character.avatar_url}}')"></div>
 							<div ng-if="!character.avatar_url || character.avatar_url === 'None'" class="avatar mini default">
 								<span>{{character.name[0]}}</span>

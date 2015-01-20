@@ -5,7 +5,7 @@
 			<ul class="characters" dnd-list="encounter_characters">
 				<li class="character-card--encounter card" ng-if="character.type !== 'enemy'" ng-repeat="character in encounter_characters">
 					<div class="toolbar">
-						<a ui-sref="character-detail({character_key: character.key})">
+						<a ui-sref="character-detail.advanced({character_key: character.key})">
 							<div ng-if="character.avatar_url && character.avatar_url !== 'None'" class="avatar micro" style="background-image: url('{{character.avatar_url}}')"></div>
 							<div ng-if="!character.avatar_url || character.avatar_url === 'None'" class="avatar micro default">
 								<span>{{character.name[0]}}</span>
