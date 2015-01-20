@@ -3536,7 +3536,8 @@ label {
 
 input {
   font-size: 16px;
-  padding: 2px; }
+  padding: 2px;
+  margin-bottom: 10px; }
 
 input[disabled] {
   background: #E4E4E4;
@@ -3599,7 +3600,7 @@ input.highlighted {
 .next-level {
   position: absolute;
   font-size: 8px;
-  bottom: -7px;
+  bottom: -2px;
   right: 15px;
   color: #888;
   font-weight: bold; }
