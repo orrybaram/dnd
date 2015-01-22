@@ -4,7 +4,7 @@
 angular.module('app.controllers', [])
 
 .controller('GroupsCtrl', function($scope, $http, $state) {
-    
+
     $scope.groups = [];
     $scope.new_group = {};
 
@@ -35,7 +35,7 @@ angular.module('app.controllers', [])
     $scope.group = {};
 
     $scope.is_admin = template_values.is_admin;
-    
+
     var group_key = $stateParams.group_key;
 
     console.log($scope);
@@ -45,7 +45,7 @@ angular.module('app.controllers', [])
         $scope.ui.loading = true;
         $http.get('/api/v1/groups/' + group_key).then(function(response) {
             console.log(response);
-            
+
             $scope.group = response.data.group;
             $scope.characters = response.data.players;
             $scope.ui.loading = false;
@@ -71,7 +71,7 @@ angular.module('app.controllers', [])
 
     $scope.$on('character-updated', function(event, args) {
         console.log(args);
-        
+
         var updated_char = args.character;
 
         for (var i = 0; i < $scope.characters.length; i++) {
@@ -86,7 +86,7 @@ angular.module('app.controllers', [])
     })
 
     var group_key = $stateParams.group_key;
-    
+
     function getCharacter(key) {
         for (var i = 0; i < $scope.characters.length; i++) {
             if ($scope.characters[i].key === key) {
@@ -100,7 +100,7 @@ angular.module('app.controllers', [])
     $scope.create_character = function() {
 
         var data = {
-            'name': $scope.new_character.name,  
+            'name': $scope.new_character.name,
             'group_key': group_key
         };
 
@@ -139,13 +139,13 @@ angular.module('app.controllers', [])
     var cached_encounter_characters = angular.fromJson(localStorage.getItem('encounter'));
 
     if (cached_encounter_characters && cached_encounter_characters.length) {
-        $scope.encounter_characters = cached_encounter_characters;        
+        $scope.encounter_characters = cached_encounter_characters;
     } else {
-        $scope.encounter_characters = angular.copy($scope.characters);    
+        $scope.encounter_characters = angular.copy($scope.characters);
     }
 
     $scope.dead_guys = [];
-    
+
     $scope.encounter_characters.forEach(function(character) {
         character.encounter_initiative = 0;
     });
@@ -163,11 +163,11 @@ angular.module('app.controllers', [])
     $scope.sort_by_initiative = function() {
         console.log($scope.characters)
         console.log('gooo')
-        $scope.encounter_characters = $filter('orderBy')($scope.encounter_characters, 'encounter_initiative', true);    
+        $scope.encounter_characters = $filter('orderBy')($scope.encounter_characters, 'encounter_initiative', true);
     }
 
     $scope.reset_encounter = function() {
-    
+
         localStorage.removeItem('encounter');
         $scope.encounter_characters = angular.copy($scope.characters);
         $scope.encounter_characters.forEach(function(character, i) {
@@ -190,7 +190,7 @@ angular.module('app.controllers', [])
 
     // Power Modal
     $scope.open_power_modal = function(char_key, id) {
-        
+
         var charIdx = _.findIndex($scope.encounter_characters, {key: char_key})
         var character = $scope.encounter_characters[charIdx]
 
@@ -223,31 +223,70 @@ angular.module('app.controllers', [])
 })
 
 .controller('GroupDetailAdminCtrl', function($scope, $rootScope, $state, $http, $timeout, $stateParams, $modal, $log) {
-    if (!template_values.is_admin) {
-        $state.go('group-detail');
-    }
+    //if (!template_values.is_admin) {
+    //    $state.go('group-detail');
+    //}
+    // TODO: add security on group actions like add character, make DM etc.
 
-    $scope.set_dm = function(user_id) {
-        console.log(user_id)
+    $scope.ui = {};
+    $scope.ui.loading = false;
+    $scope.userlist = {};
+    $scope.items = DND_ITEMS;
 
-        $http.post('/api/v1/groups/' + $scope.group.key + '/dm', {'user_id': user_id}).then(function(data) {
+    $scope.set_dm = function(user_key) {
+        console.log(user_key);
+
+        $http.post('/api/v1/groups/' + $scope.group.key + '/dm', {'user_key': user_key}).then(function(data) {
             console.log(data);
+        });
+    };
+
+    $scope.add_member = function() {
+        var data = $scope.new_member;
+
+        $http.post('/api/v1/groups/' + $scope.group.key + '/members/add/', data).then(function(response) {
+            console.log(response);
+            $scope.group.members.push(response.data);
+            $scope.new_member = '';
+        });
+    };
+
+    $scope.delete_member = function(id) {
+        var index = _.findIndex($scope.group.members, {id: id});
+        var member = $scope.group.members[index];
+
+        $scope.group.members.splice(index, 1);
+
+        $http.post('/api/v1/groups/' + $scope.group.key + '/members/' + member.key + '/delete/').then(function(response) {
+            console.log(response);
+        });
+    };
+
+    $scope.get_user_detail = function() {
+        $scope.ui.loading = true;
+        $http.get('/api/v1/users/list/').then(function(response) {
+            console.log(response);
+
+            $scope.userlist = response.data;
+            $scope.ui.loading = false;
         })
     }
+
+    $scope.get_user_detail();
 })
 
 .controller('CharacterDetailCtrl', function($scope, $rootScope, $state, $http, $timeout, $stateParams, $modal, $log) {
-    
+
     $scope.ui = {};
     $scope.powers = DND_POWERS;
-    $scope.items = DND_ITEMS
+    $scope.items = DND_ITEMS;
     $scope.state = $state;
     $scope.upload = {};
 
     var is_editting = false;
     var character_key = $stateParams.character_key;
     var _characters = angular.fromJson(localStorage.getItem('characters'));
-    var _character = _.where(_characters, {key: character_key})[0] || {};    
+    var _character = _.where(_characters, {key: character_key})[0] || {};
 
     $scope.character = _character
 
@@ -266,7 +305,7 @@ angular.module('app.controllers', [])
     $scope.$on('character-updated', function(event, args) {
         if(!is_editting) {
             $scope.character = args.character;
-            $scope.$apply();    
+            $scope.$apply();
         }
     });
 
@@ -290,7 +329,7 @@ angular.module('app.controllers', [])
     $scope.save_character = function() {
         is_editting = true;
         $scope.ui.saving = true;
-        
+
         var data = {
             'character': $scope.character,
             'channel_token': template_values.channel_token
@@ -300,7 +339,7 @@ angular.module('app.controllers', [])
     		console.log(response);
             $timeout(function() {
                 $scope.ui.saving = false;
-                is_editting = false;    
+                is_editting = false;
             }, 3000)
 
             // var idx = _.findIndex(_characters, {key: character_key});
@@ -310,7 +349,7 @@ angular.module('app.controllers', [])
         }, function(error) {
             console.log(error);
             $timeout(function() {
-                $scope.ui.saving = false;    
+                $scope.ui.saving = false;
                 is_editting = false;
             }, 3000)
         })
@@ -322,9 +361,9 @@ angular.module('app.controllers', [])
         })
     }
 
-    
 
-    
+
+
 
     $scope.getAbilModifier = function(score) {
         return Math.floor((score - 10) / 2);
@@ -385,11 +424,11 @@ angular.module('app.controllers', [])
         var total = 0;
 
         if($scope.character[skill + '_armor_penalty']) {
-            total += parseInt($scope.character[skill + '_armor_penalty'])            
+            total += parseInt($scope.character[skill + '_armor_penalty'])
         }
         if($scope.character[skill + '_trained']) {
             total += 5;
-        } 
+        }
         total += $scope.getAbilModifier($scope.character[ability]) + $scope.getHalfLevel()
         total += parseInt($scope.character[skill + '_misc'])
         $scope.character[skill + '_total'] = total;
@@ -538,7 +577,7 @@ angular.module('app.controllers', [])
 })
 
 .controller('CharacterDetailSimpleCtrl', function($scope, $rootScope, $state, $http, $timeout, $stateParams, $modal, $log) {
-    
+
 })
 
 .controller('ModalInstanceCtrl', function ($scope, $modalInstance, item) {

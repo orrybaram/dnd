@@ -1,16 +1,70 @@
 <div class="content-view">
 	<div class="row">
-		<div class="columns medium-12">
-			<h2>Admin</h2>
+		<div class="columns medium-6">
 
-			<div><strong>Dungeon Master:</strong> {{ group.dm.name }}</div>
+			<h2>Dungeon Master</h2>
 
-			<div ng-repeat="character in characters">
-				<div>{{character.name }} -- {{ character.user_name }} | <a ng-click="delete_character()">delete</a> | <a ng-click="set_dm(character.user_id)"> make dm</a></div>
-			</div>
+			<ul class="member-list" dnd-list="members">
+          <li class="dm card">
+						<div class="toolbar">
+								<div class="avatar micro default">
+									<span>{{ group.dm.name[0] }}</span>
+								</div>
+								<h1>{{ group.dm.name }}</h1>
+								<p class="char-bio">
+			              Motherfucking Master of the Universe
+			          </p>
+				    </div>
+          </li>
+      </ul>
 
-			<h2>Invite</h2>
-			<p>Soon...</p>
+
+			<h2>Group Members</h2>
+
+			<ul class="member-list" dnd-list="members">
+          <li class="member card" ng-repeat="member in group.members">
+						<div class="toolbar">
+								<div class="avatar micro default">
+									<span>{{ member.name[0] }}</span>
+								</div>
+								<h1>{{ member.name }}</h1>
+
+	          		<i class="fa fa-trash" ng-click="delete_member(member.id)"></i> | <i class="fa fa-magic" ng-click="set_dm(member.key)"></i>
+				    </div>
+          </li>
+
+          <li class="member">
+						<input type="text" ng-model="new_member" typeahead="member as member.name for member in userlist | filter:{name:$viewValue} | limitTo:20" class="width-100">
+						<button ng-click="add_member()" class="width-100">add</button>
+          </li>
+      </ul>
+
+		</div>
+
+		<div class="columns medium-6">
+			<h2>Group Party</h2>
+
+			<ul class="characters" dnd-list="characters">
+				<li class="character-card--admin card" ng-repeat="character in characters">
+					<div class="toolbar">
+						<a ui-sref="character-detail.advanced({character_key: character.key})">
+							<div ng-if="character.avatar_url && character.avatar_url !== 'None'" class="avatar micro" style="background-image: url('{{character.avatar_url}}')"></div>
+							<div ng-if="!character.avatar_url || character.avatar_url === 'None'" class="avatar micro default">
+								<span>{{character.name[0]}}</span>
+							</div>
+							<h1>{{ character.name }}</h1>
+							<p class="char-bio">
+	                A level {{character.level}} {{character.char_race || 'noob'}} {{character.char_class}}
+	            </p>
+			      </a>
+
+          	<i class="fa fa-trash" ng-click="delete_character()"></i>
+			    </div>
+				</li>
+			</ul>
 		</div>
 	</div>
 </div>
+
+
+<!--  -->
