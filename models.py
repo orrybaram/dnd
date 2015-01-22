@@ -6,7 +6,9 @@ class User(db.Model):
     user_id = db.StringProperty()
     name = db.StringProperty()
     is_admin = db.BooleanProperty(default=False)
-    
+
+    groups = db.ListProperty(db.Key)
+
     def serializable(self):
         result = {}
         result["key"] = str(self.key())
@@ -19,18 +21,30 @@ class Group(db.Model):
     name = db.StringProperty()
     story = db.TextProperty()
     notes = db.TextProperty()
+
     dm = db.ReferenceProperty(User, default=None)
-    
+
+    @property
+    def members(self):
+        return User.gql("WHERE groups = :1", self.key())
+
     def serializable(self):
+        _members = []
+        for member in self.members:
+            _members.append(member.serializable())
+
         values = {
             'date_created': self.date_created.isoformat(),
             'key': str(self.key()),
             'name': self.name,
             'story': self.story,
-            'notes': self.notes
+            'notes': self.notes,
+            'members': _members
         }
+
         if self.dm:
             values['dm'] = self.dm.serializable()
+
         return values
 
 
@@ -55,30 +69,30 @@ class Character(db.Model):
     deity = db.StringProperty()
     affiliations = db.StringProperty()
     avatar = db.BlobProperty(default=None)
-    
+
     # Initiative
     initiative_score = db.IntegerProperty(default=0)
     initiative_misc = db.IntegerProperty(default=0)
-    
+
     # Ability Scores
     strength = db.IntegerProperty(default=0)
     strength_abil_mod = db.IntegerProperty(default=0)
-    
+
     constitution = db.IntegerProperty(default=0)
     constitution_abil_mod = db.IntegerProperty(default=0)
-    
+
     dexterity = db.IntegerProperty(default=0)
     dexterity_abil_mod = db.IntegerProperty(default=0)
-    
+
     intelligence = db.IntegerProperty(default=0)
     intelligence_abil_mod = db.IntegerProperty(default=0)
-    
+
     wisdom = db.IntegerProperty(default=0)
     wisdom_abil_mod = db.IntegerProperty(default=0)
-    
+
     charisma = db.IntegerProperty(default=0)
     charisma_abil_mod = db.IntegerProperty(default=0)
-    
+
 
     # Defenses
     armor_class_total = db.IntegerProperty(default=0)
@@ -261,30 +275,30 @@ class Character(db.Model):
             'deity': self.deity,
             'affiliations': self.affiliations,
             'avatar_url': self.get_avatar_url(),
-            
+
             # Initiative
             'initiative_score': self.initiative_score,
             'initiative_misc': self.initiative_misc,
-            
+
             # Ability Scores
             'strength': self.strength,
             'strength_abil_mod': self.strength_abil_mod,
-            
+
             'constitution': self.constitution,
             'constitution_abil_mod': self.constitution_abil_mod,
-            
+
             'dexterity': self.dexterity,
             'dexterity_abil_mod': self.dexterity_abil_mod,
-            
+
             'intelligence': self.intelligence,
             'intelligence_abil_mod': self.intelligence_abil_mod,
-            
+
             'wisdom': self.wisdom,
             'wisdom_abil_mod': self.wisdom_abil_mod,
-            
+
             'charisma': self.charisma,
             'charisma_abil_mod': self.charisma_abil_mod,
-            
+
 
             # Defenses
             'armor_class_total': self.armor_class_total,
@@ -438,7 +452,7 @@ class Power(db.Model):
     json_string = db.TextProperty()
 
     def serializable(self):
-        payload = json.loads(self.json_string) 
+        payload = json.loads(self.json_string)
         payload['key'] = str(self.key())
 
         return payload
@@ -451,7 +465,7 @@ class Weapon(db.Model):
     damage = db.StringProperty()
 
     def serializable(self):
-        payload = json.loads(self.json_string) 
+        payload = json.loads(self.json_string)
         payload['key'] = str(self.key())
         payload['attack'] = self.attack
         payload['defense'] = self.defense
@@ -464,7 +478,7 @@ class Item(db.Model):
     json_string = db.TextProperty()
 
     def serializable(self):
-        payload = json.loads(self.json_string) 
+        payload = json.loads(self.json_string)
         payload['key'] = str(self.key())
 
         return payload
