@@ -288,7 +288,46 @@ angular.module('app.controllers', [])
             var ghost = $scope.characters[index];
 
             $scope.characters.splice(index, 1);
-            $scope.graveyard.add(ghost);
+            $scope.graveyard.push(ghost);
+        });
+    };
+
+    $scope.resurrect_character = function(key) {
+
+        $http.post('/api/v1/character/' + key + '/resurrect/').then(function(response) {
+            console.log(response);
+
+            var index = _.findIndex($scope.graveyard, { 'key': key });
+            var ghost = $scope.graveyard[index];
+
+            $scope.graveyard.splice(index, 1);
+            $scope.characters.push(ghost);
+        });
+    };
+
+    $scope.hiatus_character = function(key) {
+
+        $http.post('/api/v1/character/' + key + '/hiatus/').then(function(response) {
+            console.log(response);
+
+            var index = _.findIndex($scope.characters, { 'key': key });
+            var traveller = $scope.characters[index];
+
+            $scope.characters.splice(index, 1);
+            $scope.hiatus.push(traveller);
+        });
+    };
+
+    $scope.return_character = function(key) {
+
+        $http.post('/api/v1/character/' + key + '/return/').then(function(response) {
+            console.log(response);
+
+            var index = _.findIndex($scope.hiatus, { 'key': key });
+            var traveller = $scope.hiatus[index];
+
+            $scope.hiatus.splice(index, 1);
+            $scope.characters.push(traveller);
         });
     };
 

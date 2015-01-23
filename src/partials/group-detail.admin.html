@@ -65,16 +65,15 @@
 	            </p>
 			      </a>
 
-          	<i class="fa fa-angellist" ng-click="hiatus_character(character.key)"></i> |
           	<i class="fa fa-bomb" ng-click="kill_character(character.key)"></i> |
-          	<i class="fa fa-trash" ng-click="delete_character(character.key)"></i>
+          	<i class="fa fa-angellist" ng-click="hiatus_character(character.key)"></i>
 			    </div>
 				</li>
 			</ul>
 
 			<h2>Off in the World Somewhere</h2>
 
-			<ul class="characters" dnd-list="characters">
+			<ul class="hiatus" dnd-list="hiatus">
 				<li class="character-card--admin card" ng-repeat="character in hiatus">
 					<div class="toolbar">
 						<a ui-sref="character-detail.advanced({character_key: character.key})">
@@ -98,7 +97,7 @@
 
 			<h2>Graveyard</h2>
 
-			<ul class="characters" dnd-list="characters">
+			<ul class="graveyard" dnd-list="graveyard">
 				<li class="character-card--admin card" ng-repeat="character in graveyard">
 					<div class="toolbar">
 						<a ui-sref="character-detail.advanced({character_key: character.key})">
