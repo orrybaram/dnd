@@ -5,15 +5,28 @@ import logging
 class User(db.Model):
     user_id = db.StringProperty()
     name = db.StringProperty()
+    nickname = db.StringProperty(default=None)
+    avatar = db.BlobProperty(default=None)
+
     is_admin = db.BooleanProperty(default=False)
 
     groups = db.ListProperty(db.Key)
 
+    def get_avatar_url(self):
+        if self.avatar:
+            return '/images?user_key=%s' % (str(self.key()))
+        else:
+            return None
+
     def serializable(self):
-        result = {}
-        result["key"] = str(self.key())
-        result["name"] = str(self.name)
-        result["user_id"] = str(self.user_id)
+        result = {
+            'key': str(self.key()),
+            'nickname': self.nickname,
+            'name': self.name,
+            'user_id': self.user_id,
+            'avatar_url': self.get_avatar_url()
+        }
+
         return result
 
 class Group(db.Model):
@@ -33,7 +46,7 @@ class Group(db.Model):
         for member in self.members:
             _members.append(member.serializable())
 
-        values = {
+        result = {
             'date_created': self.date_created.isoformat(),
             'key': str(self.key()),
             'name': self.name,
@@ -43,15 +56,19 @@ class Group(db.Model):
         }
 
         if self.dm:
-            values['dm'] = self.dm.serializable()
+            result['dm'] = self.dm.serializable()
 
-        return values
+        return result
 
 
 class Character(db.Model):
     date_created = db.DateTimeProperty(auto_now_add=True)
-    group = db.ReferenceProperty(Group, collection_name="players", default=None)
     user = db.UserProperty()
+
+    group = db.ReferenceProperty(Group, collection_name="players", default=None)
+
+    is_dead = db.BooleanProperty(default=False)
+    is_gone = db.BooleanProperty(default=False)
 
     # Basics
     name = db.StringProperty()

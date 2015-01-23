@@ -7,13 +7,16 @@
 			<ul class="member-list" dnd-list="members">
           <li class="dm card">
 						<div class="toolbar">
-								<div class="avatar micro default">
-									<span>{{ group.dm.name[0] }}</span>
-								</div>
-								<h1>{{ group.dm.name }}</h1>
-								<p class="char-bio">
-			              Motherfucking Master of the Universe
-			          </p>
+							<div ng-if="group.dm.avatar_url" class="avatar micro" style="background-image: url('{{ group.dm.avatar_url }}')"></div>
+							<div ng-if="!group.dm.avatar_url" class="avatar micro default">
+								<span>{{ group.dm.nickname[0] || group.dm.name[0] }}</span>
+							</div>
+
+							<h1>{{ group.dm.nickname || group.dm.name }}</h1>
+
+							<p class="char-bio">
+		              Motherfucking Master of the Universe
+		          </p>
 				    </div>
           </li>
       </ul>
@@ -24,12 +27,14 @@
 			<ul class="member-list" dnd-list="members">
           <li class="member card" ng-repeat="member in group.members">
 						<div class="toolbar">
-								<div class="avatar micro default">
-									<span>{{ member.name[0] }}</span>
-								</div>
-								<h1>{{ member.name }}</h1>
+							<div ng-if="member.avatar_url" class="avatar micro" style="background-image: url('{{ member.avatar_url }}')"></div>
+							<div ng-if="!member.avatar_url" class="avatar micro default">
+								<span>{{ member.nickname[0] || member.name[0] }}</span>
+							</div>
 
-	          		<i class="fa fa-trash" ng-click="delete_member(member.id)"></i> | <i class="fa fa-magic" ng-click="set_dm(member.key)"></i>
+							<h1>{{ member.nickname || member.name }}</h1>
+
+          		<i class="fa fa-trash" ng-click="delete_member(member.id)"></i> | <i class="fa fa-magic" ng-click="set_dm(member.key)"></i>
 				    </div>
           </li>
 
@@ -48,23 +53,71 @@
 				<li class="character-card--admin card" ng-repeat="character in characters">
 					<div class="toolbar">
 						<a ui-sref="character-detail.advanced({character_key: character.key})">
-							<div ng-if="character.avatar_url && character.avatar_url !== 'None'" class="avatar micro" style="background-image: url('{{character.avatar_url}}')"></div>
-							<div ng-if="!character.avatar_url || character.avatar_url === 'None'" class="avatar micro default">
-								<span>{{character.name[0]}}</span>
+							<div ng-if="character.avatar_url" class="avatar micro" style="background-image: url('{{ character.avatar_url }}')"></div>
+							<div ng-if="!character.avatar_url" class="avatar micro default">
+								<span>{{ character.nickname[0] || character.name[0] }}</span>
 							</div>
-							<h1>{{ character.name }}</h1>
+
+							<h1>{{ character.nickname || character.name }}</h1>
+
 							<p class="char-bio">
-	                A level {{character.level}} {{character.char_race || 'noob'}} {{character.char_class}}
+	                A level {{ character.level }} {{ character.char_race || 'noob' }} {{ character.char_class }}
 	            </p>
 			      </a>
 
-          	<i class="fa fa-trash" ng-click="delete_character()"></i>
+          	<i class="fa fa-bomb" ng-click="kill_character(character.key)"></i> |
+          	<i class="fa fa-angellist" ng-click="hiatus_character(character.key)"></i>
+			    </div>
+				</li>
+			</ul>
+
+			<h2>Off in the World Somewhere</h2>
+
+			<ul class="hiatus" dnd-list="hiatus">
+				<li class="character-card--admin card" ng-repeat="character in hiatus">
+					<div class="toolbar">
+						<a ui-sref="character-detail.advanced({character_key: character.key})">
+							<div ng-if="character.avatar_url" class="avatar micro" style="background-image: url('{{ character.avatar_url }}')"></div>
+							<div ng-if="!character.avatar_url" class="avatar micro default">
+								<span>{{ character.nickname[0] || character.name[0] }}</span>
+							</div>
+
+							<h1>{{ character.nickname || character.name }}</h1>
+
+							<p class="char-bio">
+	                A level {{ character.level }} {{ character.char_race || 'noob' }} {{ character.char_class }}
+	            </p>
+			      </a>
+
+          	<i class="fa fa-users" ng-click="return_character(character.key)"></i> |
+          	<i class="fa fa-trash" ng-click="delete_character(character.key)"></i>
+			    </div>
+				</li>
+			</ul>
+
+			<h2>Graveyard</h2>
+
+			<ul class="graveyard" dnd-list="graveyard">
+				<li class="character-card--admin card" ng-repeat="character in graveyard">
+					<div class="toolbar">
+						<a ui-sref="character-detail.advanced({character_key: character.key})">
+							<div ng-if="character.avatar_url" class="avatar micro" style="background-image: url('{{ character.avatar_url }}')"></div>
+							<div ng-if="!character.avatar_url" class="avatar micro default">
+								<span>{{ character.nickname[0] || character.name[0] }}</span>
+							</div>
+
+							<h1>{{ character.nickname || character.name }}</h1>
+
+							<p class="char-bio">
+	                A level {{ character.level }} {{ character.char_race || 'noob' }} {{ character.char_class }}
+	            </p>
+			      </a>
+
+          	<i class="fa fa-bolt" ng-click="resurrect_character(character.key)"></i> |
+          	<i class="fa fa-trash" ng-click="delete_character(character.key)"></i>
 			    </div>
 				</li>
 			</ul>
 		</div>
 	</div>
 </div>
-
-
-<!--  -->

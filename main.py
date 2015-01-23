@@ -52,6 +52,7 @@ class MainHandler(webapp2.RequestHandler):
             if not user:
                 user = User()
                 user.name = str(current_user)
+                user.nickname = current_user.nickname()
                 user.user_id = current_user.user_id()
                 user.put()
 
@@ -86,7 +87,18 @@ class GroupCreate(webapp2.RequestHandler):
 
         group = Group()
         group.name = data.get('name')
+
         group.put()
+
+        current_user = users.get_current_user()
+        user = User.all().filter('user_id =', current_user.user_id()).get()
+
+        if user and (group.key() not in user.groups):
+            logging.info('adding user to group')
+            user.groups.append(group.key())
+            user.put()
+
+        group = Group.get(group.key())
 
         self.response.headers['Content-Type'] = 'application/json'
         self.response.out.write(json.dumps(group.serializable()))
@@ -96,6 +108,7 @@ class GroupList(webapp2.RequestHandler):
 
         values = []
         _groups= Group.all().fetch(100)
+
         for group in _groups:
             values.append(group.serializable());
 
@@ -105,6 +118,7 @@ class GroupList(webapp2.RequestHandler):
 class GroupUpdate(webapp2.RequestHandler):
     def post(self, group_key):
         data = json.loads(self.request.body)
+
         group = Group.get(group_key)
 
         group.story = data.get('story')
@@ -155,7 +169,8 @@ class SetDungeonMaster(webapp2.RequestHandler):
         group.put()
 
         values = {
-            'info': 'dm set'
+            'info': 'dm set',
+            'dm' : group.dm.serializable()
         }
 
         logging.info('group dm: ' + group.dm.name)
@@ -167,13 +182,23 @@ class GroupDetail(webapp2.RequestHandler):
     def get(self, group_key):
         group = Group.get(group_key)
         players = []
+        graveyard = []
+        hiatus = []
 
         for player in group.players:
-            players.append(player.serializable())
+            logging.info('player: ' + player.name + ' dead: ' + str(player.is_dead) + ' gone: ' + str(player.is_gone))
+            if (player.is_dead):
+                graveyard.append(player.serializable())
+            elif (player.is_gone):
+                hiatus.append(player.serializable())
+            else:
+                players.append(player.serializable())
 
         values = {
             'group': group.serializable(),
             'players': players,
+            'graveyard':graveyard,
+            'hiatus':hiatus
         }
 
         self.response.headers['Content-Type'] = 'application/json'
@@ -192,6 +217,7 @@ class CharacterDelete(webapp2.RequestHandler):
                 'info':'character deleted'
             }
         else:
+            self.response.set_status(500)
             values = {
                 "error": "You don't have permission"
             }
@@ -241,6 +267,50 @@ class AvatarUpload(webapp2.RequestHandler):
         character.put()
 
         self.redirect("/#/character/%s" % (character.key()))
+
+class CharacterKill(webapp2.RequestHandler):
+    def post(self, character_key):
+
+        character = Character.get(character_key)
+        character.is_dead = True;
+        character.is_gone = False;
+        character.put()
+
+        self.response.headers['Content-Type'] = 'application/json'
+        self.response.out.write(json.dumps({"success": True}))
+
+class CharacterResurrect(webapp2.RequestHandler):
+    def post(self, character_key):
+
+        character = Character.get(character_key)
+        character.is_dead = False;
+        character.is_gone = False;
+        character.put()
+
+        self.response.headers['Content-Type'] = 'application/json'
+        self.response.out.write(json.dumps({"success": True}))
+
+class CharacterHiatus(webapp2.RequestHandler):
+    def post(self, character_key):
+
+        character = Character.get(character_key)
+        character.is_dead = False;
+        character.is_gone = True;
+        character.put()
+
+        self.response.headers['Content-Type'] = 'application/json'
+        self.response.out.write(json.dumps({"success": True}))
+
+class CharacterReturn(webapp2.RequestHandler):
+    def post(self, character_key):
+
+        character = Character.get(character_key)
+        character.is_dead = False;
+        character.is_gone = False;
+        character.put()
+
+        self.response.headers['Content-Type'] = 'application/json'
+        self.response.out.write(json.dumps({"success": True}))
 
 class CharacterUpdate(webapp2.RequestHandler):
     def post(self, character_key):
@@ -403,6 +473,7 @@ app = webapp2.WSGIApplication([
     ('/images/?', Image),
     ('/api/v1/character/create/?', CharacterCreate),
     ('/api/v1/users/list/?', UserList),
+
     ('/api/v1/groups/create/?', GroupCreate),
     ('/api/v1/groups/list/?', GroupList),
     ('/api/v1/groups/(?P<group_key>[^/]+)/?', GroupDetail),
@@ -410,9 +481,14 @@ app = webapp2.WSGIApplication([
     ('/api/v1/groups/(?P<group_key>[^/]+)/dm/?', SetDungeonMaster),
     ('/api/v1/groups/(?P<group_key>[^/]+)/members/add?/', GroupAddMember),
     ('/api/v1/groups/(?P<group_key>[^/]+)/members/(?P<member_key>[^/]+)/delete/?', GroupDeleteMember),
+
     ('/api/v1/character/(?P<character_key>[^/]+)/?', CharacterDetail),
     ('/api/v1/character/(?P<character_key>[^/]+)/update/?', CharacterUpdate),
     ('/api/v1/character/(?P<character_key>[^/]+)/delete/?', CharacterDelete),
+    ('/api/v1/character/(?P<character_key>[^/]+)/kill/?', CharacterKill),
+    ('/api/v1/character/(?P<character_key>[^/]+)/resurrect/?', CharacterResurrect),
+    ('/api/v1/character/(?P<character_key>[^/]+)/hiatus/?', CharacterHiatus),
+    ('/api/v1/character/(?P<character_key>[^/]+)/return/?', CharacterReturn),
     ('/api/v1/character/(?P<character_key>[^/]+)/avatar/?', AvatarUpload),
     ('/api/v1/character/(?P<character_key>[^/]+)/powers/add/?', CharacterAddPower),
     ('/api/v1/character/(?P<character_key>[^/]+)/powers/(?P<power_key>[^/]+)/delete/?', CharacterDeletePower),
