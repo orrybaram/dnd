@@ -52,6 +52,7 @@ class MainHandler(webapp2.RequestHandler):
             if not user:
                 user = User()
                 user.name = str(current_user)
+                user.nickname = current_user.nickname()
                 user.user_id = current_user.user_id()
                 user.put()
 
