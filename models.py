@@ -13,7 +13,6 @@ class User(db.Model):
     groups = db.ListProperty(db.Key)
 
     def get_avatar_url(self):
-        logging.info(self.avatar)
         if self.avatar:
             return '/images?user_key=%s' % (str(self.key()))
         else:

@@ -47,6 +47,9 @@ angular.module('app.controllers', [])
 
             $scope.group = response.data.group;
             $scope.characters = response.data.players;
+            $scope.graveyard = response.data.graveyard;
+            $scope.hiatus = response.data.hiatus;
+
             $scope.ui.loading = false;
 
             var _cache = [];
@@ -282,7 +285,10 @@ angular.module('app.controllers', [])
             console.log(response);
 
             var index = _.findIndex($scope.characters, { 'key': key });
+            var ghost = $scope.characters[index];
+
             $scope.characters.splice(index, 1);
+            $scope.graveyard.add(ghost);
         });
     };
 

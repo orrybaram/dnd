@@ -169,13 +169,23 @@ class GroupDetail(webapp2.RequestHandler):
     def get(self, group_key):
         group = Group.get(group_key)
         players = []
+        graveyard = []
+        hiatus = []
 
         for player in group.players:
-            players.append(player.serializable())
+            logging.info('player: ' + player.name + ' dead: ' + str(player.is_dead) + ' gone: ' + str(player.is_gone))
+            if (player.is_dead):
+                graveyard.append(player.serializable())
+            elif (player.is_gone):
+                hiatus.append(player.serializable())
+            else:
+                players.append(player.serializable())
 
         values = {
             'group': group.serializable(),
             'players': players,
+            'graveyard':graveyard,
+            'hiatus':hiatus
         }
 
         self.response.headers['Content-Type'] = 'application/json'

@@ -65,7 +65,56 @@
 	            </p>
 			      </a>
 
+          	<i class="fa fa-angellist" ng-click="hiatus_character(character.key)"></i> |
           	<i class="fa fa-bomb" ng-click="kill_character(character.key)"></i> |
+          	<i class="fa fa-trash" ng-click="delete_character(character.key)"></i>
+			    </div>
+				</li>
+			</ul>
+
+			<h2>Off in the World Somewhere</h2>
+
+			<ul class="characters" dnd-list="characters">
+				<li class="character-card--admin card" ng-repeat="character in hiatus">
+					<div class="toolbar">
+						<a ui-sref="character-detail.advanced({character_key: character.key})">
+							<div ng-if="character.avatar_url" class="avatar micro" style="background-image: url('{{ character.avatar_url }}')"></div>
+							<div ng-if="!character.avatar_url" class="avatar micro default">
+								<span>{{ character.nickname[0] || character.name[0] }}</span>
+							</div>
+
+							<h1>{{ character.nickname || character.name }}</h1>
+
+							<p class="char-bio">
+	                A level {{ character.level }} {{ character.char_race || 'noob' }} {{ character.char_class }}
+	            </p>
+			      </a>
+
+          	<i class="fa fa-users" ng-click="return_character(character.key)"></i> |
+          	<i class="fa fa-trash" ng-click="delete_character(character.key)"></i>
+			    </div>
+				</li>
+			</ul>
+
+			<h2>Graveyard</h2>
+
+			<ul class="characters" dnd-list="characters">
+				<li class="character-card--admin card" ng-repeat="character in graveyard">
+					<div class="toolbar">
+						<a ui-sref="character-detail.advanced({character_key: character.key})">
+							<div ng-if="character.avatar_url" class="avatar micro" style="background-image: url('{{ character.avatar_url }}')"></div>
+							<div ng-if="!character.avatar_url" class="avatar micro default">
+								<span>{{ character.nickname[0] || character.name[0] }}</span>
+							</div>
+
+							<h1>{{ character.nickname || character.name }}</h1>
+
+							<p class="char-bio">
+	                A level {{ character.level }} {{ character.char_race || 'noob' }} {{ character.char_class }}
+	            </p>
+			      </a>
+
+          	<i class="fa fa-bolt" ng-click="resurrect_character(character.key)"></i> |
           	<i class="fa fa-trash" ng-click="delete_character(character.key)"></i>
 			    </div>
 				</li>
