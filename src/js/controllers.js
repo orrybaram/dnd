@@ -236,8 +236,9 @@ angular.module('app.controllers', [])
     $scope.set_dm = function(user_key) {
         console.log(user_key);
 
-        $http.post('/api/v1/groups/' + $scope.group.key + '/dm', {'user_key': user_key}).then(function(data) {
-            console.log(data);
+        $http.post('/api/v1/groups/' + $scope.group.key + '/dm', {'user_key': user_key}).then(function(response) {
+            console.log(response);
+            $scope.group.dm = response.data.dm;
         });
     };
 

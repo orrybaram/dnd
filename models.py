@@ -64,8 +64,12 @@ class Group(db.Model):
 
 class Character(db.Model):
     date_created = db.DateTimeProperty(auto_now_add=True)
-    group = db.ReferenceProperty(Group, collection_name="players", default=None)
     user = db.UserProperty()
+
+    group = db.ReferenceProperty(Group, collection_name="players", default=None)
+
+    is_dead = db.BooleanProperty(default=False)
+    is_gone = db.BooleanProperty(default=False)
 
     # Basics
     name = db.StringProperty()

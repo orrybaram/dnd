@@ -156,7 +156,8 @@ class SetDungeonMaster(webapp2.RequestHandler):
         group.put()
 
         values = {
-            'info': 'dm set'
+            'info': 'dm set',
+            'dm' : group.dm.serializable()
         }
 
         logging.info('group dm: ' + group.dm.name)
@@ -242,6 +243,50 @@ class AvatarUpload(webapp2.RequestHandler):
         character.put()
 
         self.redirect("/#/character/%s" % (character.key()))
+
+class CharacterKill(webapp2.RequestHandler):
+    def post(self, character_key):
+
+        character = Character.get(character_key)
+        character.is_dead = True;
+        character.is_gone = False;
+        character.put()
+
+        self.response.headers['Content-Type'] = 'application/json'
+        self.response.out.write({"success": True})
+
+class CharacterResurrect(webapp2.RequestHandler):
+    def post(self, character_key):
+
+        character = Character.get(character_key)
+        character.is_dead = False;
+        character.is_gone = False;
+        character.put()
+
+        self.response.headers['Content-Type'] = 'application/json'
+        self.response.out.write({"success": True})
+
+class CharacterHiatus(webapp2.RequestHandler):
+    def post(self, character_key):
+
+        character = Character.get(character_key)
+        character.is_dead = False;
+        character.is_gone = True;
+        character.put()
+
+        self.response.headers['Content-Type'] = 'application/json'
+        self.response.out.write({"success": True})
+
+class CharacterReturn(webapp2.RequestHandler):
+    def post(self, character_key):
+
+        character = Character.get(character_key)
+        character.is_dead = False;
+        character.is_gone = False;
+        character.put()
+
+        self.response.headers['Content-Type'] = 'application/json'
+        self.response.out.write({"success": True})
 
 class CharacterUpdate(webapp2.RequestHandler):
     def post(self, character_key):
@@ -404,6 +449,7 @@ app = webapp2.WSGIApplication([
     ('/images/?', Image),
     ('/api/v1/character/create/?', CharacterCreate),
     ('/api/v1/users/list/?', UserList),
+
     ('/api/v1/groups/create/?', GroupCreate),
     ('/api/v1/groups/list/?', GroupList),
     ('/api/v1/groups/(?P<group_key>[^/]+)/?', GroupDetail),
@@ -411,9 +457,14 @@ app = webapp2.WSGIApplication([
     ('/api/v1/groups/(?P<group_key>[^/]+)/dm/?', SetDungeonMaster),
     ('/api/v1/groups/(?P<group_key>[^/]+)/members/add?/', GroupAddMember),
     ('/api/v1/groups/(?P<group_key>[^/]+)/members/(?P<member_key>[^/]+)/delete/?', GroupDeleteMember),
+
     ('/api/v1/character/(?P<character_key>[^/]+)/?', CharacterDetail),
     ('/api/v1/character/(?P<character_key>[^/]+)/update/?', CharacterUpdate),
     ('/api/v1/character/(?P<character_key>[^/]+)/delete/?', CharacterDelete),
+    ('/api/v1/character/(?P<character_key>[^/]+)/kill/?', CharacterKill),
+    ('/api/v1/character/(?P<character_key>[^/]+)/resurrect/?', CharacterResurrect),
+    ('/api/v1/character/(?P<character_key>[^/]+)/hiatus/?', CharacterHiatus),
+    ('/api/v1/character/(?P<character_key>[^/]+)/return/?', CharacterReturn),
     ('/api/v1/character/(?P<character_key>[^/]+)/avatar/?', AvatarUpload),
     ('/api/v1/character/(?P<character_key>[^/]+)/powers/add/?', CharacterAddPower),
     ('/api/v1/character/(?P<character_key>[^/]+)/powers/(?P<power_key>[^/]+)/delete/?', CharacterDeletePower),
