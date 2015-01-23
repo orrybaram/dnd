@@ -19,6 +19,7 @@ angular.module('app.controllers', [])
         $http.get('/api/v1/groups/list').then(function(response) {
             console.log(response);
             $scope.groups = response.data;
+            localStorage.setItem('encounter', angular.toJson([]));
         });
     };
 
@@ -49,6 +50,9 @@ angular.module('app.controllers', [])
             $scope.characters = response.data.players;
             $scope.graveyard = response.data.graveyard;
             $scope.hiatus = response.data.hiatus;
+
+            console.log("group:");
+            console.log($scope.group);
 
             $scope.ui.loading = false;
 

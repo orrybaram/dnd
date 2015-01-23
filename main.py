@@ -87,7 +87,18 @@ class GroupCreate(webapp2.RequestHandler):
 
         group = Group()
         group.name = data.get('name')
+
         group.put()
+
+        current_user = users.get_current_user()
+        user = User.all().filter('user_id =', current_user.user_id()).get()
+
+        if user and (group.key() not in user.groups):
+            logging.info('adding user to group')
+            user.groups.append(group.key())
+            user.put()
+
+        group = Group.get(group.key())
 
         self.response.headers['Content-Type'] = 'application/json'
         self.response.out.write(json.dumps(group.serializable()))
@@ -97,6 +108,7 @@ class GroupList(webapp2.RequestHandler):
 
         values = []
         _groups= Group.all().fetch(100)
+
         for group in _groups:
             values.append(group.serializable());
 
@@ -106,6 +118,7 @@ class GroupList(webapp2.RequestHandler):
 class GroupUpdate(webapp2.RequestHandler):
     def post(self, group_key):
         data = json.loads(self.request.body)
+
         group = Group.get(group_key)
 
         group.story = data.get('story')
