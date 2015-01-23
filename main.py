@@ -194,6 +194,7 @@ class CharacterDelete(webapp2.RequestHandler):
                 'info':'character deleted'
             }
         else:
+            self.response.set_status(500)
             values = {
                 "error": "You don't have permission"
             }
@@ -253,7 +254,7 @@ class CharacterKill(webapp2.RequestHandler):
         character.put()
 
         self.response.headers['Content-Type'] = 'application/json'
-        self.response.out.write({"success": True})
+        self.response.out.write(json.dumps({"success": True}))
 
 class CharacterResurrect(webapp2.RequestHandler):
     def post(self, character_key):
@@ -264,7 +265,7 @@ class CharacterResurrect(webapp2.RequestHandler):
         character.put()
 
         self.response.headers['Content-Type'] = 'application/json'
-        self.response.out.write({"success": True})
+        self.response.out.write(json.dumps({"success": True}))
 
 class CharacterHiatus(webapp2.RequestHandler):
     def post(self, character_key):
@@ -275,7 +276,7 @@ class CharacterHiatus(webapp2.RequestHandler):
         character.put()
 
         self.response.headers['Content-Type'] = 'application/json'
-        self.response.out.write({"success": True})
+        self.response.out.write(json.dumps({"success": True}))
 
 class CharacterReturn(webapp2.RequestHandler):
     def post(self, character_key):
@@ -286,7 +287,7 @@ class CharacterReturn(webapp2.RequestHandler):
         character.put()
 
         self.response.headers['Content-Type'] = 'application/json'
-        self.response.out.write({"success": True})
+        self.response.out.write(json.dumps({"success": True}))
 
 class CharacterUpdate(webapp2.RequestHandler):
     def post(self, character_key):
