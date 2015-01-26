@@ -112,7 +112,7 @@ angular.module('app.controllers', [])
 
         $http.post('/api/v1/character/create/', data).then(function(response) {
             console.log(response);
-            $state.go('character-detail', {character_key: response.data.character.key});
+            $state.go('character-detail.advanced', {character_key: response.data.character.key});
         }, function(err) {
             alert(err.data.error);
         });
