@@ -32,13 +32,9 @@ module.exports = function(options) {
     */
 
     var plugins = [
-        new ngAnnotatePlugin({
-            add: true,
-        }),
         new webpack.optimize.CommonsChunkPlugin({
             name: 'common',
             filename: 'common' + (options.production ? ".min" : "") + '.js',
-            chunks: ['admin', 'app'],
             minChunks: 2
         }),
         new webpack.optimize.LimitChunkCountPlugin({
@@ -57,6 +53,9 @@ module.exports = function(options) {
     */
     if (options.production) {
         plugins.push(
+            new ngAnnotatePlugin({
+                add: true,
+            }),
             new webpack.optimize.UglifyJsPlugin(),
             new webpack.optimize.DedupePlugin(),
             new webpack.NoErrorsPlugin()
@@ -82,10 +81,6 @@ module.exports = function(options) {
             query: {
                 presets: ['es2015']
             }
-        },
-        {
-            loader: 'ngtemplate!html',
-            test: /\.html$/
         }
     ];
 
@@ -101,21 +96,12 @@ module.exports = function(options) {
         entry: entry,
         output: output,
         plugins: plugins,
-        externals: {
-            jquery: "$"
-        },
         module: {
             loaders: loaders,
             extensions: ['.js', '']
         },
         resolve: {
-            alias: {
-                'utils': path.resolve(__dirname, './static/js/src/shared/utils.js'),
-                'lib': path.resolve(__dirname, './static/js/lib'),
-                'components': path.resolve(__dirname, './static/js/src/components'),
-                'shared': path.resolve(__dirname, './static/js/src/shared'),
-                'fixtures': path.resolve(__dirname, './static/js/fixtures'),
-            }
+            alias: {}
         }
     };
 };

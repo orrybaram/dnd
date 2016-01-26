@@ -27,7 +27,6 @@ import logging
 import urlparse
 import json
 
-
 from template_filters import  *
 
 from models import *
@@ -38,6 +37,11 @@ JINJA_ENVIRONMENT = jinja2.Environment(
     autoescape=True)
 
 JINJA_ENVIRONMENT.filters['to_json'] = to_json
+
+SETTINGS_LIVE_SITE = True
+DEVELOPMENT_ENVIRONMENT = os.environ.get("SERVER_SOFTWARE", "LIVE") in ['Development/1.0','Development/2.0']
+if DEVELOPMENT_ENVIRONMENT:
+    SETTINGS_LIVE_SITE = False    
 
 class MainHandler(webapp2.RequestHandler):
     def get(self):

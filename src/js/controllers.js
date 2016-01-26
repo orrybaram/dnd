@@ -14,6 +14,7 @@ angular.module('app.controllers', [])
     .controller('ModalInstanceCtrl', ModalInstanceCtrl)
 ;
 
+/** @ngInject */
 function GroupsCtrl($scope, $http, $state) {
 
     $scope.groups = [];
@@ -40,6 +41,9 @@ function GroupsCtrl($scope, $http, $state) {
 
     $scope.get_groups();
 }
+
+
+/** @ngInject */
 function GroupDetailCtrl($scope, $http, $state, $stateParams, $uibModal) {
     $scope.ui = {};
     $scope.ui.loading = false;
@@ -77,6 +81,8 @@ function GroupDetailCtrl($scope, $http, $state, $stateParams, $uibModal) {
 
     $scope.get_group_detail();
 }
+
+/** @ngInject */
 function GroupDetailDashboardCtrl($scope, $rootScope, $http, $state, $stateParams, $uibModal) {
     $rootScope.state = $state;
     $scope.new_character = {};
@@ -150,6 +156,7 @@ function GroupDetailDashboardCtrl($scope, $rootScope, $http, $state, $stateParam
     };
 }
 
+/** @ngInject */
 function GroupDetailEncounterCtrl($scope, $rootScope, $filter, $http, $state, $stateParams, $uibModal) {
     $rootScope.state = $state;
 
@@ -230,6 +237,7 @@ function GroupDetailEncounterCtrl($scope, $rootScope, $filter, $http, $state, $s
     };
 }
 
+/** @ngInject */
 function GroupDetailStoryCtrl($scope, $rootScope, $state, $http, $timeout, $stateParams, $uibModal, $log) {
     console.log($scope);
     $scope.save_group = function() {
@@ -242,6 +250,7 @@ function GroupDetailStoryCtrl($scope, $rootScope, $state, $http, $timeout, $stat
     };
 }
 
+/** @ngInject */
 function GroupDetailAdminCtrl($scope, $rootScope, $state, $http, $timeout, $stateParams, $uibModal, $log) {
     //if (!template_values.is_admin) {
     //    $state.go('group-detail');
@@ -370,6 +379,7 @@ function GroupDetailAdminCtrl($scope, $rootScope, $state, $http, $timeout, $stat
     $scope.get_user_detail();
 }
 
+/** @ngInject */
 function CharacterDetailCtrl($scope, $rootScope, $state, $http, $timeout, $stateParams, $uibModal, $log) {
 
     $scope.ui = {};
@@ -384,6 +394,8 @@ function CharacterDetailCtrl($scope, $rootScope, $state, $http, $timeout, $state
     var _character = _characters.filter(function(x) {
         return x.key = character_key;
     });
+
+    console.log(_character)
 
     $scope.character = _character;
 
@@ -611,6 +623,7 @@ function CharacterDetailCtrl($scope, $rootScope, $state, $http, $timeout, $state
     };
 }
 
+/** @ngInject */
 function CharacterDetailAdvancedCtrl($scope, $rootScope, $state, $http, $timeout, $stateParams, $uibModal, $log) {
 
     var character_key = $stateParams.character_key;
@@ -685,10 +698,12 @@ function CharacterDetailAdvancedCtrl($scope, $rootScope, $state, $http, $timeout
     };
 }
 
+
 function CharacterDetailSimpleCtrl() {
 
 }
 
+/** @ngInject */
 function ModalInstanceCtrl ($scope, $uibModalInstance, item) {
     $scope.item = item;
 

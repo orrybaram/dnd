@@ -43,4 +43,9 @@ libraries:
 - name: PIL
   version: latest
 
-
+skip_files:
+- ^(.*/)?.*/?node_modules/.*$
+- ^(.*/)?.*/sass/.*$
+- ^(.*/)?.*~$
+- ^(.*/)?.*\.DS_Store$
+- ^\..*$

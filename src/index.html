@@ -39,10 +39,9 @@
     <script src="js/powers.js"></script>
     <script src="js/items.js"></script>
     
-    <script src="dist/common.js"></script>
-    <script src="dist/main-bundle.js"></script>
+    <script src="dist/common{% if SETTINGS_LIVE_SITE %}.min{% endif %}.js"></script>
+    <script src="dist/main-bundle{% if SETTINGS_LIVE_SITE %}.min{% endif %}.js"></script>
 
-    
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
     <script>
     (function(b, o, i, l, e, r) {
