@@ -26,6 +26,9 @@ handlers:
 - url: /js
   static_dir: src/js
 
+- url: /dist
+  static_dir: dist
+
 - url: /fonts
   static_dir: src/fonts
 

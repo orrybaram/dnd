@@ -41,3 +41,8 @@ var RESERVED_POWER_TRAITS = [
     'level',
     'info',
 ];
+
+module.exports = {
+	XP_LEVELS: XP_LEVELS,
+	RESERVED_POWER_TRAITS: RESERVED_POWER_TRAITS
+}

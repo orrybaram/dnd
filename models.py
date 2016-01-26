@@ -257,7 +257,6 @@ class Character(db.Model):
     copper = db.IntegerProperty(default=0)
 
     def get_avatar_url(self):
-        logging.info(self.avatar)
         if self.avatar:
             return '/images?character_key=%s' % (str(self.key()))
         else:
