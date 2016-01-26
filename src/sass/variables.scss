@@ -1,6 +1,7 @@
-$primary: #607D8B;
-$darkPrimary: #455A64;
-$lightPrimary: #CFD8DC;
+
+$primary: #4C304C;
+$darkPrimary: darken($primary, 10%);
+$lightPrimary: lighten($primary, 10%);
 $accentColor: #CDDC39;
 $primaryText: #212121;
 $secondaryText: #727272;
@@ -9,8 +10,6 @@ $danger: #EA5252;
 $encounterPower: #961334;
 $atWillPower: #4A8B4A;
 $dailyPower: #2D2D2D;
-
-
 
 $zindex-modal: 10;
 

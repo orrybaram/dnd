@@ -22,7 +22,7 @@ h2 {
 .full-height {height: 100%;}
 
 a {
-	color: $primary;
+	color: $lightPrimary;
 }
 
 h3 {
@@ -94,7 +94,7 @@ h3 {
 		.avatar {
 			margin: 0px 10px 0 0;
 			text-align: center;
-			border: 3px solid $primary;
+			border: 3px solid $lightPrimary;
 			float:left;
 		}
 		.char-bio {
@@ -171,7 +171,7 @@ a {
 }
 
 .toolbar {
-	background: $darkPrimary;
+	background: $primary;
 	color: white;
 	position: relative;
 	padding: 10px;
@@ -197,7 +197,7 @@ a {
 }
 
 .secondary-toolbar {
-	background: $primary;
+	background: $lightPrimary;
 	
 	.tabs {
 		a {
@@ -210,7 +210,7 @@ a {
 			display: inline-block;
 
 			&.active {
-				background-color: lighten($primary, 10%);
+				background-color: lighten($lightPrimary, 10%);
 			}
 		}
 	}
@@ -302,7 +302,7 @@ label {
 	}
 
 	&.default {
-		background-color: $primary;
+		background-color: $lightPrimary;
 		
 		span {
 			font-size: 28px;	
