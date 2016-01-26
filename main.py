@@ -123,6 +123,7 @@ class GroupUpdate(webapp2.RequestHandler):
 
         group.story = data.get('story')
         group.notes = data.get('notes')
+        group.name = data.get('name')
         group.put()
 
         self.response.headers['Content-Type'] = 'application/json'

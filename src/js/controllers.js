@@ -2,8 +2,19 @@
 'use strict';
 
 angular.module('app.controllers', [])
+    .controller('GroupsCtrl', GroupsCtrl)
+    .controller('GroupDetailCtrl', GroupDetailCtrl)
+    .controller('GroupDetailDashboardCtrl', GroupDetailDashboardCtrl)
+    .controller('GroupDetailEncounterCtrl', GroupDetailEncounterCtrl)
+    .controller('GroupDetailStoryCtrl', GroupDetailStoryCtrl)
+    .controller('GroupDetailAdminCtrl', GroupDetailAdminCtrl)
+    .controller('CharacterDetailCtrl', CharacterDetailCtrl)
+    .controller('CharacterDetailAdvancedCtrl', CharacterDetailAdvancedCtrl)
+    .controller('CharacterDetailSimpleCtrl', CharacterDetailSimpleCtrl)
+    .controller('ModalInstanceCtrl', ModalInstanceCtrl)
+;
 
-.controller('GroupsCtrl', function($scope, $http, $state) {
+function GroupsCtrl($scope, $http, $state) {
 
     $scope.groups = [];
     $scope.new_group = {};
@@ -29,7 +40,7 @@ angular.module('app.controllers', [])
 
     $scope.get_groups();
 })
-.controller('GroupDetailCtrl', function($scope, $http, $state, $stateParams, $modal) {
+function GroupDetailCtrl($scope, $http, $state, $stateParams, $modal) {
     $scope.ui = {};
     $scope.ui.loading = false;
     $scope.group = {};
@@ -66,7 +77,7 @@ angular.module('app.controllers', [])
 
     $scope.get_group_detail();
 })
-.controller('GroupDetailDashboardCtrl', function($scope, $rootScope, $http, $state, $stateParams, $modal) {
+function GroupDetailDashboardCtrl($scope, $rootScope, $http, $state, $stateParams, $modal) {
     $rootScope.state = $state;
     $scope.new_character = {};
 
@@ -139,7 +150,7 @@ angular.module('app.controllers', [])
     };
 })
 
-.controller('GroupDetailEncounterCtrl', function($scope, $rootScope, $filter, $http, $state, $stateParams, $modal) {
+function GroupDetailEncounterCtrl($scope, $rootScope, $filter, $http, $state, $stateParams, $modal) {
     $rootScope.state = $state;
 
     var cached_encounter_characters = angular.fromJson(localStorage.getItem('encounter'));
@@ -219,7 +230,7 @@ angular.module('app.controllers', [])
     };
 })
 
-.controller('GroupDetailStoryCtrl', function($scope, $rootScope, $state, $http, $timeout, $stateParams, $modal, $log) {
+function GroupDetailStoryCtrl($scope, $rootScope, $state, $http, $timeout, $stateParams, $modal, $log) {
     console.log($scope);
     $scope.save_group = function() {
         $scope.ui.saving = true;
@@ -231,7 +242,7 @@ angular.module('app.controllers', [])
     };
 })
 
-.controller('GroupDetailAdminCtrl', function($scope, $rootScope, $state, $http, $timeout, $stateParams, $modal, $log) {
+function GroupDetailAdminCtrl($scope, $rootScope, $state, $http, $timeout, $stateParams, $modal, $log) {
     //if (!template_values.is_admin) {
     //    $state.go('group-detail');
     //}
@@ -345,10 +356,21 @@ angular.module('app.controllers', [])
         });
     };
 
+    $scope.save_group = function() {
+        console.log("hallo!")
+        $scope.ui.saving = true;
+        $http.post('/api/v1/groups/' + $scope.group.key + '/update/', $scope.group).then(function(response) {
+            console.log(response);
+            $timeout(function() {
+                $scope.ui.saving = false;
+            }, 3000);
+        });
+    };
+
     $scope.get_user_detail();
 })
 
-.controller('CharacterDetailCtrl', function($scope, $rootScope, $state, $http, $timeout, $stateParams, $modal, $log) {
+function CharacterDetailCtrl($scope, $rootScope, $state, $http, $timeout, $stateParams, $modal, $log) {
 
     $scope.ui = {};
     $scope.powers = DND_POWERS;
@@ -587,7 +609,7 @@ angular.module('app.controllers', [])
     };
 })
 
-.controller('CharacterDetailAdvancedCtrl', function($scope, $rootScope, $state, $http, $timeout, $stateParams, $modal, $log) {
+function CharacterDetailAdvancedCtrl($scope, $rootScope, $state, $http, $timeout, $stateParams, $modal, $log) {
 
     var character_key = $stateParams.character_key;
 
@@ -659,11 +681,11 @@ angular.module('app.controllers', [])
     };
 })
 
-.controller('CharacterDetailSimpleCtrl', function($scope, $rootScope, $state, $http, $timeout, $stateParams, $modal, $log) {
+function CharacterDetailSimpleCtrl($scope, $rootScope, $state, $http, $timeout, $stateParams, $modal, $log) {
 
 })
 
-.controller('ModalInstanceCtrl', function ($scope, $modalInstance, item) {
+function ModalInstanceCtrl ($scope, $modalInstance, item) {
     $scope.item = item;
 
     $scope.close = function () {
