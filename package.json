@@ -28,7 +28,8 @@
     "start": "webpack --config webpack_config/dev.webpack.config.js --progress --colors --watch --profile & gulp watch",
     "build": "webpack --config webpack_config/prod.webpack.config.js --progress --colors --profile",
     "serve": "dev_appserver.py --host 0.0.0.0 --port 8080 . & webpack --config webpack_config/dev.webpack.config.js --prog",
-    "dev-server": "dev_appserver.py --host 0.0.0.0 --port 8080 ."
+    "dev-server": "dev_appserver.py --host 0.0.0.0 --port 8080 .",
+    "deploy": "appcfg.py update ."
   },
   "dependencies": {
     "angular": "^1.4.9",

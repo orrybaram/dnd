@@ -41,7 +41,7 @@ JINJA_ENVIRONMENT.filters['to_json'] = to_json
 SETTINGS_LIVE_SITE = True
 DEVELOPMENT_ENVIRONMENT = os.environ.get("SERVER_SOFTWARE", "LIVE") in ['Development/1.0','Development/2.0']
 if DEVELOPMENT_ENVIRONMENT:
-    SETTINGS_LIVE_SITE = False    
+    SETTINGS_LIVE_SITE = False
 
 class MainHandler(webapp2.RequestHandler):
     def get(self):
@@ -62,11 +62,12 @@ class MainHandler(webapp2.RequestHandler):
 
             token = channel.create_channel(user.user_id)
 
+            values["SETTINGS_LIVE_SITE"] = SETTINGS_LIVE_SITE
             values["user"] = user
             values["template_values"] = {
                 'user_id': user.user_id,
                 'is_admin': user.is_admin,
-                'channel_token': token
+                'channel_token': token,
             }
         else:
             values["login_url"] = users.create_login_url('/')
