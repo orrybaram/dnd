@@ -692,7 +692,7 @@ function CharacterDetailAdvancedCtrl($scope, $rootScope, $state, $http, $timeout
 
         $scope.character.weapons.splice(index, 1);
 
-        $http.post('/api/v1/character/' + character_key + '/weapons/' + item.key + '/delete/').then(function(response) {
+        $http.post('/api/v1/character/' + character_key + '/weapons/' + weapon.key + '/delete/').then(function(response) {
             console.log(response);
         });
     };
