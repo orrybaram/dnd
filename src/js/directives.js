@@ -1,3 +1,6 @@
+const $ = require("jquery");
+require("jquery-ui");
+
 angular.module('directives', [])
 
 .directive('onFormChange',function($parse, $timeout) {
