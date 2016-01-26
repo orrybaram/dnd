@@ -94,21 +94,27 @@ class Character(db.Model):
     # Ability Scores
     strength = db.IntegerProperty(default=0)
     strength_abil_mod = db.IntegerProperty(default=0)
+    strength_misc_mod = db.IntegerProperty(default=0)
 
     constitution = db.IntegerProperty(default=0)
     constitution_abil_mod = db.IntegerProperty(default=0)
+    constitution_misc_mod = db.IntegerProperty(default=0) 
 
     dexterity = db.IntegerProperty(default=0)
     dexterity_abil_mod = db.IntegerProperty(default=0)
+    dexterity_misc_mod = db.IntegerProperty(default=0) 
 
     intelligence = db.IntegerProperty(default=0)
     intelligence_abil_mod = db.IntegerProperty(default=0)
+    intelligence_misc_mod = db.IntegerProperty(default=0) 
 
     wisdom = db.IntegerProperty(default=0)
     wisdom_abil_mod = db.IntegerProperty(default=0)
+    wisdom_misc_mod = db.IntegerProperty(default=0) 
 
     charisma = db.IntegerProperty(default=0)
     charisma_abil_mod = db.IntegerProperty(default=0)
+    charisma_misc_mod = db.IntegerProperty(default=0) 
 
 
     # Defenses
@@ -300,21 +306,27 @@ class Character(db.Model):
             # Ability Scores
             'strength': self.strength,
             'strength_abil_mod': self.strength_abil_mod,
+            'strength_misc_mod': self.strength_misc_mod,
 
             'constitution': self.constitution,
             'constitution_abil_mod': self.constitution_abil_mod,
+            'constitution_misc_mod': self.constitution_misc_mod,
 
             'dexterity': self.dexterity,
             'dexterity_abil_mod': self.dexterity_abil_mod,
+            'dexterity_misc_mod': self.dexterity_misc_mod,
 
             'intelligence': self.intelligence,
             'intelligence_abil_mod': self.intelligence_abil_mod,
+            'intelligence_misc_mod': self.intelligence_misc_mod,
 
             'wisdom': self.wisdom,
             'wisdom_abil_mod': self.wisdom_abil_mod,
+            'wisdom_misc_mod': self.wisdom_misc_mod,
 
             'charisma': self.charisma,
             'charisma_abil_mod': self.charisma_abil_mod,
+            'charisma_misc_mod': self.charisma_misc_mod,
 
 
             # Defenses

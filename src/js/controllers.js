@@ -461,6 +461,10 @@ angular.module('app.controllers', [])
         return total;
     };
 
+    $scope.getTotalAbilityScore = function(ability) {
+        return parseInt($scope.character[ability]) + parseInt($scope.character[ability + '_misc_mod']);
+    }
+
     $scope.getDefenseTotal = function(defense) {
         var total = 10 + parseInt($scope.getHalfLevel());
 
