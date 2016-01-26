@@ -14,8 +14,17 @@ https://cloud.google.com/appengine/downloads
 
 #### Get dependencies
 `npm install`  
-`bower install`
 
-#### Build
-`gulp watch`
+#### Start compilation
+`npm run start`
+
+#### Dev Server
+`npm run dev-server`
+
+#### To Deply
+`npm run build`  
+Once it's finished, run:  
+`npm run deploy`
+
+
 
