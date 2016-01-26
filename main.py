@@ -27,7 +27,6 @@ import logging
 import urlparse
 import json
 
-
 from template_filters import  *
 
 from models import *
@@ -38,6 +37,11 @@ JINJA_ENVIRONMENT = jinja2.Environment(
     autoescape=True)
 
 JINJA_ENVIRONMENT.filters['to_json'] = to_json
+
+SETTINGS_LIVE_SITE = True
+DEVELOPMENT_ENVIRONMENT = os.environ.get("SERVER_SOFTWARE", "LIVE") in ['Development/1.0','Development/2.0']
+if DEVELOPMENT_ENVIRONMENT:
+    SETTINGS_LIVE_SITE = False    
 
 class MainHandler(webapp2.RequestHandler):
     def get(self):
@@ -94,7 +98,6 @@ class GroupCreate(webapp2.RequestHandler):
         user = User.all().filter('user_id =', current_user.user_id()).get()
 
         if user and (group.key() not in user.groups):
-            logging.info('adding user to group')
             user.groups.append(group.key())
             user.put()
 
@@ -123,6 +126,7 @@ class GroupUpdate(webapp2.RequestHandler):
 
         group.story = data.get('story')
         group.notes = data.get('notes')
+        group.name = data.get('name')
         group.put()
 
         self.response.headers['Content-Type'] = 'application/json'
@@ -130,7 +134,6 @@ class GroupUpdate(webapp2.RequestHandler):
 
 class GroupAddMember(webapp2.RequestHandler):
     def post(self, group_key):
-        logging.info(self.request.body)
         data = json.loads(self.request.body)
 
         group = Group.get(group_key)
@@ -163,8 +166,6 @@ class SetDungeonMaster(webapp2.RequestHandler):
         user = User.get(data.get('user_key'))
         group = Group.get(group_key)
 
-        logging.info('userid: ' + data.get('user_key') + ', username: ' + user.name)
-
         group.dm = user
         group.put()
 
@@ -172,8 +173,6 @@ class SetDungeonMaster(webapp2.RequestHandler):
             'info': 'dm set',
             'dm' : group.dm.serializable()
         }
-
-        logging.info('group dm: ' + group.dm.name)
 
         self.response.headers['Content-Type'] = 'application/json'
         self.response.out.write(json.dumps(values))
@@ -186,7 +185,6 @@ class GroupDetail(webapp2.RequestHandler):
         hiatus = []
 
         for player in group.players:
-            logging.info('player: ' + player.name + ' dead: ' + str(player.is_dead) + ' gone: ' + str(player.is_gone))
             if (player.is_dead):
                 graveyard.append(player.serializable())
             elif (player.is_gone):
@@ -255,8 +253,6 @@ class AvatarUpload(webapp2.RequestHandler):
     def post(self, character_key):
         character = Character.get(character_key)
         avatar = self.request.get('avatar')
-
-        logging.info('upload the image')
 
         avatar = db.Blob(str(avatar))
         avatar = images.Image(avatar)
@@ -400,7 +396,6 @@ class CharacterDeletePower(webapp2.RequestHandler):
 
 class CharacterAddItem(webapp2.RequestHandler):
     def post(self, character_key):
-        logging.info(self.request.body)
         data = json.loads(self.request.body)
         try:
             item = db.Query(Item).filter('name', data.get('name'))[0]
@@ -425,7 +420,6 @@ class CharacterDeleteItem(webapp2.RequestHandler):
 
 class CharacterAddWeapon(webapp2.RequestHandler):
     def post(self, character_key):
-        logging.info(self.request.body)
         data = json.loads(self.request.body)
 
         weapon = Weapon()
@@ -438,7 +432,6 @@ class CharacterAddWeapon(webapp2.RequestHandler):
 
 class CharacterUpdateWeapon(webapp2.RequestHandler):
     def post(self, character_key, weapon_key):
-        logging.info(self.request.body)
         data = json.loads(self.request.body)
 
         weapon = Weapon.get(weapon_key)

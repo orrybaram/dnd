@@ -1,9 +1,21 @@
-
-'use strict';
+const _ = require("lodash");
+const {XP_LEVELS, RESERVED_POWER_TRAITS} = require("./dnd-data");
 
 angular.module('app.controllers', [])
+    .controller('GroupsCtrl', GroupsCtrl)
+    .controller('GroupDetailCtrl', GroupDetailCtrl)
+    .controller('GroupDetailDashboardCtrl', GroupDetailDashboardCtrl)
+    .controller('GroupDetailEncounterCtrl', GroupDetailEncounterCtrl)
+    .controller('GroupDetailStoryCtrl', GroupDetailStoryCtrl)
+    .controller('GroupDetailAdminCtrl', GroupDetailAdminCtrl)
+    .controller('CharacterDetailCtrl', CharacterDetailCtrl)
+    .controller('CharacterDetailAdvancedCtrl', CharacterDetailAdvancedCtrl)
+    .controller('CharacterDetailSimpleCtrl', CharacterDetailSimpleCtrl)
+    .controller('ModalInstanceCtrl', ModalInstanceCtrl)
+;
 
-.controller('GroupsCtrl', function($scope, $http, $state) {
+/** @ngInject */
+function GroupsCtrl($scope, $http, $state) {
 
     $scope.groups = [];
     $scope.new_group = {};
@@ -28,8 +40,11 @@ angular.module('app.controllers', [])
     });
 
     $scope.get_groups();
-})
-.controller('GroupDetailCtrl', function($scope, $http, $state, $stateParams, $modal) {
+}
+
+
+/** @ngInject */
+function GroupDetailCtrl($scope, $http, $state, $stateParams, $uibModal) {
     $scope.ui = {};
     $scope.ui.loading = false;
     $scope.group = {};
@@ -65,8 +80,10 @@ angular.module('app.controllers', [])
     };
 
     $scope.get_group_detail();
-})
-.controller('GroupDetailDashboardCtrl', function($scope, $rootScope, $http, $state, $stateParams, $modal) {
+}
+
+/** @ngInject */
+function GroupDetailDashboardCtrl($scope, $rootScope, $http, $state, $stateParams, $uibModal) {
     $rootScope.state = $state;
     $scope.new_character = {};
 
@@ -126,7 +143,7 @@ angular.module('app.controllers', [])
         var index = _.findIndex(character.powers, {id: id});
         var power = character.powers[index];
 
-        var modalInstance = $modal.open({
+        var modalInstance = $uibModal.open({
             templateUrl: 'partials/power-modal.html',
             controller: 'ModalInstanceCtrl',
             size: 'sm',
@@ -137,9 +154,10 @@ angular.module('app.controllers', [])
             }
         });
     };
-})
+}
 
-.controller('GroupDetailEncounterCtrl', function($scope, $rootScope, $filter, $http, $state, $stateParams, $modal) {
+/** @ngInject */
+function GroupDetailEncounterCtrl($scope, $rootScope, $filter, $http, $state, $stateParams, $uibModal) {
     $rootScope.state = $state;
 
     var cached_encounter_characters = angular.fromJson(localStorage.getItem('encounter'));
@@ -206,7 +224,7 @@ angular.module('app.controllers', [])
         var index = _.findIndex(character.powers, {id: id});
         var power = angular.copy(character.powers[index]);
 
-        var modalInstance = $modal.open({
+        var modalInstance = $uibModal.open({
             templateUrl: 'partials/power-modal.html',
             controller: 'ModalInstanceCtrl',
             size: 'sm',
@@ -217,9 +235,10 @@ angular.module('app.controllers', [])
             }
         });
     };
-})
+}
 
-.controller('GroupDetailStoryCtrl', function($scope, $rootScope, $state, $http, $timeout, $stateParams, $modal, $log) {
+/** @ngInject */
+function GroupDetailStoryCtrl($scope, $rootScope, $state, $http, $timeout, $stateParams, $uibModal, $log) {
     console.log($scope);
     $scope.save_group = function() {
         $scope.ui.saving = true;
@@ -229,9 +248,10 @@ angular.module('app.controllers', [])
             }, 3000);
         });
     };
-})
+}
 
-.controller('GroupDetailAdminCtrl', function($scope, $rootScope, $state, $http, $timeout, $stateParams, $modal, $log) {
+/** @ngInject */
+function GroupDetailAdminCtrl($scope, $rootScope, $state, $http, $timeout, $stateParams, $uibModal, $log) {
     //if (!template_values.is_admin) {
     //    $state.go('group-detail');
     //}
@@ -345,10 +365,22 @@ angular.module('app.controllers', [])
         });
     };
 
-    $scope.get_user_detail();
-})
+    $scope.save_group = function() {
+        console.log("hallo!")
+        $scope.ui.saving = true;
+        $http.post('/api/v1/groups/' + $scope.group.key + '/update/', $scope.group).then(function(response) {
+            console.log(response);
+            $timeout(function() {
+                $scope.ui.saving = false;
+            }, 3000);
+        });
+    };
 
-.controller('CharacterDetailCtrl', function($scope, $rootScope, $state, $http, $timeout, $stateParams, $modal, $log) {
+    $scope.get_user_detail();
+}
+
+/** @ngInject */
+function CharacterDetailCtrl($scope, $rootScope, $state, $http, $timeout, $stateParams, $uibModal, $log) {
 
     $scope.ui = {};
     $scope.powers = DND_POWERS;
@@ -359,7 +391,11 @@ angular.module('app.controllers', [])
     var is_editting = false;
     var character_key = $stateParams.character_key;
     var _characters = angular.fromJson(localStorage.getItem('characters'));
-    var _character = _.where(_characters, {key: character_key})[0] || {};
+    var _character = _characters.filter(function(x) {
+        return x.key = character_key;
+    });
+
+    console.log(_character)
 
     $scope.character = _character;
 
@@ -524,7 +560,7 @@ angular.module('app.controllers', [])
         var index = _.findIndex($scope.character.powers, {id: id});
         var power = angular.copy($scope.character.powers[index]);
 
-        var modalInstance = $modal.open({
+        var modalInstance = $uibModal.open({
             templateUrl: 'partials/power-modal.html',
             controller: 'ModalInstanceCtrl',
             size: 'sm',
@@ -541,7 +577,7 @@ angular.module('app.controllers', [])
         var index = _.findIndex($scope.character.items, {id: id});
         var item = angular.copy($scope.character.items[index]);
 
-        var modalInstance = $modal.open({
+        var modalInstance = $uibModal.open({
             templateUrl: 'partials/item-modal.html',
             controller: 'ModalInstanceCtrl',
             size: 'sm',
@@ -558,7 +594,7 @@ angular.module('app.controllers', [])
         var index = _.findIndex($scope.character.weapons, {id: id});
         var weapon = angular.copy($scope.character.weapons[index]);
 
-        var modalInstance = $modal.open({
+        var modalInstance = $uibModal.open({
             templateUrl: 'partials/item-modal.html',
             controller: 'ModalInstanceCtrl',
             size: 'sm',
@@ -574,7 +610,7 @@ angular.module('app.controllers', [])
     $scope.open_upload_modal = function(id) {
         var character = angular.copy($scope.character);
 
-        var modalInstance = $modal.open({
+        var modalInstance = $uibModal.open({
             templateUrl: 'partials/upload-modal.html',
             controller: 'ModalInstanceCtrl',
             size: 'sm',
@@ -585,9 +621,10 @@ angular.module('app.controllers', [])
             }
         });
     };
-})
+}
 
-.controller('CharacterDetailAdvancedCtrl', function($scope, $rootScope, $state, $http, $timeout, $stateParams, $modal, $log) {
+/** @ngInject */
+function CharacterDetailAdvancedCtrl($scope, $rootScope, $state, $http, $timeout, $stateParams, $uibModal, $log) {
 
     var character_key = $stateParams.character_key;
 
@@ -606,9 +643,11 @@ angular.module('app.controllers', [])
 
         $scope.character.powers.splice(index, 1);
 
-        $http.post('/api/v1/character/' + character_key + '/powers/' + power.key + '/delete/').then(function(response) {
-            console.log(response);
-        });
+        $http.post('/api/v1/character/' + character_key + '/powers/' + power.key + '/delete/')
+            .then(function(response) {
+                console.log(response);
+            })
+        ;
     };
 
     $scope.add_item = function() {
@@ -657,21 +696,23 @@ angular.module('app.controllers', [])
             console.log(response);
         });
     };
-})
+}
 
-.controller('CharacterDetailSimpleCtrl', function($scope, $rootScope, $state, $http, $timeout, $stateParams, $modal, $log) {
 
-})
+function CharacterDetailSimpleCtrl() {
 
-.controller('ModalInstanceCtrl', function ($scope, $modalInstance, item) {
+}
+
+/** @ngInject */
+function ModalInstanceCtrl ($scope, $uibModalInstance, item) {
     $scope.item = item;
 
     $scope.close = function () {
-        $modalInstance.close();
+        $uibModalInstance.close();
     };
 
     $scope.cancel = function () {
-        $modalInstance.dismiss('cancel');
+        $uibModalInstance.dismiss('cancel');
     };
-});
+};
 
