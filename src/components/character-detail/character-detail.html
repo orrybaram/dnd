@@ -1,0 +1,27 @@
+<div ng-show="ui.saving" class="toast">Saving...</div>
+
+<form name="characterDetail" on-form-change="save_character()">
+    <div class="toolbar">
+        <a ui-sref="group-detail.dashboard({group_key: character.group_key})"><i class="fa fa-arrow-left"></i></a>
+        <div>
+            <div ng-click="open_upload_modal()" class="avatar" style="background-image: url('{{character.avatar_url}}')">
+                <p ng-show="!character.avatar_url">Upload Image</p>
+            </div>
+            <input class="title-input" ng-model="character.name" />
+            <p class="char-bio">
+                A level {{character.level}} {{character.char_race || 'noob'}} {{character.char_class}}
+            </p>
+        </div>
+    </div>
+    <div class="secondary-toolbar">
+        
+
+        <div class="tabs">
+            <a ng-class="{active: state.current.name === 'character-detail.advanced'}" ui-sref="character-detail.advanced">Detail</a>
+            <a ng-class="{active: state.current.name === 'character-detail.simple'}" ui-sref="character-detail.simple">Combat</a>
+        </div>
+    </div>
+    <div ui-view></div ui-view>
+</form>
+
+
