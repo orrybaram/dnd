@@ -61,12 +61,6 @@ class MainHandler(webapp2.RequestHandler):
                 user.user_id = current_user.user_id()
                 user.put()
 
-            try: 
-                token = channel.create_channel(user.user_id)
-                values['template_values']['channel_token'] = token
-            
-            except apiproxy_errors.OverQuotaError, message:
-                logging.error(message)
 
             values["SETTINGS_LIVE_SITE"] = SETTINGS_LIVE_SITE
             values["user"] = user
@@ -74,6 +68,13 @@ class MainHandler(webapp2.RequestHandler):
                 'user_id': user.user_id,
                 'is_admin': user.is_admin
             }
+
+            try: 
+                token = channel.create_channel(user.user_id)
+                values['template_values']['channel_token'] = token
+            
+            except apiproxy_errors.OverQuotaError, message:
+                logging.error(message)
         else:
             values["login_url"] = users.create_login_url('/')
 
