@@ -60,7 +60,10 @@ class MainHandler(webapp2.RequestHandler):
                 user.user_id = current_user.user_id()
                 user.put()
 
-            token = channel.create_channel(user.user_id)
+            try: 
+                token = channel.create_channel(user.user_id)
+            except apiproxy_errors.OverQuotaError, message:
+                logging.error(message)
 
             values["SETTINGS_LIVE_SITE"] = SETTINGS_LIVE_SITE
             values["user"] = user
@@ -347,10 +350,16 @@ class CharacterUpdate(webapp2.RequestHandler):
             }
 
             for player in group.players:
-                channel.send_message(player.user.user_id(), json.dumps(message))
+                try:
+                    channel.send_message(player.user.user_id(), json.dumps(message))
+                except apiproxy_errors.OverQuotaError, message:
+                    logging.error(message)
 
             if group.dm:
-                channel.send_message(group.dm.user_id, json.dumps(message))
+                try:
+                    channel.send_message(group.dm.user_id, json.dumps(message))
+                except apiproxy_errors.OverQuotaError, message:
+                    logging.error(message)
 
         except Exception, e:
             values = {'error': e}
