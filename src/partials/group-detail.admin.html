@@ -35,7 +35,7 @@
                     </div>
                 </li>
                 <li class="member">
-                    <input type="text" ng-model="new_member" typeahead="member as member.name for member in userlist | filter:{name:$viewValue} | limitTo:20" class="width-100">
+                    <input type="text" ng-model="new_member" uib-typeahead="member as member.name for member in userlist | filter:{name:$viewValue} | limitTo:20" class="width-100">
                     <button ng-click="add_member()" class="width-100">add</button>
                 </li>
             </ul>

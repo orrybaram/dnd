@@ -136,7 +136,6 @@ class GroupUpdate(webapp2.RequestHandler):
 class GroupAddMember(webapp2.RequestHandler):
     def post(self, group_key):
         data = json.loads(self.request.body)
-
         group = Group.get(group_key)
 
         try:
