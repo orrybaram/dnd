@@ -19,6 +19,7 @@ from google.appengine.ext.webapp import template
 from google.appengine.api import channel
 from google.appengine.api.datastore import Key
 from google.appengine.api import images
+from google.appengine.runtime import apiproxy_errors
 
 import webapp2
 import os
@@ -62,6 +63,7 @@ class MainHandler(webapp2.RequestHandler):
 
             try: 
                 token = channel.create_channel(user.user_id)
+                token['template_values']['channel_token'] = token
             except apiproxy_errors.OverQuotaError, message:
                 logging.error(message)
 
@@ -69,8 +71,7 @@ class MainHandler(webapp2.RequestHandler):
             values["user"] = user
             values["template_values"] = {
                 'user_id': user.user_id,
-                'is_admin': user.is_admin,
-                'channel_token': token,
+                'is_admin': user.is_admin
             }
         else:
             values["login_url"] = users.create_login_url('/')
