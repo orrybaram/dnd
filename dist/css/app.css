@@ -3396,11 +3396,14 @@ input.highlighted {
       margin-top: 15px; }
 
 .card--power {
+  position: relative;
   border: 10px solid #FFF;
   float: left;
   max-width: 400px;
-  max-height: 600px;
-  margin: 10px; }
+  height: 400px;
+  margin: 10px;
+  transition: all .1s;
+  overflow: auto; }
   .card--power .card-title {
     color: white;
     padding: 5px 10px;
@@ -3441,6 +3444,17 @@ input.highlighted {
       font-size: 8px;
       text-align: center;
       margin-top: 15px; }
+
+.card--tapped {
+  transform: rotate(2deg); }
+  .card--tapped:after {
+    content: "";
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.4); }
 
 .card--encounterpower .card-title {
   background: #961334; }
