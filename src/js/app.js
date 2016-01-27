@@ -48,7 +48,7 @@ function config($stateProvider, $urlRouterProvider, $locationProvider) {
 
         .state('group-detail.admin', {
             url: "/admin",
-            templateUrl: "/components/group-detail.admin.html",
+            templateUrl: "/components/group-detail/admin.html",
             controller: 'GroupDetailAdminCtrl'
         })
 
