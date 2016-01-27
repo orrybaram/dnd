@@ -1,6 +1,6 @@
 var webpack = require('webpack');
 var path = require("path");
-var ngAnnotatePlugin = require('ng-annotate-webpack-plugin');
+var ngAnnotatePlugin = require('ng-annotate-loader');
 require('ngtemplate-loader');
 
 module.exports = function(options) {
@@ -53,15 +53,14 @@ module.exports = function(options) {
     */
     if (options.production) {
         plugins.push(
-            new ngAnnotatePlugin({
-                add: true,
-            }),
+            // new ngAnnotatePlugin({
+            //     add: true,
+            // }),
             new webpack.optimize.UglifyJsPlugin(),
             new webpack.optimize.DedupePlugin(),
             new webpack.NoErrorsPlugin()
         );
     }
-
 
     /* 
         LOADERS
@@ -73,7 +72,14 @@ module.exports = function(options) {
     */
     var loaders = [
         {
-            loader: 'babel-loader',
+            loader:'ng-annotate?map=false',
+            test: /\.js$/,
+            exclude: [
+                path.resolve(__dirname, "node_modules"),
+            ],
+        },
+        {
+            loader:'babel-loader',
             test: /\.js$/,
             exclude: [
                 path.resolve(__dirname, "node_modules"),
@@ -81,7 +87,7 @@ module.exports = function(options) {
             query: {
                 presets: ['es2015']
             }
-        }
+        }, 
     ];
 
     // This is where the bundles will be output
