@@ -12,7 +12,7 @@
 							<div ng-if="!character.avatar_url || character.avatar_url === 'None'" class="avatar mini default">
 								<span>{{character.name[0]}}</span>
 							</div>
-							<h1>{{ character.name }}</h1>
+							<h1 title="{{character.name}}">{{ character.name }}</h1>
 							<p class="char-bio">
 				                A level {{character.level}} {{character.char_race || 'noob'}} {{character.char_class}}
 				            </p>

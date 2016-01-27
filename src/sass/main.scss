@@ -180,6 +180,9 @@ a {
 	h1 {
 		margin:0;
 		font-size: 20px;
+		white-space: nowrap;
+	    text-overflow: ellipsis;
+	    overflow: hidden;
 	}
 
 	.fa-arrow-left {
@@ -575,7 +578,7 @@ input.highlighted {
 	border: 10px solid #FFF;
 	float: left;
 	max-width: 400px;
-	height: 400px;
+	max-height: 500px;
 	margin: 10px;
 	transition: all .1s;
 	overflow: auto;
