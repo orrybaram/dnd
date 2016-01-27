@@ -196,6 +196,21 @@ a {
 	}
 }
 
+.toolbar--minimized {
+	.avatar {
+		height: 0;
+		width:0;
+	}
+	.title-input {
+		font-size: 20px;
+	}
+	.char-bio {
+		height: 0;
+		width: 0;
+		overflow: hidden;
+	}
+}
+
 .secondary-toolbar {
 	background: $lightPrimary;
 	
@@ -219,6 +234,7 @@ a {
 .char-bio {
 	color: rgba(255, 255, 255, 0.7);
 	text-align: center;
+	transition: all .2s;
 }
 
 .item {
@@ -247,6 +263,7 @@ a {
 	margin: 0 auto 0;
 	display: block;
 	width: 100%;
+	transition: all .2s;
 }
 
 .toast {
@@ -286,6 +303,8 @@ label {
 	cursor: pointer;
 	background-color: rgba(0, 0, 0, 0.25);
 	margin: 20px auto 0;
+	overflow:hidden;
+	transition: all .2s;
 
 	&.mini {
 		height: 50px;
@@ -548,6 +567,80 @@ input.highlighted {
 
 		.publishedIn {font-size: 8px; text-align: center; margin-top: 15px;}
 		
+	}
+}
+
+.card--power {
+	border: 10px solid #FFF;
+	float: left;
+	max-width: 400px;
+	max-height: 600px;
+	margin: 10px;
+
+	.card-title {
+		color: white;
+		padding: 5px 10px;
+		margin:0;
+		background-color:#447DB5;
+	}
+	.description {
+		background: #ECECBA;
+		color: #413623;
+		font-style: italic;
+		padding: 5px 10px;
+		font-size: 14px;
+		margin:0;
+	}
+
+	.trait {
+		padding: 5px 10px;
+		font-size: 14px;
+		color: $primaryText;
+		background-color: #F7F7ED;
+	}
+
+	.item-content {
+		padding: 10px;
+		font-size: 14px;
+		color: #212121;
+		background-color: #F7F7F7;
+		
+		h1 {
+			display:none;
+		}
+		h2 {
+			font-size: 12px;
+			margin: 12px 0 5px;
+			text-transform: uppercase;
+			border-bottom: 1px solid #DFDFDF;
+		}
+		img {display:none}
+
+		b {font-weight: bold;}
+
+		table {
+			width: 100%;
+			margin: 10px 0;
+		}
+
+		.publishedIn {font-size: 8px; text-align: center; margin-top: 15px;}
+		
+	}
+}
+
+.card--encounterpower {
+	.card-title {
+		background: $encounterPower;
+	}
+}
+.card--atwillpower {
+	.card-title {
+		background: $atWillPower;
+	}
+}
+.card--dailypower {
+	.card-title {
+		background: $dailyPower;
 	}
 }
 

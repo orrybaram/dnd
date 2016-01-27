@@ -3,6 +3,8 @@ module.exports = CharacterDetailAdvancedCtrl;
 /** @ngInject */
 function CharacterDetailAdvancedCtrl($scope, $rootScope, $state, $http, $timeout, $stateParams, $uibModal, $log) {
 
+    $rootScope.minimizeToolbar = false;
+    
     var character_key = $stateParams.character_key;
 
     $scope.add_power = function() {
