@@ -15,7 +15,7 @@ handlers:
   upload: favicon\.ico
 
 - url: /components
-  static_dir: components
+  static_dir: src/components
 
 - url: /css
   static_dir: dist/css
