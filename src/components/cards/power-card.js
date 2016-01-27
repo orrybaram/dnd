@@ -5,6 +5,10 @@ angular.module('directives.powerCard', [])
 function powerCard() {
 	return {
 		templateUrl: "components/cards/power-card.html",
-		link: function(scope) {}
+		link: function(scope) {
+			scope.tapCard = function($index) {
+				console.log("ahhhh")
+			}
+		}
 	}
 }

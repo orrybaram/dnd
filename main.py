@@ -63,7 +63,8 @@ class MainHandler(webapp2.RequestHandler):
 
             try: 
                 token = channel.create_channel(user.user_id)
-                token['template_values']['channel_token'] = token
+                values['template_values']['channel_token'] = token
+            
             except apiproxy_errors.OverQuotaError, message:
                 logging.error(message)
 
