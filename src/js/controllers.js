@@ -2,7 +2,7 @@ const _ = require("lodash");
 const {XP_LEVELS, RESERVED_POWER_TRAITS} = require("./dnd-data");
 
 angular.module('app.controllers', [])
-    .controller('GroupsCtrl', GroupsCtrl)
+    .controller('GroupsCtrl', require("components/group-detail"))
     .controller('GroupDetailCtrl', GroupDetailCtrl)
     .controller('GroupDetailDashboardCtrl', GroupDetailDashboardCtrl)
     .controller('GroupDetailEncounterCtrl', GroupDetailEncounterCtrl)
@@ -13,35 +13,6 @@ angular.module('app.controllers', [])
     .controller('CharacterDetailSimpleCtrl', CharacterDetailSimpleCtrl)
     .controller('ModalInstanceCtrl', ModalInstanceCtrl)
 ;
-
-/** @ngInject */
-function GroupsCtrl($scope, $http, $state) {
-
-    $scope.groups = [];
-    $scope.new_group = {};
-
-    $scope.create_group = function() {
-        $http.post('/api/v1/groups/create/', $scope.new_group).then(function(response) {
-            console.log(response);
-            $state.go('group-detail.dashboard', {group_key: response.data.key});
-        });
-    };
-
-    $scope.get_groups = function() {
-        $http.get('/api/v1/groups/list').then(function(response) {
-            console.log(response);
-            $scope.groups = response.data;
-            localStorage.setItem('encounter', angular.toJson([]));
-        });
-    };
-
-    $scope.groups.forEach(function(group) {
-        console.log(group);
-    });
-
-    $scope.get_groups();
-}
-
 
 /** @ngInject */
 function GroupDetailCtrl($scope, $http, $state, $stateParams, $uibModal) {
