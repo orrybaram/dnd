@@ -1,9 +1,10 @@
 var gulp = require('gulp');
-var sass = require('gulp-ruby-sass');
+var sass = require('gulp-sass');
 
 
 var paths = {
   sass: ['./src/sass/**/*.scss'],
+  sassDestPath: ['./dist/css']
 };
 
 
@@ -15,5 +16,5 @@ gulp.task('default', function() {
 });
 
 gulp.task('watch', function() {
-  gulp.watch(paths.sass, ['default']);
-})
+  	gulp.watch(paths.sass, ['default']);
+});

@@ -1,0 +1,27 @@
+<div class="card card--tile card--power card--{{power.type}}">
+	<div class="card-header ">
+	    <h3 class="card-title">{{ power.name }} <span class="right">{{power.level}}</span></h3>
+	</div>
+	<div class="content">    
+		<p class="description">{{ power.description }}</p>	    
+		<div class="trait"><strong>{{ power.info }}</strong></div>
+
+	    <div ng-repeat="(key, value) in power.primary">
+	    	<div class="trait">	    		
+	    		<strong>{{ key | removeUnderscores | capitalize }}:</strong> {{ value }}
+	    	</div>
+	    </div>
+
+	    <div ng-if="power.secondary_attack">
+	    	<div class="card-header {{power.type}}">
+	    	    <h3 class="card-title">{{ power.secondary_attack }}</h3>
+	    	</div>
+	    	<div class="trait"><strong>{{ power.secondary_info }}</strong></div>
+	    	<div ng-repeat="(key, value) in power.secondary">
+	    		<div class="trait">	    		
+	    			<strong>{{ key | removeUnderscores | capitalize }}:</strong> {{ value }}
+	    		</div>
+	    	</div>
+	    </div>
+	</div>
+</div>
