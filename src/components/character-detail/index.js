@@ -35,7 +35,7 @@ function CharacterDetailCtrl($scope, $rootScope, $state, $http, $timeout, $state
     $scope.get_character();
 
     $scope.$on('character-updated', function(event, args) {
-        if(!is_editting) {
+        if(!is_editting && $scope.character.key === args.character.key) {
             $scope.character = args.character;
             $scope.$apply();
         }

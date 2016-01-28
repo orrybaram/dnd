@@ -12,9 +12,7 @@ function GroupDetailDashboardCtrl($scope, $rootScope, $http, $state, $stateParam
 
     $scope.$on('character-updated', function(event, args) {
         console.log(args);
-
         var updated_char = args.character;
-
         for (var i = 0; i < $scope.characters.length; i++) {
             if ($scope.characters[i].key === updated_char.key) {
                 $scope.characters[i] = updated_char;
