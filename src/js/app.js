@@ -63,15 +63,20 @@ function config($stateProvider, $urlRouterProvider, $locationProvider) {
             templateUrl: "/components/character-detail/advanced.html",
             controller: 'CharacterDetailAdvancedCtrl as detail'
         })
+        .state('character-detail.simple', {
+            url: "/simple",
+            templateUrl: "/components/character-detail/simple.html",
+            controller: 'CharacterDetailSimpleCtrl'
+        })
         .state('character-detail.powers', {
             url: "/powers",
             templateUrl: "/components/character-detail/powers.html",
             controller: 'CharacterDetailPowersCtrl as detail'
         })
-        .state('character-detail.simple', {
-            url: "/simple",
-            templateUrl: "/components/character-detail/simple.html",
-            controller: 'CharacterDetailSimpleCtrl'
+        .state('character-detail.notes', {
+            url: "/notes",
+            templateUrl: "/components/character-detail/notes.html",
+            controller: 'CharacterDetailNotesCtrl as detail'
         })
     ;
 }

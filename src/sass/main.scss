@@ -381,10 +381,13 @@ textarea {
 	border: 1px solid #DBDBDB;
 	font-size: 14px;
 	height: 110px;
-	min-height: 25;
+	min-height: 25px;
 
 	&.mini {
 		height: 25px;
+	}
+	&.bigger {
+		height: 250px;
 	}
 }
 
