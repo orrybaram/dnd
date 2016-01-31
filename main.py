@@ -40,7 +40,7 @@ JINJA_ENVIRONMENT = jinja2.Environment(
 JINJA_ENVIRONMENT.filters['to_json'] = to_json
 
 SETTINGS_LIVE_SITE = True
-DEVELOPMENT_ENVIRONMENT = os.environ.get("SERVER_SOFTWARE", "LIVE") in ['Development/1.0','Development/2.0']
+DEVELOPMENT_ENVIRONMENT = os.environ['SERVER_SOFTWARE'].startswith('Development')
 if DEVELOPMENT_ENVIRONMENT:
     SETTINGS_LIVE_SITE = False
 
