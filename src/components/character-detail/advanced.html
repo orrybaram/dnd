@@ -903,10 +903,12 @@
                     </ul>
                     <div class="row">
                         <div class="columns small-9">
-                            <input type="text" ng-model="new_feat" uib-typeahead="feat as feat.name for feat in feats | filter:{name:$viewValue} | limitTo:20" class="width-100">
+                            <input type="text" ng-model="new_feat" uib-typeahead="feat as feat.name for feat in feats | filter:{name:$viewValue} | limitTo:20" typeahead-is-open="featTypeaheadOpen" typeahead-no-results="noFeatResults" class="width-100">
                         </div>
+
                         <div class="columns small-3">
-                            <button ng-click="add_feat()" class="width-100">add</button>
+                            <button ng-hide="noFeatResults" ng-click="add_feat()" class="width-100">add</button>
+                            <button ng-show="noFeatResults" ng-click="show_create_feat_modal()">Not listed? Create Feat</button>
                         </div>
                     </div>
                 </section>

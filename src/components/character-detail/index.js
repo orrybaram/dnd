@@ -23,16 +23,27 @@ function CharacterDetailCtrl($scope, $rootScope, $state, $http, $timeout, $state
 
     $scope.character = _character;
 
-    $scope.get_character = function() {
-        $http.get('/api/v1/character/' + character_key).then(function(response) {
-            console.log(response);
-            $scope.character = response.data.character;
+    $scope.get_character = get_character;
+    $scope.delete_character = delete_character;
+    $scope.save_character = save_character;
+    $scope.upload_avatar = upload_avatar;
+    $scope.getAbilModifier = getAbilModifier;
+    $scope.getInitiativeTotal = getInitiativeTotal;
+    $scope.getHalfLevel = getHalfLevel;
+    $scope.roundDown = roundDown;
+    $scope.get_bloodied = get_bloodied;
+    $scope.getTotalAbilityScore = getTotalAbilityScore;
+    $scope.getDefenseTotal = getDefenseTotal;
+    $scope.get_level = get_level;
+    $scope.get_speed = get_speed;
+    $scope.get_skill_total = get_skill_total;
+    $scope.open_power_modal = open_power_modal;
+    $scope.open_item_modal = open_item_modal;
+    $scope.open_weapon_modal = open_weapon_modal;
+    $scope.open_feat_modal = open_feat_modal;
+    $scope.open_upload_modal = open_upload_modal;
 
-            var idx = _.findIndex(_characters, {key: character_key});
-            _characters[idx] = $scope.character;
-            localStorage.setItem('characters', angular.toJson(_characters));
-        });
-    };
+   
     $scope.get_character();
 
     $scope.$on('character-updated', function(event, args) {
@@ -50,16 +61,27 @@ function CharacterDetailCtrl($scope, $rootScope, $state, $http, $timeout, $state
         $scope.xp_level_progress = Math.floor(($scope.your_xp_in_this_level / $scope.xp_in_level) * 100).toFixed(0);
     }, true);
 
-    $scope.delete_character = function() {
+     function get_character() {
+        $http.get('/api/v1/character/' + character_key).then(function(response) {
+            console.log(response);
+            $scope.character = response.data.character;
+
+            var idx = _.findIndex(_characters, {key: character_key});
+            _characters[idx] = $scope.character;
+            localStorage.setItem('characters', angular.toJson(_characters));
+        });
+    }
+
+    function delete_character() {
         $http.post('/api/v1/character/'+$scope.character.key+'/delete').then(function(response) {
             console.log(response);
             $state.go('group-detail.dashboard', {group_key: $scope.character.group_key });
         }, function(err) {
             alert(err.data.error);
         });
-    };
+    }
 
-    $scope.save_character = function() {
+    function save_character() {
         is_editting = true;
         $scope.ui.saving = true;
 
@@ -86,46 +108,46 @@ function CharacterDetailCtrl($scope, $rootScope, $state, $http, $timeout, $state
                 is_editting = false;
             }, 3000);
         });
-    };
+    }
 
-    $scope.upload_avatar = function() {
+    function upload_avatar() {
         $http.post('/api/v1/character/' + character_key + '/avatar/?avatar=' + $scope.upload.avatar).then(function(data) {
             console.log(data);
         });
-    };
+    }
 
-    $scope.getAbilModifier = function(score) {
+    function getAbilModifier(score) {
         return Math.floor((score - 10) / 2);
-    };
+    }
 
-    $scope.getHalfLevel = function() {
+    function getHalfLevel() {
         return Math.floor($scope.character.level / 2);
-    };
+    }
 
-    $scope.roundDown = function(score) {
+    function roundDown(score) {
         return Math.floor(score);
-    };
+    }
 
-    $scope.get_bloodied = function(hp) {
+    function get_bloodied(hp) {
         var bloodied = $scope.roundDown(hp / 2);
         $scope.character.hp_bloodied = bloodied;
         return bloodied;
 
-    };
+    }
 
-    $scope.getInitiativeTotal =function() {
+    function getInitiativeTotal() {
         var total = parseInt($scope.getAbilModifier($scope.character.dexterity));
         total += parseInt($scope.getHalfLevel());
         total += parseInt($scope.character.initiative_misc);
         $scope.character.initiative_score = total;
         return total;
-    };
+    }
 
-    $scope.getTotalAbilityScore = function(ability) {
+    function getTotalAbilityScore(ability) {
         return parseInt($scope.character[ability]) + parseInt($scope.character[ability + '_misc_mod']);
     }
 
-    $scope.getDefenseTotal = function(defense) {
+    function getDefenseTotal(defense) {
         var total = 10 + parseInt($scope.getHalfLevel());
 
         total += parseInt($scope.character[defense + '_abil']);
@@ -140,7 +162,7 @@ function CharacterDetailCtrl($scope, $rootScope, $state, $http, $timeout, $state
         return total;
     };
 
-    $scope.get_level = function() {
+    function get_level() {
         var level = 0;
 
         for (var i = 0; i < XP_LEVELS.length; i++) {
@@ -154,7 +176,7 @@ function CharacterDetailCtrl($scope, $rootScope, $state, $http, $timeout, $state
         return level;
     };
 
-    $scope.get_speed = function() {
+    function get_speed() {
         var speed = parseInt($scope.character.speed_base);
         speed += parseInt($scope.character.speed_armor);
         speed += parseInt($scope.character.speed_item);
@@ -163,7 +185,7 @@ function CharacterDetailCtrl($scope, $rootScope, $state, $http, $timeout, $state
         return speed;
     };
 
-    $scope.get_skill_total = function(skill, ability) {
+    function get_skill_total(skill, ability) {
         var total = 0;
 
         if($scope.character[skill + '_armor_penalty']) {
@@ -180,7 +202,7 @@ function CharacterDetailCtrl($scope, $rootScope, $state, $http, $timeout, $state
 
 
     // Power Modal
-    $scope.open_power_modal = function(id) {
+    function open_power_modal(id) {
         var index = _.findIndex($scope.character.powers, {id: id});
         var power = angular.copy($scope.character.powers[index]);
 
@@ -197,7 +219,7 @@ function CharacterDetailCtrl($scope, $rootScope, $state, $http, $timeout, $state
     };
 
     // Item Modal
-    $scope.open_item_modal = function(id) {
+    function open_item_modal(id) {
         var index = _.findIndex($scope.character.items, {id: id});
         var item = angular.copy($scope.character.items[index]);
 
@@ -214,7 +236,7 @@ function CharacterDetailCtrl($scope, $rootScope, $state, $http, $timeout, $state
     };
 
     // Weapon Modal
-    $scope.open_weapon_modal = function(id) {
+    function open_weapon_modal(id) {
         var index = _.findIndex($scope.character.weapons, {id: id});
         var weapon = angular.copy($scope.character.weapons[index]);
 
@@ -231,7 +253,7 @@ function CharacterDetailCtrl($scope, $rootScope, $state, $http, $timeout, $state
     };
 
     // Feat Modal
-    $scope.open_feat_modal = function(id) {
+    function open_feat_modal(id) {
         var index = _.findIndex($scope.character.feats, {id: id});
         var feat = angular.copy($scope.character.feats[index]);
 
@@ -248,7 +270,7 @@ function CharacterDetailCtrl($scope, $rootScope, $state, $http, $timeout, $state
     };
 
     // Upload Avatar Modal
-    $scope.open_upload_modal = function(id) {
+    function open_upload_modal(id) {
         var character = angular.copy($scope.character);
 
         var modalInstance = $uibModal.open({
