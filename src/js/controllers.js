@@ -11,6 +11,7 @@ angular.module('app.controllers', [])
     .controller('CharacterDetailAdvancedCtrl', require("components/character-detail/advanced"))
     .controller('CharacterDetailSimpleCtrl', require("components/character-detail/simple"))
     .controller('CharacterDetailPowersCtrl', require("components/character-detail/powers"))
+    .controller('CharacterDetailNotesCtrl', require("components/character-detail/notes"))
     .controller('ModalInstanceCtrl', ModalInstanceCtrl)
 ;
 

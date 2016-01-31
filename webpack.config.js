@@ -17,7 +17,6 @@ module.exports = function(options) {
         "main": "./src/js/index.js",
     };
 
-
     /* 
         PLUGINS
 

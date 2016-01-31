@@ -895,8 +895,23 @@
 
                 <section class="card">
                     <h2 class="section-header">Feats</h2>
-                    <textarea ng-model="character.feats"></textarea>
+                    <ul class="item-list">
+                        <li class="item" ng-repeat="feat in character.feats">
+                            <a ng-click="open_feat_modal(feat.id)">{{ feat.name }}</a>
+                            <i class="fa fa-times" ng-click="delete_feat(feat.id)"></i>
+                        </li>
+                    </ul>
+                    <div class="row">
+                        <div class="columns small-9">
+                            <input type="text" ng-model="new_feat" uib-typeahead="feat as feat.name for feat in feats | filter:{name:$viewValue} | limitTo:20" class="width-100">
+                        </div>
+                        <div class="columns small-3">
+                            <button ng-click="add_feat()" class="width-100">add</button>
+                        </div>
+                    </div>
                 </section>
+
+
                 <section class="card">
                     <h2 class="section-header">Powers</h2>
                     <ul class="item-list">

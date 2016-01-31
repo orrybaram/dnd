@@ -7,10 +7,14 @@ function GroupsCtrl($scope, $http, $state) {
     $scope.new_group = {};
 
     $scope.create_group = function() {
-        $http.post('/api/v1/groups/create/', $scope.new_group).then(function(response) {
-            console.log(response);
-            $state.go('group-detail.dashboard', {group_key: response.data.key});
-        });
+        $http.post('/api/v1/groups/create/', $scope.new_group)
+            .then(function(response) {
+                console.log(response);
+                $state.go('group-detail.dashboard', {group_key: response.data.key});
+            }, function(error) {
+                alert(error.data.error);
+            })
+        ;
     };
 
     $scope.get_groups = function() {

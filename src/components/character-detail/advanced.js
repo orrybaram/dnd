@@ -49,6 +49,27 @@ function CharacterDetailAdvancedCtrl($scope, $rootScope, $state, $http, $timeout
         });
     };
 
+    $scope.add_feat = function() {
+        var data = $scope.new_feat;
+        $http.post('/api/v1/character/' + character_key + '/feats/add/', data).then(function(response) {
+            console.log(response);
+            $scope.character.feats.push(response.data);
+            $scope.new_feat = '';
+        });
+    };
+
+    $scope.delete_feat = function(id) {
+        var index = _.findIndex($scope.character.feats, {id: id});
+        var feat = $scope.character.feats[index];
+
+        $scope.character.feats.splice(index, 1);
+
+        $http.post('/api/v1/character/' + character_key + '/feats/' + feat.key + '/delete/').then(function(response) {
+            console.log(response);
+        });
+    };
+
+
     $scope.add_weapon = function() {
         var data = $scope.new_weapon;
         $http.post('/api/v1/character/' + character_key + '/weapons/add/', data).then(function(response) {
