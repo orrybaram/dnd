@@ -10,6 +10,11 @@ handlers:
   # login: admin
   secure: always
 
+- url: /upload_json/*
+  script: upload_json.app
+  # login: admin
+  secure: always
+
 - url: /favicon\.ico
   static_files: favicon.ico
   upload: favicon\.ico

@@ -42,6 +42,7 @@ function CharacterDetailCtrl($scope, $rootScope, $state, $http, $timeout, $state
     $scope.open_weapon_modal = open_weapon_modal;
     $scope.open_feat_modal = open_feat_modal;
     $scope.open_upload_modal = open_upload_modal;
+    $scope.open_create_feat_modal = open_create_feat_modal;
 
    
     $scope.get_character();
@@ -160,7 +161,7 @@ function CharacterDetailCtrl($scope, $rootScope, $state, $http, $timeout, $state
         $scope.character[defense + '_total'] = total;
 
         return total;
-    };
+    }
 
     function get_level() {
         var level = 0;
@@ -174,7 +175,7 @@ function CharacterDetailCtrl($scope, $rootScope, $state, $http, $timeout, $state
         $scope.character.level = level;
 
         return level;
-    };
+    }
 
     function get_speed() {
         var speed = parseInt($scope.character.speed_base);
@@ -183,7 +184,7 @@ function CharacterDetailCtrl($scope, $rootScope, $state, $http, $timeout, $state
         speed += parseInt($scope.character.speed_misc);
         $scope.character.speed_total = speed;
         return speed;
-    };
+    }
 
     function get_skill_total(skill, ability) {
         var total = 0;
@@ -198,7 +199,7 @@ function CharacterDetailCtrl($scope, $rootScope, $state, $http, $timeout, $state
         total += parseInt($scope.character[skill + '_misc']);
         $scope.character[skill + '_total'] = total;
         return total;
-    };
+    }
 
 
     // Power Modal
@@ -216,7 +217,7 @@ function CharacterDetailCtrl($scope, $rootScope, $state, $http, $timeout, $state
                 }
             }
         });
-    };
+    }
 
     // Item Modal
     function open_item_modal(id) {
@@ -233,7 +234,7 @@ function CharacterDetailCtrl($scope, $rootScope, $state, $http, $timeout, $state
                 }
             }
         });
-    };
+    }
 
     // Weapon Modal
     function open_weapon_modal(id) {
@@ -250,7 +251,7 @@ function CharacterDetailCtrl($scope, $rootScope, $state, $http, $timeout, $state
                 }
             }
         });
-    };
+    }
 
     // Feat Modal
     function open_feat_modal(id) {
@@ -267,7 +268,7 @@ function CharacterDetailCtrl($scope, $rootScope, $state, $http, $timeout, $state
                 }
             }
         });
-    };
+    }
 
     // Upload Avatar Modal
     function open_upload_modal(id) {
@@ -283,5 +284,20 @@ function CharacterDetailCtrl($scope, $rootScope, $state, $http, $timeout, $state
                 }
             }
         });
-    };
+    }
+
+    // Upload Avatar Modal
+    function open_create_feat_modal(id) {
+        
+        var modalInstance = $uibModal.open({
+            templateUrl: 'partials/create-feat-modal.html',
+            controller: 'ModalInstanceCtrl',
+            size: 'sm',
+            resolve: {
+                item: function () {
+                    return {};
+                }
+            }
+        });
+    }
 }

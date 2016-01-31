@@ -503,6 +503,7 @@ class Image(webapp2.RequestHandler):
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
     ('/images/?', Image),
+
     ('/api/v1/character/create/?', CharacterCreate),
     ('/api/v1/users/list/?', UserList),
 

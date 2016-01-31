@@ -1,7 +1,7 @@
 module.exports = CharacterDetailAdvancedCtrl;
 
 /** @ngInject */
-function CharacterDetailAdvancedCtrl($scope, $rootScope, $state, $http, $timeout, $stateParams, $uibModal, $log) {
+function CharacterDetailAdvancedCtrl($scope, $rootScope, $http, $stateParams) {
 
     $rootScope.minimizeToolbar = false;
     
@@ -19,7 +19,6 @@ function CharacterDetailAdvancedCtrl($scope, $rootScope, $state, $http, $timeout
     $scope.delete_weapon = delete_weapon;
 
     $scope.$watch("new_feat", function(newFeat) {
-        console.log(newFeat);
         if(!newFeat) {
             $scope.noFeatResults = false;
         }
