@@ -1,7 +1,4 @@
 const {XP_LEVELS, RESERVED_POWER_TRAITS} = require("data/dnd-data");
-const DND_POWERS = require("data/powers");
-const DND_ITEMS = require("data/items");
-const DND_FEATS = require("data/feats");
 
 module.exports = CharacterDetailCtrl;
 
