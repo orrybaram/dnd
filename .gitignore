@@ -111,3 +111,15 @@ npm-debug.log
 
 
 .sass-cache
+
+
+
+#################
+#  misc         #
+#################
+
+.idea
+*.sublime-project
+*.sublime-workspace
+
+.DS_Store
