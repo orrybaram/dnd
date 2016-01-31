@@ -248,7 +248,6 @@ class Character(db.Model):
 
     race_features = db.TextProperty()
     other_features = db.TextProperty()
-    feats = db.TextProperty()
     languages = db.TextProperty()
     notes = db.TextProperty()
 
@@ -274,6 +273,10 @@ class Character(db.Model):
         _weapons = []
         for weapon in self.weapons:
             _weapons.append(weapon.serializable())
+
+        _feats = []
+        for feat in self.feats:
+            _feats.append(feat.serializable())
 
         result = {
             # Basics
@@ -459,7 +462,6 @@ class Character(db.Model):
 
             'race_features': self.race_features,
             'other_features': self.other_features,
-            'feats': self.feats,
             'languages': self.languages,
             'notes': self.notes,
 
@@ -470,6 +472,7 @@ class Character(db.Model):
             'powers': _powers,
             'weapons': _weapons,
             'items': _items,
+            'feats': _feats,
 
         }
 
@@ -503,6 +506,16 @@ class Weapon(db.Model):
 
 class Item(db.Model):
     character = db.ReferenceProperty(Character, collection_name="items")
+    json_string = db.TextProperty()
+
+    def serializable(self):
+        payload = json.loads(self.json_string)
+        payload['key'] = str(self.key())
+
+        return payload
+
+class Feat(db.Model):
+    character = db.ReferenceProperty(Character, collection_name="feats")
     json_string = db.TextProperty()
 
     def serializable(self):

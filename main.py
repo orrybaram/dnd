@@ -433,6 +433,30 @@ class CharacterDeleteItem(webapp2.RequestHandler):
         character = Character.get(character_key)
         character.items.filter('__key__ =', Key(item_key)).get().delete()
 
+class CharacterAddFeat(webapp2.RequestHandler):
+    def post(self, character_key):
+        data = json.loads(self.request.body)
+        try:
+            feat = db.Query(Feat).filter('name', data.get('name'))[0]
+        except:
+            feat = None
+        if feat:
+            feat.character = Character.get(character_key)
+            feat.put()
+        else:
+            feat = Feat()
+            feat.character = Character.get(character_key)
+            feat.json_string = unicode(self.request.body, 'utf-8');
+            feat.put()
+
+        self.response.headers['Content-Type'] = 'application/json'
+        self.response.out.write(json.dumps(feat.serializable()))
+
+class CharacterDeleteFeat(webapp2.RequestHandler):
+    def post(self, character_key, feat_key):
+        character = Character.get(character_key)
+        character.feats.filter('__key__ =', Key(feat_key)).get().delete()
+
 class CharacterAddWeapon(webapp2.RequestHandler):
     def post(self, character_key):
         data = json.loads(self.request.body)
@@ -500,6 +524,8 @@ app = webapp2.WSGIApplication([
     ('/api/v1/character/(?P<character_key>[^/]+)/avatar/?', AvatarUpload),
     ('/api/v1/character/(?P<character_key>[^/]+)/powers/add/?', CharacterAddPower),
     ('/api/v1/character/(?P<character_key>[^/]+)/powers/(?P<power_key>[^/]+)/delete/?', CharacterDeletePower),
+    ('/api/v1/character/(?P<character_key>[^/]+)/feats/add/?', CharacterAddFeat),
+    ('/api/v1/character/(?P<character_key>[^/]+)/feats/(?P<feat_key>[^/]+)/delete/?', CharacterDeleteFeat),
     ('/api/v1/character/(?P<character_key>[^/]+)/items/add/?', CharacterAddItem),
     ('/api/v1/character/(?P<character_key>[^/]+)/items/(?P<item_key>[^/]+)/delete/?', CharacterDeleteItem),
     ('/api/v1/character/(?P<character_key>[^/]+)/weapons/add/?', CharacterAddWeapon),

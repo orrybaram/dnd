@@ -2,6 +2,7 @@ angular
     .module('dnd', [
         'ui.router',
         'app.controllers',
+        'dnd.data',
         'directives',
         'directives.powerCard',
         'ui.bootstrap',

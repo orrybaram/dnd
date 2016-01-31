@@ -1,13 +1,17 @@
 const {XP_LEVELS, RESERVED_POWER_TRAITS} = require("data/dnd-data");
+const DND_POWERS = require("data/powers");
+const DND_ITEMS = require("data/items");
+const DND_FEATS = require("data/feats");
 
 module.exports = CharacterDetailCtrl;
 
 /** @ngInject */
-function CharacterDetailCtrl($scope, $rootScope, $state, $http, $timeout, $stateParams, $uibModal, $log) {
+function CharacterDetailCtrl($scope, $rootScope, $state, $http, $timeout, $stateParams, $uibModal, $log, Powers, Items, Feats) {
 
     $scope.ui = {};
-    $scope.powers = DND_POWERS;
-    $scope.items = DND_ITEMS;
+    $scope.powers = Powers;
+    $scope.items = Items;
+    $scope.feats = Feats;
     $scope.state = $state;
     $scope.upload = {};
 
@@ -229,7 +233,24 @@ function CharacterDetailCtrl($scope, $rootScope, $state, $http, $timeout, $state
         });
     };
 
-    // Item Modal
+    // Feat Modal
+    $scope.open_feat_modal = function(id) {
+        var index = _.findIndex($scope.character.feats, {id: id});
+        var feat = angular.copy($scope.character.feats[index]);
+
+        var modalInstance = $uibModal.open({
+            templateUrl: 'partials/item-modal.html',
+            controller: 'ModalInstanceCtrl',
+            size: 'sm',
+            resolve: {
+                item: function () {
+                    return feat;
+                }
+            }
+        });
+    };
+
+    // Upload Avatar Modal
     $scope.open_upload_modal = function(id) {
         var character = angular.copy($scope.character);
 
