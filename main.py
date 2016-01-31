@@ -94,23 +94,26 @@ class UserList(webapp2.RequestHandler):
 
 class GroupCreate(webapp2.RequestHandler):
     def post(self):
+        self.response.headers['Content-Type'] = 'application/json'
         data = json.loads(self.request.body)
+
+        current_user = users.get_current_user()
+        try:
+            user = User.all().filter('user_id =', current_user.user_id()).get()
+        except:
+            self.response.out.write(json.dumps({"error": "Please login to create a group"}))
+            self.response.set_status(401)
+            return
 
         group = Group()
         group.name = data.get('name')
-
         group.put()
-
-        current_user = users.get_current_user()
-        user = User.all().filter('user_id =', current_user.user_id()).get()
 
         if user and (group.key() not in user.groups):
             user.groups.append(group.key())
             user.put()
 
         group = Group.get(group.key())
-
-        self.response.headers['Content-Type'] = 'application/json'
         self.response.out.write(json.dumps(group.serializable()))
 
 class GroupList(webapp2.RequestHandler):
