@@ -49,6 +49,11 @@ function CharacterDetailCtrl($scope, $rootScope, $state, $http, $timeout, $state
         }
     });
 
+    $scope.$on('fetched-character', function(evt, data) {
+        console.log('on fetched', data)
+        $scope.character = data;
+    });
+
     $scope.$watch('character', function() {
         $scope.next_level_xp = XP_LEVELS[$scope.get_level()];
         $scope.current_level_xp = XP_LEVELS[$scope.get_level() - 1];
@@ -63,7 +68,7 @@ function CharacterDetailCtrl($scope, $rootScope, $state, $http, $timeout, $state
         console.log($scope.feats)
     });
 
-    Character.get(character_key).then(function(res) {
+    Character.fetch(character_key).then(function(res) {
         $scope.character = res;
     });
     

@@ -3,20 +3,27 @@ angular.module('dnd.character', [])
 
 
 /** @ngInject */
-function Character($http) {
+function Character($rootScope, $http) {
 
 	var data;
 
 	return {
 		data: data,
 		get: get,
+		fetch: fetch,
 		destroy: destroy,
 		update: update,
 	};
 
-	function get(key) {
+	function get() {
+		return data;
+	}
+
+	function fetch(key) {
+		key = key || data.key
 		return $http.get(`/api/v1/character/${key}`).then(function(response) {
             data = response.data.character;
+            $rootScope.$broadcast('fetched-character', data);
             return data;
 		});
 	}

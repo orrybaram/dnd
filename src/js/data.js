@@ -1,6 +1,5 @@
-const _items = require("data/items");
-const _powers = require("data/powers");
-// const _feats = require("data/feats");
+// const _items = require("data/items");
+// const _powers = require("data/powers");
 
 angular.module("dnd.data", [])
 	.factory("Items", Items)
@@ -10,10 +9,10 @@ angular.module("dnd.data", [])
 
 function Items() {
 	
-	return _items
+	return {}
 }
 function Powers() {
-	return _powers
+	return {}
 }
 /** @ngInject */
 function Feats($http) {
@@ -46,7 +45,7 @@ function Feats($http) {
 	function create_new(feat, character_key) {
 		var template = `<h1 class=player>${feat.name}</h1>
 						<p class="flavor">
-							<b>${feat.tier}</b><br>
+							<b>${feat.tier} Tier</b><br>
 							<b> Prerequisite</b>: ${feat.prerequisites}<br>
 							<b> Benefit</b>: ${feat.benefit}
 						</p>`;
