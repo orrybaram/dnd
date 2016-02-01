@@ -11,6 +11,7 @@ function CharacterDetailCtrl($scope, $rootScope, $state, $http, $timeout, $state
     $scope.feats = [];
     $scope.state = $state;
     $scope.upload = {};
+    $scope.featsLoading = true;
 
     var is_editting = false;
     var character_key = $stateParams.character_key;
@@ -50,8 +51,14 @@ function CharacterDetailCtrl($scope, $rootScope, $state, $http, $timeout, $state
     });
 
     $scope.$on('fetched-character', function(evt, data) {
-        console.log('on fetched', data)
+        console.log('character loaded');
         $scope.character = data;
+    });
+
+    $scope.$on('fetched-feats', function(evt, data) {
+        console.log('feats loaded');
+        $scope.feats = data;
+        $scope.featsLoading = false;
     });
 
     $scope.$watch('character', function() {
@@ -63,10 +70,7 @@ function CharacterDetailCtrl($scope, $rootScope, $state, $http, $timeout, $state
     }, true);
 
 
-    Feats.get().then(function(feats) {
-        $scope.feats = feats;
-        console.log($scope.feats)
-    });
+    Feats.get()
 
     Character.fetch(character_key).then(function(res) {
         $scope.character = res;

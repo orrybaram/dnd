@@ -15,21 +15,30 @@ function Powers() {
 	return {}
 }
 /** @ngInject */
-function Feats($http) {
+function Feats($http, $rootScope) {
 	
 	var feats = [];
 
 	return {
 		feats: feats,
 		get: get,
+		fetch: fetch,
 		add: add,
 		remove: remove,
 		create_new: create_new
 	};
 
 	function get() {
+		if(feats.length) {
+			$rootScope.$broadcast('fetched-feats', feats);
+		}
+		fetch();
+	}
+
+	function fetch() {
 		return $http.get('/api/v1/feats').then(function(response) {
 			feats = response.data;
+			$rootScope.$broadcast('fetched-feats', feats);
 			return feats;
 		});
 	}
