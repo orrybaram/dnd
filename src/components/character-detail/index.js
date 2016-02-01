@@ -23,7 +23,7 @@ function CharacterDetailCtrl($scope, $rootScope, $state, $http, $timeout, $state
 
     $scope.delete_character = delete_character;
     $scope.save_character = save_character;
-    $scope.upload_avatar = upload_avatar;
+    
     $scope.getAbilModifier = getAbilModifier;
     $scope.getInitiativeTotal = getInitiativeTotal;
     $scope.getHalfLevel = getHalfLevel;
@@ -64,16 +64,13 @@ function CharacterDetailCtrl($scope, $rootScope, $state, $http, $timeout, $state
     });
 
     Character.get(character_key).then(function(res) {
-        $scope.character = res.character;
+        $scope.character = res;
     });
     
 
-    function delete_character() {
-        $http.post('/api/v1/character/'+$scope.character.key+'/delete').then(function(response) {
-            console.log(response);
+    function delete_character(character_key) {
+        Character.remove(character_key).then(function() {
             $state.go('group-detail.dashboard', {group_key: $scope.character.group_key });
-        }, function(err) {
-            alert(err.data.error);
         });
     }
 
@@ -86,32 +83,18 @@ function CharacterDetailCtrl($scope, $rootScope, $state, $http, $timeout, $state
             'channel_token': template_values.channel_token
         };
 
-        $http.post('/api/v1/character/' + character_key + '/update/', data).then(function(response) {
-            console.log(response);
+        Character.update(data).then(function(response) {
             $timeout(function() {
                 $scope.ui.saving = false;
                 is_editting = false;
             }, 3000);
-
-            // var idx = _.findIndex(_characters, {key: character_key});
-            // _characters[idx] = $scope.character;
-            // localStorage.setItem('characters', angular.toJson(_characters));
-
         }, function(error) {
-            console.log(error);
             $timeout(function() {
                 $scope.ui.saving = false;
                 is_editting = false;
             }, 3000);
         });
     }
-
-    function upload_avatar() {
-        $http.post('/api/v1/character/' + character_key + '/avatar/?avatar=' + $scope.upload.avatar).then(function(data) {
-            console.log(data);
-        });
-    }
-
     function getAbilModifier(score) {
         return Math.floor((score - 10) / 2);
     }
