@@ -255,9 +255,6 @@ class Character(db.Model):
     silver = db.IntegerProperty(default=0)
     copper = db.IntegerProperty(default=0)
 
-    fea = db.ReferenceProperty(Group, collection_name="players", default=None)
-
-
     def get_avatar_url(self):
         if self.avatar:
             return '/images?character_key=%s' % (str(self.key()))

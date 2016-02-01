@@ -12,20 +12,5 @@ angular.module('app.controllers', [])
     .controller('CharacterDetailSimpleCtrl', require("components/character-detail/simple"))
     .controller('CharacterDetailPowersCtrl', require("components/character-detail/powers"))
     .controller('CharacterDetailNotesCtrl', require("components/character-detail/notes"))
-    .controller('ModalInstanceCtrl', ModalInstanceCtrl)
 ;
-
-
-/** @ngInject */
-function ModalInstanceCtrl ($scope, $uibModalInstance, item) {
-    $scope.item = item;
-
-    $scope.close = function () {
-        $uibModalInstance.close();
-    };
-
-    $scope.cancel = function () {
-        $uibModalInstance.dismiss('cancel');
-    };
-}
 

@@ -215,8 +215,8 @@ function CharacterDetailCtrl($scope, $rootScope, $state, $http, $timeout, $state
         var power = angular.copy($scope.character.powers[index]);
 
         var modalInstance = $uibModal.open({
-            templateUrl: 'partials/power-modal.html',
-            controller: 'ModalInstanceCtrl',
+            templateUrl: 'components/modals/power-modal/index.html',
+            controller: 'BaseModalCtrl',
             size: 'sm',
             resolve: {
                 item: function () {
@@ -232,8 +232,8 @@ function CharacterDetailCtrl($scope, $rootScope, $state, $http, $timeout, $state
         var item = angular.copy($scope.character.items[index]);
 
         var modalInstance = $uibModal.open({
-            templateUrl: 'partials/item-modal.html',
-            controller: 'ModalInstanceCtrl',
+            templateUrl: 'components/modals/item-modal/index.html',
+            controller: 'BaseModalCtrl',
             size: 'sm',
             resolve: {
                 item: function () {
@@ -249,8 +249,8 @@ function CharacterDetailCtrl($scope, $rootScope, $state, $http, $timeout, $state
         var weapon = angular.copy($scope.character.weapons[index]);
 
         var modalInstance = $uibModal.open({
-            templateUrl: 'partials/item-modal.html',
-            controller: 'ModalInstanceCtrl',
+            templateUrl: 'components/modals/item-modal/index.html',
+            controller: 'BaseModalCtrl',
             size: 'sm',
             resolve: {
                 item: function () {
@@ -266,8 +266,8 @@ function CharacterDetailCtrl($scope, $rootScope, $state, $http, $timeout, $state
         var feat = angular.copy($scope.character.feats[index]);
 
         var modalInstance = $uibModal.open({
-            templateUrl: 'partials/item-modal.html',
-            controller: 'ModalInstanceCtrl',
+            templateUrl: 'components/modals/item-modal/index.html',
+            controller: 'BaseModalCtrl',
             size: 'sm',
             resolve: {
                 item: function () {
@@ -282,8 +282,8 @@ function CharacterDetailCtrl($scope, $rootScope, $state, $http, $timeout, $state
         var character = angular.copy($scope.character);
 
         var modalInstance = $uibModal.open({
-            templateUrl: 'partials/upload-modal.html',
-            controller: 'ModalInstanceCtrl',
+            templateUrl: 'components/modals/upload-modal/index.html',
+            controller: 'BaseModalCtrl',
             size: 'sm',
             resolve: {
                 item: function () {
@@ -297,8 +297,8 @@ function CharacterDetailCtrl($scope, $rootScope, $state, $http, $timeout, $state
     function open_create_feat_modal(id) {
         
         var modalInstance = $uibModal.open({
-            templateUrl: 'partials/create-feat-modal.html',
-            controller: 'ModalInstanceCtrl',
+            templateUrl: 'components/modals/create-feat-modal/index.html',
+            controller: 'CreateFeatModalCtrl',
             size: 'sm',
             resolve: {
                 item: function () {

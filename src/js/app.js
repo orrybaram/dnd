@@ -3,6 +3,7 @@ angular
         'ui.router',
         'app.controllers',
         'dnd.data',
+        'dnd.modals',
         'directives',
         'directives.powerCard',
         'ui.bootstrap',

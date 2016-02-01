@@ -437,7 +437,7 @@ class CharacterAddFeat(webapp2.RequestHandler):
     def post(self, character_key):
         data = json.loads(self.request.body)
         try:
-            feat = db.Query(Feat).filter('feat_id', data.get('feat_id'))[0]
+            feat = db.Query(Feat).filter('name', data.get('name'))[0]
         except:
             feat = None
         if feat:

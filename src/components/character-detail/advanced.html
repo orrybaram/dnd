@@ -908,7 +908,9 @@
 
                         <div class="columns small-3">
                             <button ng-hide="noFeatResults" ng-click="add_feat()" class="width-100">add</button>
-                            <button ng-show="noFeatResults" ng-click="open_create_feat_modal()">Not listed? Create Feat</button>
+                        </div>
+                        <div ng-show="noFeatResults">
+                            <button ng-click="open_create_feat_modal()">Not listed? Create Feat</button>
                         </div>
                     </div>
                 </section>

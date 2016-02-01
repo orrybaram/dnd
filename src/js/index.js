@@ -3,9 +3,11 @@ require("angular-ui-router");
 require("angular-ui-bootstrap");
 
 require("components/cards/power-card");
+require("components/modals");
 require("./data");
 require("./controllers");
 require("./directives");
 require("./ng-filters");
+
 
 require("./app");
