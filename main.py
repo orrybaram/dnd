@@ -437,7 +437,7 @@ class CharacterAddFeat(webapp2.RequestHandler):
     def post(self, character_key):
         data = json.loads(self.request.body)
         try:
-            feat = db.Query(Feat).filter('name', data.get('name'))[0]
+            feat = db.Query(Feat).filter('feat_id', data.get('feat_id'))[0]
         except:
             feat = None
         if feat:
@@ -489,6 +489,17 @@ class CharacterDeleteWeapon(webapp2.RequestHandler):
         character.weapons.filter('__key__ =', Key(weapon_key)).get().delete()
 
 
+class Feats(webapp2.RequestHandler):
+    def get(self):
+        feats = Feat.all()
+
+        _feats = []
+        for feat in feats:
+            _feats.append(feat.serializable())
+
+        self.response.headers['Content-Type'] = 'application/json'
+        self.response.out.write(json.dumps(_feats))
+
 class Image(webapp2.RequestHandler):
     def get(self):
         character = Character.get(self.request.get('character_key'))
@@ -506,6 +517,7 @@ app = webapp2.WSGIApplication([
 
     ('/api/v1/character/create/?', CharacterCreate),
     ('/api/v1/users/list/?', UserList),
+    ('/api/v1/feats/?', Feats),
 
     ('/api/v1/groups/create/?', GroupCreate),
     ('/api/v1/groups/list/?', GroupList),

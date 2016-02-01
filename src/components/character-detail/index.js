@@ -8,7 +8,7 @@ function CharacterDetailCtrl($scope, $rootScope, $state, $http, $timeout, $state
     $scope.ui = {};
     $scope.powers = Powers;
     $scope.items = Items;
-    $scope.feats = Feats;
+    $scope.feats = [];
     $scope.state = $state;
     $scope.upload = {};
 
@@ -62,7 +62,14 @@ function CharacterDetailCtrl($scope, $rootScope, $state, $http, $timeout, $state
         $scope.xp_level_progress = Math.floor(($scope.your_xp_in_this_level / $scope.xp_in_level) * 100).toFixed(0);
     }, true);
 
-     function get_character() {
+
+    Feats.get().then(function(feats) {
+        $scope.feats = feats;
+        console.log($scope.feats)
+    });
+
+
+    function get_character() {
         $http.get('/api/v1/character/' + character_key).then(function(response) {
             console.log(response);
             $scope.character = response.data.character;

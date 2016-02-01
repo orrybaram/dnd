@@ -255,6 +255,9 @@ class Character(db.Model):
     silver = db.IntegerProperty(default=0)
     copper = db.IntegerProperty(default=0)
 
+    fea = db.ReferenceProperty(Group, collection_name="players", default=None)
+
+
     def get_avatar_url(self):
         if self.avatar:
             return '/images?character_key=%s' % (str(self.key()))
@@ -480,6 +483,7 @@ class Character(db.Model):
 
 class Power(db.Model):
     character = db.ReferenceProperty(Character, collection_name="powers")
+    power_id = db.StringProperty()
     json_string = db.TextProperty()
 
     def serializable(self):
@@ -490,6 +494,7 @@ class Power(db.Model):
 
 class Weapon(db.Model):
     character = db.ReferenceProperty(Character, collection_name="weapons")
+    weapon_id = db.StringProperty()
     json_string = db.TextProperty()
     attack = db.StringProperty()
     defense = db.StringProperty()
@@ -507,6 +512,7 @@ class Weapon(db.Model):
 class Item(db.Model):
     character = db.ReferenceProperty(Character, collection_name="items")
     json_string = db.TextProperty()
+    item_id = db.StringProperty()
 
     def serializable(self):
         payload = json.loads(self.json_string)
@@ -517,6 +523,8 @@ class Item(db.Model):
 class Feat(db.Model):
     character = db.ReferenceProperty(Character, collection_name="feats")
     json_string = db.TextProperty()
+    feat_id = db.StringProperty()
+    name = db.StringProperty()
 
     def serializable(self):
         payload = json.loads(self.json_string)
