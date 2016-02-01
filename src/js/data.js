@@ -22,7 +22,10 @@ function Feats($http) {
 
 	return {
 		feats: feats,
-		get: get
+		get: get,
+		add: add,
+		remove: remove,
+		create_new: create_new
 	};
 
 	function get() {
@@ -30,6 +33,30 @@ function Feats($http) {
 			feats = response.data;
 			return feats;
 		});
+	}
+
+	function add(data, character_key) {
+		return $http.post('/api/v1/character/' + character_key + '/feats/add/', data);
+    }
+
+    function remove(feat_id, character_key) {
+		return $http.post('/api/v1/character/' + character_key + '/feats/' + feat_id + '/delete/');
+	}
+
+	function create_new(feat, character_key) {
+		var template = `<h1 class=player>${feat.name}</h1>
+						<p class="flavor">
+							<b>${feat.tier}</b><br>
+							<b> Prerequisite</b>: ${feat.prerequisites}<br>
+							<b> Benefit</b>: ${feat.benefit}
+						</p>`;
+
+		var postData = {
+			id: (feats.length + 2).toString(),
+			name: feat.name,
+			html: template
+		}
+		return $http.post('/api/v1/feats/', postData);
 	}
 }
 

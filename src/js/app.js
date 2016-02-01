@@ -4,6 +4,7 @@ angular
         'app.controllers',
         'dnd.data',
         'dnd.modals',
+        'dnd.character',
         'directives',
         'directives.powerCard',
         'ui.bootstrap',

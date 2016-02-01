@@ -6,11 +6,23 @@
 		<form ng-submit="submit_new_feat()">
 			<div>
 				<label>Name</label>
-				<input ng-model="feat.name" />
+				<input ng-model="feat.name" required />
 			</div>
 			<div>
-				<label>Description</label>
-				<textarea ng-model="feat.description"></textarea>
+				<label>Tier</label>
+				<select ng-model="feat.tier" required>
+					<option>Heroic</option>
+					<option>Paragon</option>
+					<option>Epic</option>
+				</select>
+			</div>
+			<div>
+				<label>Prerequisites</label>
+				<textarea ng-model="feat.prerequisites" required></textarea>
+			</div>
+			<div>
+				<label>Benefits</label>
+				<textarea ng-model="feat.benefit" required></textarea>
 			</div>
 			<button>Save</button>
 		</form>

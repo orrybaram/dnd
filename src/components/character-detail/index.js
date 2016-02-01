@@ -3,7 +3,7 @@ const {XP_LEVELS, RESERVED_POWER_TRAITS} = require("data/dnd-data");
 module.exports = CharacterDetailCtrl;
 
 /** @ngInject */
-function CharacterDetailCtrl($scope, $rootScope, $state, $http, $timeout, $stateParams, $uibModal, $log, Powers, Items, Feats) {
+function CharacterDetailCtrl($scope, $rootScope, $state, $http, $timeout, $stateParams, $uibModal, $log, Character, Powers, Items, Feats) {
 
     $scope.ui = {};
     $scope.powers = Powers;
@@ -14,16 +14,13 @@ function CharacterDetailCtrl($scope, $rootScope, $state, $http, $timeout, $state
 
     var is_editting = false;
     var character_key = $stateParams.character_key;
-    var _characters = angular.fromJson(localStorage.getItem('characters'));
-    var _character = _characters.filter(function(x) {
-        return x.key = character_key;
-    });
+    // var _characters = angular.fromJson(localStorage.getItem('characters'));
+    // var _character = _characters.filter(function(x) {
+    //     return x.key = character_key;
+    // });
 
-    console.log(_character)
+    $scope.character = {};
 
-    $scope.character = _character;
-
-    $scope.get_character = get_character;
     $scope.delete_character = delete_character;
     $scope.save_character = save_character;
     $scope.upload_avatar = upload_avatar;
@@ -45,8 +42,6 @@ function CharacterDetailCtrl($scope, $rootScope, $state, $http, $timeout, $state
     $scope.open_create_feat_modal = open_create_feat_modal;
 
    
-    $scope.get_character();
-
     $scope.$on('character-updated', function(event, args) {
         if(!is_editting && $scope.character.key === args.character.key) {
             $scope.character = args.character;
@@ -68,17 +63,10 @@ function CharacterDetailCtrl($scope, $rootScope, $state, $http, $timeout, $state
         console.log($scope.feats)
     });
 
-
-    function get_character() {
-        $http.get('/api/v1/character/' + character_key).then(function(response) {
-            console.log(response);
-            $scope.character = response.data.character;
-
-            var idx = _.findIndex(_characters, {key: character_key});
-            _characters[idx] = $scope.character;
-            localStorage.setItem('characters', angular.toJson(_characters));
-        });
-    }
+    Character.get(character_key).then(function(res) {
+        $scope.character = res.character;
+    });
+    
 
     function delete_character() {
         $http.post('/api/v1/character/'+$scope.character.key+'/delete').then(function(response) {

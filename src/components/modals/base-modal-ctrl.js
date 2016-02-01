@@ -5,6 +5,8 @@ module.exports = BaseModalCtrl;
 function BaseModalCtrl ($scope, $uibModalInstance, item) {
     $scope.item = item;
 
+    console.log(item)
+
     $scope.close = function () {
         $uibModalInstance.close();
     };

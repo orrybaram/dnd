@@ -7,8 +7,8 @@ function powerCard() {
 		templateUrl: "components/cards/power-card.html",
 		link: function(scope) {
 			scope.tapCard = function($event, $index) {
-				console.log($index)
-				console.log($event)
+				
+
 			}
 		}
 	}

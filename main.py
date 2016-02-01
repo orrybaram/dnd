@@ -499,6 +499,19 @@ class Feats(webapp2.RequestHandler):
 
         self.response.headers['Content-Type'] = 'application/json'
         self.response.out.write(json.dumps(_feats))
+    
+    def post(self):
+
+        data = json.loads(self.request.body)
+
+        feat = Feat()
+        feat.feat_id = data.get('id')
+        feat.name = data.get('name')
+        feat.json_string = json.dumps(data)
+        feat.put()
+
+        self.response.headers['Content-Type'] = 'application/json'
+        self.response.out.write(json.dumps(feat.serializable()))
 
 class Image(webapp2.RequestHandler):
     def get(self):

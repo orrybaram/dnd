@@ -1,7 +1,7 @@
 module.exports = CharacterDetailAdvancedCtrl;
 
 /** @ngInject */
-function CharacterDetailAdvancedCtrl($scope, $rootScope, $http, $stateParams) {
+function CharacterDetailAdvancedCtrl($scope, $rootScope, $http, $stateParams, Feats) {
 
     $rootScope.minimizeToolbar = false;
     
@@ -13,7 +13,6 @@ function CharacterDetailAdvancedCtrl($scope, $rootScope, $http, $stateParams) {
     $scope.delete_item = delete_item;
     $scope.add_feat = add_feat;
     $scope.delete_feat = delete_feat;
-    $scope.create_feat = create_feat;
     $scope.add_weapon = add_weapon;
     $scope.update_weapon = update_weapon;
     $scope.delete_weapon = delete_weapon;
@@ -68,7 +67,7 @@ function CharacterDetailAdvancedCtrl($scope, $rootScope, $http, $stateParams) {
 
     function add_feat() {
         var data = $scope.new_feat;
-        $http.post('/api/v1/character/' + character_key + '/feats/add/', data).then(function(response) {
+        Feats.add(data, character_key).then(function(response) {
             console.log(response);
             $scope.character.feats.push(response.data);
             $scope.new_feat = '';
@@ -76,20 +75,15 @@ function CharacterDetailAdvancedCtrl($scope, $rootScope, $http, $stateParams) {
     }
 
     function delete_feat(id) {
+
         var index = _.findIndex($scope.character.feats, {id: id});
         var feat = $scope.character.feats[index];
-
         $scope.character.feats.splice(index, 1);
-
-        $http.post('/api/v1/character/' + character_key + '/feats/' + feat.key + '/delete/').then(function(response) {
+        
+        Feats.remove(feat.key, character_key).then(function(response) {
             console.log(response);
         });
     }
-
-    function create_feat() {
-        console.log("ehh wahassup!")
-    }
-
 
     function add_weapon() {
         var data = $scope.new_weapon;
