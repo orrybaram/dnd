@@ -1,30 +1,18 @@
-// const _items = require("data/items");
-// const _powers = require("data/powers");
+module.exports = Feats;
 
-angular.module("dnd.data", [])
-	.factory("Items", Items)
-	.factory("Powers", Powers)
-	.factory("Feats", Feats)
-;
-
-function Items() {
-	
-	return {}
-}
-function Powers() {
-	return {}
-}
 /** @ngInject */
 function Feats($http, $rootScope) {
 	
 	var feats = [];
 
 	return {
-		feats: feats,
 		get: get,
-		fetch: fetch,
 		add: add,
+		edit: edit,
+		feats: feats,
+		fetch: fetch,
 		remove: remove,
+		destroy: destroy,
 		create_new: create_new
 	};
 
@@ -43,12 +31,27 @@ function Feats($http, $rootScope) {
 		});
 	}
 
+	function edit(feat) {
+		return $http.post('/api/v1/feats', feat).then(function() {
+			$rootScope.$broadcast('feat-editted');
+		});
+	}
+
 	function add(data, character_key) {
 		return $http.post('/api/v1/character/' + character_key + '/feats/add/', data);
     }
 
     function remove(feat_id, character_key) {
 		return $http.post('/api/v1/character/' + character_key + '/feats/' + feat_id + '/delete/');
+	}
+
+	function destroy(feat_id) {
+		return $http.post(`/api/v1/feats/${feat_id}/delete/`).then(function(data) {
+			console.log(data);
+			$rootScope.$broadcast('feat-destroyed');
+		}, function(error) {
+			console.log(error);
+		});
 	}
 
 	function create_new(feat, character_key) {
@@ -63,7 +66,7 @@ function Feats($http, $rootScope) {
 			id: (feats.length + 2).toString(),
 			name: feat.name,
 			html: template
-		}
+		};
 		return $http.post('/api/v1/feats/', postData);
 	}
 }

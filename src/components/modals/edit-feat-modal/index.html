@@ -1,0 +1,18 @@
+<div class="create-feat">
+	<div class="modal-header">
+	    <h3 class="modal-title">Edit Feat</h3>
+	</div>
+	<div class="content">
+		<form ng-submit="edit_feat()">
+			<div>
+				<label>Name</label>
+				<input ng-model="feat.name" required />
+			</div>
+			<div>
+				<label>HTML</label>
+				<textarea ng-model="feat.html"></textarea>
+			</div>
+			<button>Save</button>
+		</form>
+	</div>
+</div>

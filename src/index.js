@@ -1,7 +1,18 @@
+require("angular");
+require("angular-ui-router");
+require("angular-ui-bootstrap");
+
+require("components/cards/power-card");
+require("components/modals");
+require("components/character/service");
+require("./data");
+require("./js/directives");
+require("./js/ng-filters");
+
+
 angular
     .module('dnd', [
         'ui.router',
-        'app.controllers',
         'dnd.data',
         'dnd.modals',
         'dnd.character',
@@ -13,12 +24,32 @@ angular
     ])
     .config(config)
     .run(onRun)
+
+    .controller('AdminCtrl', require("components/admin"))
+
+    .controller('GroupsCtrl', require("components/group-list"))
+    .controller('GroupDetailCtrl', require("components/group-detail"))
+    .controller('GroupDetailDashboardCtrl', require("components/group-detail/dashboard"))
+    .controller('GroupDetailEncounterCtrl', require("components/group-detail/encounter"))
+    .controller('GroupDetailStoryCtrl', require("components/group-detail/story"))
+    .controller('GroupDetailAdminCtrl', require("components/group-detail/admin"))
+    .controller('CharacterDetailCtrl', require("components/character-detail"))
+    .controller('CharacterDetailAdvancedCtrl', require("components/character-detail/advanced"))
+    .controller('CharacterDetailSimpleCtrl', require("components/character-detail/simple"))
+    .controller('CharacterDetailPowersCtrl', require("components/character-detail/powers"))
+    .controller('CharacterDetailNotesCtrl', require("components/character-detail/notes"))
 ;
 
 function config($stateProvider, $urlRouterProvider, $locationProvider) {
     $urlRouterProvider.otherwise("/");
 
     $stateProvider
+        .state('admin', {
+            url: "/admin",
+            templateUrl: "/components/admin/index.html",
+            controller: 'AdminCtrl'
+        })
+
         .state('group-list', {
             url: "/",
             templateUrl: "/components/group-list/index.html",
@@ -102,4 +133,5 @@ function onRun($rootScope) {
         socket.onclose = function(){};    
     }
 }
+
 

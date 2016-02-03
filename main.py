@@ -504,7 +504,11 @@ class Feats(webapp2.RequestHandler):
 
         data = json.loads(self.request.body)
 
-        feat = Feat()
+        if data.get('key'):
+            feat = Feat.get(data.get('key'))
+        else:
+            feat = Feat()
+
         feat.feat_id = data.get('id')
         feat.name = data.get('name')
         feat.json_string = json.dumps(data)
@@ -512,6 +516,28 @@ class Feats(webapp2.RequestHandler):
 
         self.response.headers['Content-Type'] = 'application/json'
         self.response.out.write(json.dumps(feat.serializable()))
+
+class FeatsDelete(webapp2.RequestHandler):
+    def post(self, feat_key):
+        self.response.headers['Content-Type'] = 'application/json'
+
+        logging.info(feat_key)
+        logging.info(feat_key)
+        logging.info(feat_key)
+
+        logging.info("hahahahahaha")
+        logging.info("hahahahahaha")
+        logging.info("hahahahahaha")
+        logging.info("hahahahahaha")
+
+        try:
+            feat = Feat.get(feat_key)
+        except:
+            self.response.set_status(404)
+            self.response.out.write(json.dumps({"error": "feat not found"}))
+            return
+        feat.delete()
+        self.response.out.write(json.dumps({"message": "feat deleted"}))
 
 class Image(webapp2.RequestHandler):
     def get(self):
@@ -531,6 +557,7 @@ app = webapp2.WSGIApplication([
     ('/api/v1/character/create/?', CharacterCreate),
     ('/api/v1/users/list/?', UserList),
     ('/api/v1/feats/?', Feats),
+    ('/api/v1/feats/(?P<feat_key>[^/]+)/delete/?', FeatsDelete),
 
     ('/api/v1/groups/create/?', GroupCreate),
     ('/api/v1/groups/list/?', GroupList),
