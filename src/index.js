@@ -29,6 +29,7 @@ angular
 
     .controller('AdminCtrl', require("components/admin"))
     .controller('AdminFeatsCtrl', require("components/admin/feats"))
+    .controller('AdminItemsCtrl', require("components/admin/items"))
 
     .controller('GroupsCtrl', require("components/group-list"))
     .controller('GroupDetailCtrl', require("components/group-detail"))
@@ -53,11 +54,17 @@ function config($stateProvider, $urlRouterProvider, $locationProvider) {
             controller: 'AdminCtrl'
         })
 
-        .state('admin.feats', {
-            url: "/feats",
-            templateUrl: "/components/admin/feats/index.html",
-            controller: 'AdminFeatsCtrl'
-        })
+            .state('admin.feats', {
+                url: "/feats",
+                templateUrl: "/components/admin/feats/index.html",
+                controller: 'AdminFeatsCtrl'
+            })
+
+            .state('admin.items', {
+                url: "/items",
+                templateUrl: "/components/admin/items/index.html",
+                controller: 'AdminItemsCtrl'
+            })
 
         .state('group-list', {
             url: "/",
@@ -71,29 +78,29 @@ function config($stateProvider, $urlRouterProvider, $locationProvider) {
             controller: 'GroupDetailCtrl'
         })
 
-        .state('group-detail.dashboard', {
-            url: "/dashboard",
-            templateUrl: "/components/group-detail/dashboard.html",
-            controller: 'GroupDetailDashboardCtrl'
-        })
+            .state('group-detail.dashboard', {
+                url: "/dashboard",
+                templateUrl: "/components/group-detail/dashboard.html",
+                controller: 'GroupDetailDashboardCtrl'
+            })
 
-        .state('group-detail.encounter', {
-            url: "/encounter",
-            templateUrl: "/components/group-detail/encounter.html",
-            controller: 'GroupDetailEncounterCtrl'
-        })
+            .state('group-detail.encounter', {
+                url: "/encounter",
+                templateUrl: "/components/group-detail/encounter.html",
+                controller: 'GroupDetailEncounterCtrl'
+            })
 
-        .state('group-detail.story', {
-            url: "/story",
-            templateUrl: "/components/group-detail/story.html",
-            controller: 'GroupDetailStoryCtrl'
-        })
+            .state('group-detail.story', {
+                url: "/story",
+                templateUrl: "/components/group-detail/story.html",
+                controller: 'GroupDetailStoryCtrl'
+            })
 
-        .state('group-detail.admin', {
-            url: "/admin",
-            templateUrl: "/components/group-detail/admin.html",
-            controller: 'GroupDetailAdminCtrl'
-        })
+            .state('group-detail.admin', {
+                url: "/admin",
+                templateUrl: "/components/group-detail/admin.html",
+                controller: 'GroupDetailAdminCtrl'
+            })
 
         .state('character-detail', {
             url: "/character/:character_key",
@@ -101,26 +108,26 @@ function config($stateProvider, $urlRouterProvider, $locationProvider) {
             controller: 'CharacterDetailCtrl'
         })
 
-        .state('character-detail.advanced', {
-            url: "/advanced",
-            templateUrl: "/components/character-detail/advanced.html",
-            controller: 'CharacterDetailAdvancedCtrl as detail'
-        })
-        .state('character-detail.simple', {
-            url: "/simple",
-            templateUrl: "/components/character-detail/simple.html",
-            controller: 'CharacterDetailSimpleCtrl'
-        })
-        .state('character-detail.powers', {
-            url: "/powers",
-            templateUrl: "/components/character-detail/powers.html",
-            controller: 'CharacterDetailPowersCtrl as detail'
-        })
-        .state('character-detail.notes', {
-            url: "/notes",
-            templateUrl: "/components/character-detail/notes.html",
-            controller: 'CharacterDetailNotesCtrl as detail'
-        })
+            .state('character-detail.advanced', {
+                url: "/advanced",
+                templateUrl: "/components/character-detail/advanced.html",
+                controller: 'CharacterDetailAdvancedCtrl as detail'
+            })
+            .state('character-detail.simple', {
+                url: "/simple",
+                templateUrl: "/components/character-detail/simple.html",
+                controller: 'CharacterDetailSimpleCtrl'
+            })
+            .state('character-detail.powers', {
+                url: "/powers",
+                templateUrl: "/components/character-detail/powers.html",
+                controller: 'CharacterDetailPowersCtrl as detail'
+            })
+            .state('character-detail.notes', {
+                url: "/notes",
+                templateUrl: "/components/character-detail/notes.html",
+                controller: 'CharacterDetailNotesCtrl as detail'
+            })
     ;
 }
 

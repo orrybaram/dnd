@@ -488,6 +488,64 @@ class CharacterDeleteWeapon(webapp2.RequestHandler):
         character = Character.get(character_key)
         character.weapons.filter('__key__ =', Key(weapon_key)).get().delete()
 
+class Items(webapp2.RequestHandler):
+    def get(self):
+        items = Item.all()
+
+        _items = []
+        for item in items:
+            _items.append(item.serializable())
+
+        self.response.headers['Content-Type'] = 'application/json'
+        self.response.out.write(json.dumps(_items))
+    
+    def post(self):
+
+        data = json.loads(self.request.body)
+
+        if data.get('key'):
+            item = Item.get(data.get('key'))
+        else:
+            item = Item()
+
+        item.item_id = data.get('id')
+        item.name = data.get('name')
+        item.json_string = json.dumps(data)
+        item.put()
+
+        self.response.headers['Content-Type'] = 'application/json'
+        self.response.out.write(json.dumps(item.serializable()))
+
+class ItemsDelete(webapp2.RequestHandler):
+    def post(self, feat_key):
+        self.response.headers['Content-Type'] = 'application/json'
+        
+        try:
+            item = Item.get(item_key)
+        except:
+            self.response.set_status(404)
+            self.response.out.write(json.dumps({"error": "item not found"}))
+            return
+        item.delete()
+        self.response.out.write(json.dumps({"message": "item deleted"}))
+
+class ItemSearch(webapp2.RequestHandler):
+    def post(self):
+        data = json.loads(self.request.body)
+        query_string = data.get('query_string')
+
+        query = db.GqlQuery("SELECT * FROM Item WHERE name >= :1 AND name < :2",
+            query_string,
+            query_string.decode("utf-8") + u"\ufffd")
+        items = query.fetch(20)
+        results = []
+
+        for item in items:
+            results.append(item.serializable())
+
+        self.response.headers['Content-Type'] = 'application/json'
+        self.response.out.write(json.dumps({"results": results}))
+
 
 class Feats(webapp2.RequestHandler):
     def get(self):
@@ -535,15 +593,6 @@ class FeatSearch(webapp2.RequestHandler):
         data = json.loads(self.request.body)
         query_string = data.get('query_string')
 
-        logging.info(query_string)
-        logging.info(query_string)
-        logging.info(query_string)
-
-        logging.info(query_string.decode("utf-8") + u"\ufffd")
-        logging.info(query_string.decode("utf-8") + u"\ufffd")
-        logging.info(query_string.decode("utf-8") + u"\ufffd")
-
-
         query = db.GqlQuery("SELECT * FROM Feat WHERE name >= :1 AND name < :2",
             query_string,
             query_string.decode("utf-8") + u"\ufffd")
@@ -576,6 +625,10 @@ app = webapp2.WSGIApplication([
     ('/api/v1/feats/?', Feats),
     ('/api/v1/feats/search?', FeatSearch),
     ('/api/v1/feats/(?P<feat_key>[^/]+)/delete/?', FeatsDelete),
+
+    ('/api/v1/item/?', Items),
+    ('/api/v1/item/search?', ItemSearch),
+    ('/api/v1/item/(?P<feat_key>[^/]+)/delete/?', ItemsDelete),
 
     ('/api/v1/groups/create/?', GroupCreate),
     ('/api/v1/groups/list/?', GroupList),

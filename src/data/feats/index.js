@@ -11,7 +11,7 @@ function Feats($http, $rootScope) {
 		edit: edit,
 		feats: feats,
 		fetch: fetch,
-		search:search,
+		search: search,
 		remove: remove,
 		destroy: destroy,
 		create_new: create_new
@@ -21,7 +21,7 @@ function Feats($http, $rootScope) {
 		if(feats.length) {
 			$rootScope.$broadcast('fetched-feats', feats);
 		}
-		fetch();
+		return fetch();
 	}
 
 	function fetch() {

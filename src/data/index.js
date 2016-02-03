@@ -7,9 +7,6 @@ angular.module("dnd.data", [])
 	.factory("Feats", require("./feats"))
 ;
 
-function Items() {
-	return []
-}
 function Powers() {
 	return []
 }

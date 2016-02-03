@@ -11,37 +11,36 @@ function Items($http, $rootScope) {
 		edit: edit,
 		items: items,
 		fetch: fetch,
-		search:search,
+		search: search,
 		remove: remove,
 		destroy: destroy,
 		create_new: create_new
 	};
 
 	function get() {
-		if(item.length) {
-			$rootScope.$broadcast('fetched-item', item);
+		if(items.length) {
+			$rootScope.$broadcast('fetched-item', items);
 		}
-		fetch();
+		return fetch();
 	}
 
 	function fetch() {
 		return $http.get('/api/v1/item').then(function(response) {
-			item = response.data;
-			$rootScope.$broadcast('fetched-item', item);
-			return item;
+			items = response.data;
+			$rootScope.$broadcast('fetched-items', items);
+			return items;
 		});
 	}
 
 	function search(query) {
-		console.log(query)
 		return $http.post('/api/v1/item/search', {query_string: query}).then(function(data) {
-			console.log(data);
+			return data.data.results;
 		});
 	}
 
-	function edit(feat) {
-		return $http.post('/api/v1/item', feat).then(function() {
-			$rootScope.$broadcast('feat-editted');
+	function edit(item) {
+		return $http.post('/api/v1/item', item).then(function() {
+			$rootScope.$broadcast('item-editted');
 		});
 	}
 
@@ -49,29 +48,29 @@ function Items($http, $rootScope) {
 		return $http.post('/api/v1/character/' + character_key + '/item/add/', data);
     }
 
-    function remove(feat_id, character_key) {
-		return $http.post('/api/v1/character/' + character_key + '/item/' + feat_id + '/delete/');
+    function remove(item_id, character_key) {
+		return $http.post('/api/v1/character/' + character_key + '/item/' + item_id + '/delete/');
 	}
 
-	function destroy(feat_id) {
-		return $http.post(`/api/v1/item/${feat_id}/delete/`).then(function(data) {
-			$rootScope.$broadcast('feat-destroyed');
+	function destroy(item_id) {
+		return $http.post(`/api/v1/item/${item_id}/delete/`).then(function(data) {
+			$rootScope.$broadcast('item-destroyed');
 		}, function(error) {
 			console.log(error);
 		});
 	}
 
-	function create_new(feat, character_key) {
-		var template = `<h1 class=player>${feat.name}</h1>
+	function create_new(item, character_key) {
+		var template = `<h1 class=player>${item.name}</h1>
 						<p class="flavor">
-							<b>${feat.tier} Tier</b><br>
-							<b> Prerequisite</b>: ${feat.prerequisites}<br>
-							<b> Benefit</b>: ${feat.benefit}
+							<b>${item.tier} Tier</b><br>
+							<b> Prerequisite</b>: ${item.prerequisites}<br>
+							<b> Benefit</b>: ${item.benefit}
 						</p>`;
 
 		var postData = {
 			id: (item.length + 2).toString(),
-			name: feat.name,
+			name: item.name,
 			html: template
 		};
 		return $http.post('/api/v1/item/', postData);

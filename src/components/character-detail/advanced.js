@@ -1,7 +1,7 @@
 module.exports = CharacterDetailAdvancedCtrl;
 
 /** @ngInject */
-function CharacterDetailAdvancedCtrl($scope, $rootScope, $http, $stateParams, Feats) {
+function CharacterDetailAdvancedCtrl($scope, $rootScope, $http, $stateParams, Feats, Items) {
 
     $rootScope.minimizeToolbar = false;
     
@@ -17,12 +17,17 @@ function CharacterDetailAdvancedCtrl($scope, $rootScope, $http, $stateParams, Fe
     $scope.update_weapon = update_weapon;
     $scope.delete_weapon = delete_weapon;
     $scope.search_feats = search_feats;
+    $scope.search_items = search_items;
 
     $scope.$watch("new_feat", function(newFeat) {
         if(!newFeat) {
             $scope.noFeatResults = false;
         }
     });
+
+    Items.get().then(function(data) {
+        console.log(data);
+    })
 
     function add_power() {
         var data = $scope.new_power;
@@ -35,6 +40,12 @@ function CharacterDetailAdvancedCtrl($scope, $rootScope, $http, $stateParams, Fe
 
     function search_feats(query) {
         return Feats.search(query).then(function(res) {
+            return res;
+        });
+    }
+
+    function search_items(query) {
+        return Items.search(query).then(function(res) {
             return res;
         });
     }
