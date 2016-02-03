@@ -16,6 +16,7 @@ function CharacterDetailAdvancedCtrl($scope, $rootScope, $http, $stateParams, Fe
     $scope.add_weapon = add_weapon;
     $scope.update_weapon = update_weapon;
     $scope.delete_weapon = delete_weapon;
+    $scope.search_feats = search_feats;
 
     $scope.$watch("new_feat", function(newFeat) {
         if(!newFeat) {
@@ -29,6 +30,12 @@ function CharacterDetailAdvancedCtrl($scope, $rootScope, $http, $stateParams, Fe
         $http.post('/api/v1/character/' + character_key + '/powers/add/', data).then(function(response) {
             $scope.character.powers.push(response.data);
             $scope.new_power = '';
+        });
+    }
+
+    function search_feats(query) {
+        return Feats.search(query).then(function(res) {
+            return res;
         });
     }
 

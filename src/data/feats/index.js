@@ -11,6 +11,7 @@ function Feats($http, $rootScope) {
 		edit: edit,
 		feats: feats,
 		fetch: fetch,
+		search:search,
 		remove: remove,
 		destroy: destroy,
 		create_new: create_new
@@ -31,6 +32,12 @@ function Feats($http, $rootScope) {
 		});
 	}
 
+	function search(query) {
+		return $http.post('/api/v1/feats/search', {query_string: query}).then(function(data) {
+			return data.data.results;
+		});
+	}
+
 	function edit(feat) {
 		return $http.post('/api/v1/feats', feat).then(function() {
 			$rootScope.$broadcast('feat-editted');
@@ -47,7 +54,6 @@ function Feats($http, $rootScope) {
 
 	function destroy(feat_id) {
 		return $http.post(`/api/v1/feats/${feat_id}/delete/`).then(function(data) {
-			console.log(data);
 			$rootScope.$broadcast('feat-destroyed');
 		}, function(error) {
 			console.log(error);

@@ -1,3 +1,5 @@
+const _ = require("lodash");
+
 require("angular");
 require("angular-ui-router");
 require("angular-ui-bootstrap");
@@ -26,6 +28,7 @@ angular
     .run(onRun)
 
     .controller('AdminCtrl', require("components/admin"))
+    .controller('AdminFeatsCtrl', require("components/admin/feats"))
 
     .controller('GroupsCtrl', require("components/group-list"))
     .controller('GroupDetailCtrl', require("components/group-detail"))
@@ -48,6 +51,12 @@ function config($stateProvider, $urlRouterProvider, $locationProvider) {
             url: "/admin",
             templateUrl: "/components/admin/index.html",
             controller: 'AdminCtrl'
+        })
+
+        .state('admin.feats', {
+            url: "/feats",
+            templateUrl: "/components/admin/feats/index.html",
+            controller: 'AdminFeatsCtrl'
         })
 
         .state('group-list', {

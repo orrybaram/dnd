@@ -520,16 +520,7 @@ class Feats(webapp2.RequestHandler):
 class FeatsDelete(webapp2.RequestHandler):
     def post(self, feat_key):
         self.response.headers['Content-Type'] = 'application/json'
-
-        logging.info(feat_key)
-        logging.info(feat_key)
-        logging.info(feat_key)
-
-        logging.info("hahahahahaha")
-        logging.info("hahahahahaha")
-        logging.info("hahahahahaha")
-        logging.info("hahahahahaha")
-
+        
         try:
             feat = Feat.get(feat_key)
         except:
@@ -538,6 +529,32 @@ class FeatsDelete(webapp2.RequestHandler):
             return
         feat.delete()
         self.response.out.write(json.dumps({"message": "feat deleted"}))
+
+class FeatSearch(webapp2.RequestHandler):
+    def post(self):
+        data = json.loads(self.request.body)
+        query_string = data.get('query_string')
+
+        logging.info(query_string)
+        logging.info(query_string)
+        logging.info(query_string)
+
+        logging.info(query_string.decode("utf-8") + u"\ufffd")
+        logging.info(query_string.decode("utf-8") + u"\ufffd")
+        logging.info(query_string.decode("utf-8") + u"\ufffd")
+
+
+        query = db.GqlQuery("SELECT * FROM Feat WHERE name >= :1 AND name < :2",
+            query_string,
+            query_string.decode("utf-8") + u"\ufffd")
+        feats = query.fetch(20)
+        results = []
+
+        for feat in feats:
+            results.append(feat.serializable())
+
+        self.response.headers['Content-Type'] = 'application/json'
+        self.response.out.write(json.dumps({"results": results}))
 
 class Image(webapp2.RequestHandler):
     def get(self):
@@ -557,6 +574,7 @@ app = webapp2.WSGIApplication([
     ('/api/v1/character/create/?', CharacterCreate),
     ('/api/v1/users/list/?', UserList),
     ('/api/v1/feats/?', Feats),
+    ('/api/v1/feats/search?', FeatSearch),
     ('/api/v1/feats/(?P<feat_key>[^/]+)/delete/?', FeatsDelete),
 
     ('/api/v1/groups/create/?', GroupCreate),

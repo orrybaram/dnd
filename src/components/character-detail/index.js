@@ -69,9 +69,6 @@ function CharacterDetailCtrl($scope, $rootScope, $state, $http, $timeout, $state
         $scope.xp_level_progress = Math.floor(($scope.your_xp_in_this_level / $scope.xp_in_level) * 100).toFixed(0);
     }, true);
 
-
-    Feats.get()
-
     Character.fetch(character_key).then(function(res) {
         $scope.character = res;
     });

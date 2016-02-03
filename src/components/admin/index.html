@@ -1,20 +1,8 @@
 
+<h1>Admin</h1>
 
-<h1>Feats</h1>
-<div ng-if="!feats.length">Loading...</div>
-<table style="width:100%;">
-	<tr>
-		<th>Name</th>
-		<th>Name</th>
-		<th>Actions</th>
-	</tr>
-	<tr ng-repeat="feat in feats">
-		<td>{{feat.id}}</td>
-		<td>{{feat.name}}</td>
-		<td>
-			<button ng-click="open_edit_feat_modal(feat, $index)">edit</button>
-			<button ng-click="open_feat_modal(feat)">view</button>
-			<button ng-click="delete_feat(feat.key)">delete</button>
-		</td>
-	</tr>
-</table>
+<nav>
+	<a ui-sref="admin.feats">feats</a>
+</nav>
+
+<ui-view></ui-view>

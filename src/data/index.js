@@ -2,14 +2,14 @@
 // const _powers = require("data/powers");
 
 angular.module("dnd.data", [])
-	.factory("Items", Items)
+	.factory("Items", require("./items"))
 	.factory("Powers", Powers)
 	.factory("Feats", require("./feats"))
 ;
 
 function Items() {
-	return {}
+	return []
 }
 function Powers() {
-	return {}
+	return []
 }
