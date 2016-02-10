@@ -17,42 +17,42 @@ class UploadJSON(webapp2.RequestHandler):
         skipped_powers = 0
         added_powers = 0
 
-        # with open('src/data/feats/feats.json') as data_file:    
-        #     data = json.load(data_file)
+        with open('src/data/feats/feats.json') as data_file:    
+            data = json.load(data_file)
 
-        # for item in data:
-        #     feat = Feat.all().filter('feat_id = ', item.get('id')).fetch(1)
-        #     if feat:
-        #         logging.info("skipping feat")
-        #         skipped_feats += 1
-        #         continue
-        #     else:
-        #         logging.info("putting feat %s" % item.get('name'))
-        #         feat = Feat()
-        #         feat.feat_id = item.get('id')
-        #         feat.name = item.get('name')
-        #         feat.json_string = json.dumps(item)
-        #         feat.put()
-        #         added_feats += 1
+        for item in data:
+            feat = Feat.all().filter('feat_id = ', item.get('id')).fetch(1)
+            if feat:
+                logging.info("skipping feat")
+                skipped_feats += 1
+                continue
+            else:
+                logging.info("putting feat %s" % item.get('name'))
+                feat = Feat()
+                feat.feat_id = item.get('id')
+                feat.name = item.get('name')
+                feat.json_string = json.dumps(item)
+                feat.put()
+                added_feats += 1
 
 
-        # with open('src/data/items/items.json') as data_file:    
-        #     data = json.load(data_file)
+        with open('src/data/items/items.json') as data_file:    
+            data = json.load(data_file)
 
-        # for item in data:
-        #     _item = Item.all().filter('item_id = ', item.get('id')).fetch(1)
-        #     if _item:
-        #         logging.info("skipping item")
-        #         skipped_items += 1
-        #         continue
-        #     else:
-        #         logging.info("putting item %s" % item.get('name'))
-        #         _item = Item()
-        #         _item.item_id = item.get('id')
-        #         _item.name = item.get('name')
-        #         _item.json_string = json.dumps(item)
-        #         _item.put()
-        #         added_items += 1
+        for item in data:
+            _item = Item.all().filter('item_id = ', item.get('id')).fetch(1)
+            if _item:
+                logging.info("skipping item")
+                skipped_items += 1
+                continue
+            else:
+                logging.info("putting item %s" % item.get('name'))
+                _item = Item()
+                _item.item_id = item.get('id')
+                _item.name = item.get('name')
+                _item.json_string = json.dumps(item)
+                _item.put()
+                added_items += 1
 
         with open('src/data/powers/powers.json') as data_file:    
             data = json.load(data_file)

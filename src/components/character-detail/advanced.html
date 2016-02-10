@@ -941,7 +941,9 @@
 
                     <div class="row">
                         <div class="columns small-9">
-                            <input type="text" ng-model="new_power" uib-typeahead="power as power.name for power in powers | filter:{name:$viewValue} | limitTo:20" class="width-100">
+                            <!--<input type="text" ng-model="new_power" uib-typeahead="power as power.name for power in powers | filter:{name:$viewValue} | limitTo:20" class="width-100"> -->
+                            <input type="text" ng-model="new_power" uib-typeahead="power as power.name for power in search_powers($viewValue)" typeahead-is-open="powerTypeaheadOpen" typeahead-no-results="noPowerResults" typeahead-min-length="3" class="width-100">
+
                         </div>
                         <div class="columns small-3">
                             <button ng-click="add_power()" class="width-100">add</button>

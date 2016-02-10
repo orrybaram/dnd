@@ -534,11 +534,20 @@ class ItemSearch(webapp2.RequestHandler):
         data = json.loads(self.request.body)
         query_string = data.get('query_string')
 
+        logging.info(query_string)
+        logging.info(query_string)
+        logging.info(query_string)
+        logging.info(query_string)
+
         query = db.GqlQuery("SELECT * FROM Item WHERE name >= :1 AND name < :2",
             query_string,
             query_string.decode("utf-8") + u"\ufffd")
         items = query.fetch(20)
         results = []
+
+        logging.info(items)
+        logging.info(items)
+        logging.info(items)
 
         for item in items:
             results.append(item.serializable())
@@ -605,6 +614,64 @@ class FeatSearch(webapp2.RequestHandler):
         self.response.headers['Content-Type'] = 'application/json'
         self.response.out.write(json.dumps({"results": results}))
 
+class Powers(webapp2.RequestHandler):
+    def get(self):
+        powers = Power.all()
+
+        _powers = []
+        for power in powers:
+            _powers.append(power.serializable())
+
+        self.response.headers['Content-Type'] = 'application/json'
+        self.response.out.write(json.dumps(_powers))
+    
+    def post(self):
+
+        data = json.loads(self.request.body)
+
+        if data.get('key'):
+            power = Power.get(data.get('key'))
+        else:
+            power = Power()
+
+        power.power_id = data.get('id')
+        power.name = data.get('name')
+        power.json_string = json.dumps(data)
+        power.put()
+
+        self.response.headers['Content-Type'] = 'application/json'
+        self.response.out.write(json.dumps(power.serializable()))
+
+class PowersDelete(webapp2.RequestHandler):
+    def post(self, power_key):
+        self.response.headers['Content-Type'] = 'application/json'
+        
+        try:
+            power = Power.get(power_key)
+        except:
+            self.response.set_status(404)
+            self.response.out.write(json.dumps({"error": "power not found"}))
+            return
+        power.delete()
+        self.response.out.write(json.dumps({"message": "power deleted"}))
+
+class PowerSearch(webapp2.RequestHandler):
+    def post(self):
+        data = json.loads(self.request.body)
+        query_string = data.get('query_string')
+
+        query = db.GqlQuery("SELECT * FROM Power WHERE name >= :1 AND name < :2",
+            query_string,
+            query_string.decode("utf-8") + u"\ufffd")
+        powers = query.fetch(20)
+        results = []
+
+        for power in powers:
+            results.append(power.serializable())
+
+        self.response.headers['Content-Type'] = 'application/json'
+        self.response.out.write(json.dumps({"results": results}))
+
 class Image(webapp2.RequestHandler):
     def get(self):
         character = Character.get(self.request.get('character_key'))
@@ -622,6 +689,7 @@ app = webapp2.WSGIApplication([
 
     ('/api/v1/character/create/?', CharacterCreate),
     ('/api/v1/users/list/?', UserList),
+    
     ('/api/v1/feats/?', Feats),
     ('/api/v1/feats/search?', FeatSearch),
     ('/api/v1/feats/(?P<feat_key>[^/]+)/delete/?', FeatsDelete),
@@ -629,6 +697,10 @@ app = webapp2.WSGIApplication([
     ('/api/v1/item/?', Items),
     ('/api/v1/item/search?', ItemSearch),
     ('/api/v1/item/(?P<feat_key>[^/]+)/delete/?', ItemsDelete),
+
+    ('/api/v1/power/?', Powers),
+    ('/api/v1/power/search?', PowerSearch),
+    ('/api/v1/power/(?P<feat_key>[^/]+)/delete/?', PowersDelete),
 
     ('/api/v1/groups/create/?', GroupCreate),
     ('/api/v1/groups/list/?', GroupList),

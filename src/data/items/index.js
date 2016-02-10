@@ -5,17 +5,7 @@ function Items($http, $rootScope) {
 	
 	var items = [];
 
-	return {
-		get: get,
-		add: add,
-		edit: edit,
-		items: items,
-		fetch: fetch,
-		search: search,
-		remove: remove,
-		destroy: destroy,
-		create_new: create_new
-	};
+	return { get, add, edit, items, fetch, search, remove, destroy, create_new };
 
 	function get() {
 		if(items.length) {
@@ -34,6 +24,7 @@ function Items($http, $rootScope) {
 
 	function search(query) {
 		return $http.post('/api/v1/item/search', {query_string: query}).then(function(data) {
+			console.log(data.data.results);
 			return data.data.results;
 		});
 	}

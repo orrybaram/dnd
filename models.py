@@ -482,6 +482,7 @@ class Power(db.Model):
     character = db.ReferenceProperty(Character, collection_name="powers")
     power_id = db.StringProperty()
     json_string = db.TextProperty()
+    name = db.StringProperty()
 
     def serializable(self):
         payload = json.loads(self.json_string)
@@ -496,6 +497,7 @@ class Weapon(db.Model):
     attack = db.StringProperty()
     defense = db.StringProperty()
     damage = db.StringProperty()
+    name = db.StringProperty()
 
     def serializable(self):
         payload = json.loads(self.json_string)
@@ -510,6 +512,7 @@ class Item(db.Model):
     character = db.ReferenceProperty(Character, collection_name="items")
     json_string = db.TextProperty()
     item_id = db.StringProperty()
+    name = db.StringProperty()
 
     def serializable(self):
         payload = json.loads(self.json_string)
