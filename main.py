@@ -510,6 +510,7 @@ class Items(webapp2.RequestHandler):
 
         item.item_id = data.get('id')
         item.name = data.get('name')
+        item.slug = data.get('name').lower()
         item.json_string = json.dumps(data)
         item.put()
 
@@ -539,7 +540,7 @@ class ItemSearch(webapp2.RequestHandler):
         logging.info(query_string)
         logging.info(query_string)
 
-        query = db.GqlQuery("SELECT * FROM Item WHERE name >= :1 AND name < :2",
+        query = db.GqlQuery("SELECT * FROM Item WHERE slug >= :1 AND slug < :2",
             query_string,
             query_string.decode("utf-8") + u"\ufffd")
         items = query.fetch(20)
@@ -578,6 +579,7 @@ class Feats(webapp2.RequestHandler):
 
         feat.feat_id = data.get('id')
         feat.name = data.get('name')
+        feat.slug = data.get('name').lower()
         feat.json_string = json.dumps(data)
         feat.put()
 
@@ -602,7 +604,7 @@ class FeatSearch(webapp2.RequestHandler):
         data = json.loads(self.request.body)
         query_string = data.get('query_string')
 
-        query = db.GqlQuery("SELECT * FROM Feat WHERE name >= :1 AND name < :2",
+        query = db.GqlQuery("SELECT * FROM Feat WHERE slug >= :1 AND slug < :2",
             query_string,
             query_string.decode("utf-8") + u"\ufffd")
         feats = query.fetch(20)
@@ -636,6 +638,7 @@ class Powers(webapp2.RequestHandler):
 
         power.power_id = data.get('id')
         power.name = data.get('name')
+        power.slug = data.get('name').lower()
         power.json_string = json.dumps(data)
         power.put()
 
@@ -660,7 +663,7 @@ class PowerSearch(webapp2.RequestHandler):
         data = json.loads(self.request.body)
         query_string = data.get('query_string')
 
-        query = db.GqlQuery("SELECT * FROM Power WHERE name >= :1 AND name < :2",
+        query = db.GqlQuery("SELECT * FROM Power WHERE slug >= :1 AND slug < :2",
             query_string,
             query_string.decode("utf-8") + u"\ufffd")
         powers = query.fetch(20)

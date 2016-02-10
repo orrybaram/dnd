@@ -4,6 +4,7 @@ from google.appengine.ext import deferred, ndb
 import logging
 import os
 import json
+from slugify import slugify
 from pprint import pprint
 
 from models import *
@@ -17,6 +18,7 @@ class UploadJSON(webapp2.RequestHandler):
         skipped_powers = 0
         added_powers = 0
 
+        ###### UPLOAD FEATS ######
         with open('src/data/feats/feats.json') as data_file:    
             data = json.load(data_file)
 
@@ -31,11 +33,12 @@ class UploadJSON(webapp2.RequestHandler):
                 feat = Feat()
                 feat.feat_id = item.get('id')
                 feat.name = item.get('name')
+                feat.slug = feat.name.lower()
                 feat.json_string = json.dumps(item)
                 feat.put()
                 added_feats += 1
 
-
+        ###### UPLOAD ITEMS ######
         with open('src/data/items/items.json') as data_file:    
             data = json.load(data_file)
 
@@ -50,10 +53,12 @@ class UploadJSON(webapp2.RequestHandler):
                 _item = Item()
                 _item.item_id = item.get('id')
                 _item.name = item.get('name')
+                _item.slug = _item.name.lower()
                 _item.json_string = json.dumps(item)
                 _item.put()
                 added_items += 1
 
+        # ###### UPLOAD POWERS ######
         with open('src/data/powers/powers.json') as data_file:    
             data = json.load(data_file)
 
@@ -68,6 +73,7 @@ class UploadJSON(webapp2.RequestHandler):
                 _power = Power()
                 _power.power_id = power.get('id')
                 _power.name = power.get('name')
+                _power.slug = _power.name.lower()
                 _power.json_string = json.dumps(power)
                 _power.put()
                 added_powers += 1
@@ -84,9 +90,5 @@ class UploadJSON(webapp2.RequestHandler):
             <p>Skipped: %d</p>
             <p>Added: %d</p>
         """ % (skipped_feats, added_feats, skipped_items, added_items, skipped_powers, added_powers))
-
-
-
-
 
 app = webapp2.WSGIApplication([('/upload_json', UploadJSON)])
