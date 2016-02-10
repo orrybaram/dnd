@@ -4,7 +4,6 @@ from google.appengine.ext import deferred, ndb
 import logging
 import os
 import json
-from slugify import slugify
 from pprint import pprint
 
 from models import *
