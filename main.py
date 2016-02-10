@@ -533,7 +533,7 @@ class ItemsDelete(webapp2.RequestHandler):
 class ItemSearch(webapp2.RequestHandler):
     def post(self):
         data = json.loads(self.request.body)
-        query_string = data.get('query_string')
+        query_string = data.get('query_string').lower()
 
         logging.info(query_string)
         logging.info(query_string)
@@ -602,7 +602,7 @@ class FeatsDelete(webapp2.RequestHandler):
 class FeatSearch(webapp2.RequestHandler):
     def post(self):
         data = json.loads(self.request.body)
-        query_string = data.get('query_string')
+        query_string = data.get('query_string').lower()
 
         query = db.GqlQuery("SELECT * FROM Feat WHERE slug >= :1 AND slug < :2",
             query_string,
@@ -661,7 +661,7 @@ class PowersDelete(webapp2.RequestHandler):
 class PowerSearch(webapp2.RequestHandler):
     def post(self):
         data = json.loads(self.request.body)
-        query_string = data.get('query_string')
+        query_string = data.get('query_string').lower()
 
         query = db.GqlQuery("SELECT * FROM Power WHERE slug >= :1 AND slug < :2",
             query_string,

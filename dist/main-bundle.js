@@ -55848,7 +55848,7 @@ webpackJsonp([0,1],[
 
 	"use strict";
 
-	angular.module("dnd.data", []).factory("Items", __webpack_require__(/*! ./items */ 15)).factory("Powers", __webpack_require__(/*! ./feats */ 16)).factory("Feats", __webpack_require__(/*! ./feats */ 16));
+	angular.module("dnd.data", []).factory("Items", __webpack_require__(/*! ./items */ 15)).factory("Powers", __webpack_require__(/*! ./powers */ 36)).factory("Feats", __webpack_require__(/*! ./feats */ 16));
 
 /***/ },
 /* 15 */
@@ -83842,15 +83842,12 @@ webpackJsonp([0,1],[
 
 	        $scope.character.powers.splice(index, 1);
 
-	        $http.post('/api/v1/character/' + character_key + '/powers/' + power.key + '/delete/').then(function (response) {
-	            console.log(response);
-	        });
+	        $http.post('/api/v1/character/' + character_key + '/powers/' + power.key + '/delete/');
 	    }
 
 	    function add_item() {
 	        var data = $scope.new_item;
 	        $http.post('/api/v1/character/' + character_key + '/items/add/', data).then(function (response) {
-	            console.log(response);
 	            $scope.character.items.push(response.data);
 	            $scope.new_item = '';
 	        });
@@ -83862,15 +83859,12 @@ webpackJsonp([0,1],[
 
 	        $scope.character.items.splice(index, 1);
 
-	        $http.post('/api/v1/character/' + character_key + '/items/' + item.key + '/delete/').then(function (response) {
-	            console.log(response);
-	        });
+	        $http.post('/api/v1/character/' + character_key + '/items/' + item.key + '/delete/');
 	    }
 
 	    function add_feat() {
 	        var data = $scope.new_feat;
 	        Feats.add(data, character_key).then(function (response) {
-	            console.log(response);
 	            $scope.character.feats.push(response.data);
 	            $scope.new_feat = '';
 	        });
@@ -83882,15 +83876,12 @@ webpackJsonp([0,1],[
 	        var feat = $scope.character.feats[index];
 	        $scope.character.feats.splice(index, 1);
 
-	        Feats.remove(feat.key, character_key).then(function (response) {
-	            console.log(response);
-	        });
+	        Feats.remove(feat.key, character_key);
 	    }
 
 	    function add_weapon() {
 	        var data = $scope.new_weapon;
 	        $http.post('/api/v1/character/' + character_key + '/weapons/add/', data).then(function (response) {
-	            console.log(response);
 	            $scope.character.weapons.push(response.data);
 	            $scope.new_weapon = '';
 	        });
@@ -83898,9 +83889,7 @@ webpackJsonp([0,1],[
 
 	    function update_weapon(weapon_idx) {
 	        var weapon_data = $scope.$parent.character.weapons[weapon_idx];
-	        $http.post('/api/v1/character/' + character_key + '/weapons/' + weapon_data.key + '/update/', weapon_data).then(function (response) {
-	            console.log(response);
-	        });
+	        $http.post('/api/v1/character/' + character_key + '/weapons/' + weapon_data.key + '/update/', weapon_data).then(function (response) {});
 	    }
 
 	    function delete_weapon(id) {
@@ -83909,9 +83898,7 @@ webpackJsonp([0,1],[
 
 	        $scope.character.weapons.splice(index, 1);
 
-	        $http.post('/api/v1/character/' + character_key + '/weapons/' + weapon.key + '/delete/').then(function (response) {
-	            console.log(response);
-	        });
+	        $http.post('/api/v1/character/' + character_key + '/weapons/' + weapon.key + '/delete/');
 	    }
 	}
 
@@ -83964,6 +83951,81 @@ webpackJsonp([0,1],[
 	/** @ngInject */
 	function CharacterDetailNotesCtrl($scope, $rootScope) {
 		$rootScope.minimizeToolbar = true;
+	}
+
+/***/ },
+/* 36 */
+/*!**********************************!*\
+  !*** ./src/data/powers/index.js ***!
+  \**********************************/
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Powers.$inject = ["$http", "$rootScope"];
+	module.exports = Powers;
+
+	/** @ngInject */
+	function Powers($http, $rootScope) {
+
+		var powers = [];
+
+		return { get: get, add: add, edit: edit, powers: powers, fetch: fetch, search: search, remove: remove, destroy: destroy, create_new: create_new };
+
+		function get() {
+			if (powers.length) {
+				$rootScope.$broadcast('fetched-power', powers);
+			}
+			return fetch();
+		}
+
+		function fetch() {
+			return $http.get('/api/v1/power').then(function (response) {
+				powers = response.data;
+				$rootScope.$broadcast('fetched-powers', powers);
+				return powers;
+			});
+		}
+
+		function search(query) {
+			return $http.post('/api/v1/power/search', { query_string: query }).then(function (data) {
+				console.log(data.data.results);
+				return data.data.results;
+			});
+		}
+
+		function edit(power) {
+			return $http.post('/api/v1/power', power).then(function () {
+				$rootScope.$broadcast('power-editted');
+			});
+		}
+
+		function add(data, character_key) {
+			return $http.post('/api/v1/character/' + character_key + '/power/add/', data);
+		}
+
+		function remove(power_id, character_key) {
+			return $http.post('/api/v1/character/' + character_key + '/power/' + power_id + '/delete/');
+		}
+
+		function destroy(power_id) {
+			return $http.post('/api/v1/power/' + power_id + '/delete/').then(function (data) {
+				$rootScope.$broadcast('power-destroyed');
+			}, function (error) {
+				console.log(error);
+			});
+		}
+
+		function create_new(power, character_key) {
+			var template = '<h1 class=player>' + power.name + '</h1>\n\t\t\t\t\t\t<p class="flavor">\n\t\t\t\t\t\t\t<b>' + power.tier + ' Tier</b><br>\n\t\t\t\t\t\t\t<b> Prerequisite</b>: ' + power.prerequisites + '<br>\n\t\t\t\t\t\t\t<b> Benefit</b>: ' + power.benefit + '\n\t\t\t\t\t\t</p>';
+
+			var postData = {
+				id: (power.length + 2).toString(),
+				name: power.name,
+				html: template
+			};
+			return $http.post('/api/v1/power/', postData);
+		}
 	}
 
 /***/ }

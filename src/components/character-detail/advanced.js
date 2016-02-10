@@ -59,17 +59,12 @@ function CharacterDetailAdvancedCtrl($scope, $rootScope, $http, $stateParams, Fe
 
         $scope.character.powers.splice(index, 1);
 
-        $http.post('/api/v1/character/' + character_key + '/powers/' + power.key + '/delete/')
-            .then(function(response) {
-                console.log(response);
-            })
-        ;
+        $http.post('/api/v1/character/' + character_key + '/powers/' + power.key + '/delete/');
     }
 
     function add_item() {
         var data = $scope.new_item;
         $http.post('/api/v1/character/' + character_key + '/items/add/', data).then(function(response) {
-            console.log(response);
             $scope.character.items.push(response.data);
             $scope.new_item = '';
         });
@@ -81,15 +76,12 @@ function CharacterDetailAdvancedCtrl($scope, $rootScope, $http, $stateParams, Fe
 
         $scope.character.items.splice(index, 1);
 
-        $http.post('/api/v1/character/' + character_key + '/items/' + item.key + '/delete/').then(function(response) {
-            console.log(response);
-        });
+        $http.post('/api/v1/character/' + character_key + '/items/' + item.key + '/delete/')
     }
 
     function add_feat() {
         var data = $scope.new_feat;
         Feats.add(data, character_key).then(function(response) {
-            console.log(response);
             $scope.character.feats.push(response.data);
             $scope.new_feat = '';
         });
@@ -101,15 +93,12 @@ function CharacterDetailAdvancedCtrl($scope, $rootScope, $http, $stateParams, Fe
         var feat = $scope.character.feats[index];
         $scope.character.feats.splice(index, 1);
         
-        Feats.remove(feat.key, character_key).then(function(response) {
-            console.log(response);
-        });
+        Feats.remove(feat.key, character_key);
     }
 
     function add_weapon() {
         var data = $scope.new_weapon;
         $http.post('/api/v1/character/' + character_key + '/weapons/add/', data).then(function(response) {
-            console.log(response);
             $scope.character.weapons.push(response.data);
             $scope.new_weapon = '';
         });
@@ -118,7 +107,6 @@ function CharacterDetailAdvancedCtrl($scope, $rootScope, $http, $stateParams, Fe
     function update_weapon(weapon_idx) {
         var weapon_data = $scope.$parent.character.weapons[weapon_idx];
         $http.post('/api/v1/character/' + character_key + '/weapons/' + weapon_data.key + '/update/', weapon_data).then(function(response) {
-            console.log(response);
         });
     }
 
@@ -128,8 +116,6 @@ function CharacterDetailAdvancedCtrl($scope, $rootScope, $http, $stateParams, Fe
 
         $scope.character.weapons.splice(index, 1);
 
-        $http.post('/api/v1/character/' + character_key + '/weapons/' + weapon.key + '/delete/').then(function(response) {
-            console.log(response);
-        });
+        $http.post('/api/v1/character/' + character_key + '/weapons/' + weapon.key + '/delete/');
     }
 }

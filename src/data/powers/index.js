@@ -5,7 +5,7 @@ function Powers($http, $rootScope) {
 	
 	var powers = [];
 
-	return { get, add, edit, powers, fetch, search, remove, destroy, create_new }
+	return { get, add, edit, powers, fetch, search, remove, destroy, create_new };
 
 	function get() {
 		if(powers.length) {
