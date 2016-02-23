@@ -579,9 +579,8 @@ input.highlighted {
 .card--power {
 	position: relative;
 	border: 10px solid #FFF;
-	float: left;
-	max-width: 400px;
-	max-height: 500px;
+	// max-width: 400px;
+	// max-height: 500px;
 	margin: 10px;
 	transition: all .1s;
 	overflow: auto;

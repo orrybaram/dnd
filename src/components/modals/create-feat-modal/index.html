@@ -1,0 +1,30 @@
+<div class="create-feat">
+	<div class="modal-header">
+	    <h3 class="modal-title">Create Feat</h3>
+	</div>
+	<div class="content">
+		<form ng-submit="submit_new_feat()">
+			<div>
+				<label>Name</label>
+				<input ng-model="feat.name" required />
+			</div>
+			<div>
+				<label>Tier</label>
+				<select ng-model="feat.tier" required>
+					<option>Heroic</option>
+					<option>Paragon</option>
+					<option>Epic</option>
+				</select>
+			</div>
+			<div>
+				<label>Prerequisites</label>
+				<textarea ng-model="feat.prerequisites" required></textarea>
+			</div>
+			<div>
+				<label>Benefits</label>
+				<textarea ng-model="feat.benefit" required></textarea>
+			</div>
+			<button>Save</button>
+		</form>
+	</div>
+</div>

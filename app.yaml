@@ -10,6 +10,17 @@ handlers:
   # login: admin
   secure: always
 
+- url: /populate_db
+  script: populate_db.app
+  login: admin
+
+- url: /start_job
+  script: populate_db.app
+
+- url: /mapreduce(/.*)?
+  script: mapreduce.main.app
+  login: admin
+  
 - url: /favicon\.ico
   static_files: favicon.ico
   upload: favicon\.ico

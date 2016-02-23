@@ -488,6 +488,192 @@ class CharacterDeleteWeapon(webapp2.RequestHandler):
         character = Character.get(character_key)
         character.weapons.filter('__key__ =', Key(weapon_key)).get().delete()
 
+class Items(webapp2.RequestHandler):
+    def get(self):
+        items = Item.all()
+
+        _items = []
+        for item in items:
+            _items.append(item.serializable())
+
+        self.response.headers['Content-Type'] = 'application/json'
+        self.response.out.write(json.dumps(_items))
+    
+    def post(self):
+
+        data = json.loads(self.request.body)
+
+        if data.get('key'):
+            item = Item.get(data.get('key'))
+        else:
+            item = Item()
+
+        item.item_id = data.get('id')
+        item.name = data.get('name')
+        item.slug = data.get('name').lower()
+        item.json_string = json.dumps(data)
+        item.put()
+
+        self.response.headers['Content-Type'] = 'application/json'
+        self.response.out.write(json.dumps(item.serializable()))
+
+class ItemsDelete(webapp2.RequestHandler):
+    def post(self, feat_key):
+        self.response.headers['Content-Type'] = 'application/json'
+        
+        try:
+            item = Item.get(item_key)
+        except:
+            self.response.set_status(404)
+            self.response.out.write(json.dumps({"error": "item not found"}))
+            return
+        item.delete()
+        self.response.out.write(json.dumps({"message": "item deleted"}))
+
+class ItemSearch(webapp2.RequestHandler):
+    def post(self):
+        data = json.loads(self.request.body)
+        query_string = data.get('query_string').lower()
+
+        logging.info(query_string)
+        logging.info(query_string)
+        logging.info(query_string)
+        logging.info(query_string)
+
+        query = db.GqlQuery("SELECT * FROM Item WHERE slug >= :1 AND slug < :2",
+            query_string,
+            query_string.decode("utf-8") + u"\ufffd")
+        items = query.fetch(20)
+        results = []
+
+        logging.info(items)
+        logging.info(items)
+        logging.info(items)
+
+        for item in items:
+            results.append(item.serializable())
+
+        self.response.headers['Content-Type'] = 'application/json'
+        self.response.out.write(json.dumps({"results": results}))
+
+
+class Feats(webapp2.RequestHandler):
+    def get(self):
+        feats = Feat.all()
+
+        _feats = []
+        for feat in feats:
+            _feats.append(feat.serializable())
+
+        self.response.headers['Content-Type'] = 'application/json'
+        self.response.out.write(json.dumps(_feats))
+    
+    def post(self):
+
+        data = json.loads(self.request.body)
+
+        if data.get('key'):
+            feat = Feat.get(data.get('key'))
+        else:
+            feat = Feat()
+
+        feat.feat_id = data.get('id')
+        feat.name = data.get('name')
+        feat.slug = data.get('name').lower()
+        feat.json_string = json.dumps(data)
+        feat.put()
+
+        self.response.headers['Content-Type'] = 'application/json'
+        self.response.out.write(json.dumps(feat.serializable()))
+
+class FeatsDelete(webapp2.RequestHandler):
+    def post(self, feat_key):
+        self.response.headers['Content-Type'] = 'application/json'
+        
+        try:
+            feat = Feat.get(feat_key)
+        except:
+            self.response.set_status(404)
+            self.response.out.write(json.dumps({"error": "feat not found"}))
+            return
+        feat.delete()
+        self.response.out.write(json.dumps({"message": "feat deleted"}))
+
+class FeatSearch(webapp2.RequestHandler):
+    def post(self):
+        data = json.loads(self.request.body)
+        query_string = data.get('query_string').lower()
+
+        query = db.GqlQuery("SELECT * FROM Feat WHERE slug >= :1 AND slug < :2",
+            query_string,
+            query_string.decode("utf-8") + u"\ufffd")
+        feats = query.fetch(20)
+        results = []
+
+        for feat in feats:
+            results.append(feat.serializable())
+
+        self.response.headers['Content-Type'] = 'application/json'
+        self.response.out.write(json.dumps({"results": results}))
+
+class Powers(webapp2.RequestHandler):
+    def get(self):
+        powers = Power.all()
+
+        _powers = []
+        for power in powers:
+            _powers.append(power.serializable())
+
+        self.response.headers['Content-Type'] = 'application/json'
+        self.response.out.write(json.dumps(_powers))
+    
+    def post(self):
+
+        data = json.loads(self.request.body)
+
+        if data.get('key'):
+            power = Power.get(data.get('key'))
+        else:
+            power = Power()
+
+        power.power_id = data.get('id')
+        power.name = data.get('name')
+        power.slug = data.get('name').lower()
+        power.json_string = json.dumps(data)
+        power.put()
+
+        self.response.headers['Content-Type'] = 'application/json'
+        self.response.out.write(json.dumps(power.serializable()))
+
+class PowersDelete(webapp2.RequestHandler):
+    def post(self, power_key):
+        self.response.headers['Content-Type'] = 'application/json'
+        
+        try:
+            power = Power.get(power_key)
+        except:
+            self.response.set_status(404)
+            self.response.out.write(json.dumps({"error": "power not found"}))
+            return
+        power.delete()
+        self.response.out.write(json.dumps({"message": "power deleted"}))
+
+class PowerSearch(webapp2.RequestHandler):
+    def post(self):
+        data = json.loads(self.request.body)
+        query_string = data.get('query_string').lower()
+
+        query = db.GqlQuery("SELECT * FROM Power WHERE slug >= :1 AND slug < :2",
+            query_string,
+            query_string.decode("utf-8") + u"\ufffd")
+        powers = query.fetch(20)
+        results = []
+
+        for power in powers:
+            results.append(power.serializable())
+
+        self.response.headers['Content-Type'] = 'application/json'
+        self.response.out.write(json.dumps({"results": results}))
 
 class Image(webapp2.RequestHandler):
     def get(self):
@@ -503,8 +689,21 @@ class Image(webapp2.RequestHandler):
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
     ('/images/?', Image),
+
     ('/api/v1/character/create/?', CharacterCreate),
     ('/api/v1/users/list/?', UserList),
+    
+    ('/api/v1/feats/?', Feats),
+    ('/api/v1/feats/search?', FeatSearch),
+    ('/api/v1/feats/(?P<feat_key>[^/]+)/delete/?', FeatsDelete),
+
+    ('/api/v1/item/?', Items),
+    ('/api/v1/item/search?', ItemSearch),
+    ('/api/v1/item/(?P<feat_key>[^/]+)/delete/?', ItemsDelete),
+
+    ('/api/v1/power/?', Powers),
+    ('/api/v1/power/search?', PowerSearch),
+    ('/api/v1/power/(?P<feat_key>[^/]+)/delete/?', PowersDelete),
 
     ('/api/v1/groups/create/?', GroupCreate),
     ('/api/v1/groups/list/?', GroupList),

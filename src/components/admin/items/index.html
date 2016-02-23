@@ -1,0 +1,18 @@
+<h2>Items</h2>
+<div ng-if="!items.length">Loading...</div>
+<table style="width:100%;">
+	<tr>
+		<th>ID</th>
+		<th>Name</th>
+		<th>Actions</th>
+	</tr>
+	<tr ng-repeat="item in items | orderBy : 'name'">
+		<td>{{item.id}}</td>
+		<td>{{item.name}}</td>
+		<td>
+			<button ng-click="open_edit_item_modal(item, $index)">edit</button>
+			<button ng-click="open_item_modal(item)">view</button>
+			<button ng-click="delete_item(item.key)">delete</button>
+		</td>
+	</tr>
+</table>

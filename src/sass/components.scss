@@ -87,26 +87,17 @@
   // Fade for backdrop
   &.fade { opacity: 0; }
   &.in { opacity: 0.5; }
-
-
 }
 
+.masonry-layout {
+  column-count: 3;
+  column-gap: 0;
 
-// Scale up the modal
-@media (min-width: 600px) {
-  // Automatically set modal's width for larger viewports
-  .modal-dialog {
-    width: $modal-md;
-    margin: 30px auto;
-  }
-  .modal-content {
-    box-shadow: 0 5px 15px rgba(0,0,0,.5);
-  }
-
-  // Modal sizes
-  .modal-sm { width: $modal-sm; }
+  -webkit-column-count: 3;
+  -webkit-gap: 0;
 }
-
-@media (min-width: $screen-md-min) {
-  .modal-lg { width: $modal-lg; }
+.masonry-layout-panel {
+  -webkit-column-break-inside: avoid;
+            page-break-inside: avoid;
+                 break-inside: avoid;
 }

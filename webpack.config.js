@@ -14,7 +14,7 @@ module.exports = function(options) {
     */
 
     var entry = {
-        "main": "./src/js/index.js",
+        "main": "./src/index.js",
     };
 
     /* 

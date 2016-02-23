@@ -801,7 +801,7 @@
                     
                     <div class="row">
                         <div class="columns small-9">
-                            <input type="text" ng-model="new_weapon" uib-typeahead="item as item.name for item in items | filter:{name:$viewValue} | limitTo:20" class="width-100">
+                            <input type="text" ng-model="new_weapon" uib-typeahead="item as item.name for item in search_items($viewValue)" typeahead-is-open="itemTypeaheadOpen" typeahead-no-results="noItemResults" typeahead-min-length="3" class="width-100">
                         </div>
                         <div class="columns small-3">
                             <button ng-click="add_weapon()" class="width-100">add</button>
@@ -903,10 +903,14 @@
                     </ul>
                     <div class="row">
                         <div class="columns small-9">
-                            <input type="text" ng-model="new_feat" uib-typeahead="feat as feat.name for feat in feats | filter:{name:$viewValue} | limitTo:20" class="width-100">
+                            <input type="text" ng-model="new_feat" uib-typeahead="feat as feat.name for feat in search_feats($viewValue)" typeahead-is-open="featTypeaheadOpen" typeahead-no-results="noFeatResults" typeahead-min-length="3" class="width-100">
                         </div>
+
                         <div class="columns small-3">
-                            <button ng-click="add_feat()" class="width-100">add</button>
+                            <button ng-hide="noFeatResults" ng-click="add_feat()" class="width-100">add</button>
+                        </div>
+                        <div ng-show="noFeatResults">
+                            <button ng-click="open_create_feat_modal()">Not listed? Create Feat</button>
                         </div>
                     </div>
                 </section>
@@ -937,7 +941,9 @@
 
                     <div class="row">
                         <div class="columns small-9">
-                            <input type="text" ng-model="new_power" uib-typeahead="power as power.name for power in powers | filter:{name:$viewValue} | limitTo:20" class="width-100">
+                            <!--<input type="text" ng-model="new_power" uib-typeahead="power as power.name for power in powers | filter:{name:$viewValue} | limitTo:20" class="width-100"> -->
+                            <input type="text" ng-model="new_power" uib-typeahead="power as power.name for power in search_powers($viewValue)" typeahead-is-open="powerTypeaheadOpen" typeahead-no-results="noPowerResults" typeahead-min-length="3" class="width-100">
+
                         </div>
                         <div class="columns small-3">
                             <button ng-click="add_power()" class="width-100">add</button>
@@ -956,7 +962,8 @@
                     </ul>
                     <div class="row">
                         <div class="columns small-9">
-                            <input type="text" ng-model="new_item" uib-typeahead="item as item.name for item in items | filter:{name:$viewValue} | limitTo:20" class="width-100">
+                            <!--<input type="text" ng-model="new_item" uib-typeahead="item as item.name for item in items | filter:{name:$viewValue} | limitTo:20" class="width-100"> -->
+                            <input type="text" ng-model="new_item" uib-typeahead="item as item.name for item in search_items($viewValue)" typeahead-is-open="itemTypeaheadOpen" typeahead-no-results="noItemResults" typeahead-min-length="3" class="width-100">
                         </div>
                         <div class="columns small-3">
                             <button ng-click="add_item()" class="width-100">add</button>
