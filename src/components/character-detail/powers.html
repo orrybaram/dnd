@@ -1,6 +1,6 @@
-
 <div class="tile-container">
 	<power-card ng-repeat="power in character.powers | filter:{type: 'atwillpower'}"></power-card>
 	<power-card ng-repeat="power in character.powers | filter:{type: 'encounterpower'}"></power-card>
 	<power-card ng-repeat="power in character.powers | filter:{type: 'dailypower'}"></power-card>
+	<power-card ng-repeat="feat in character.feat | filter:{type: 'feat'}"></power-card>
 </div>

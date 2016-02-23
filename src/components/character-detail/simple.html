@@ -29,6 +29,29 @@
             </section>
 
             <section class="card">
+                <h2 class="section-header">Defenses</h2>
+                
+                <div class="inline-block">
+                    <h3 class="item-name">AC</h3>
+                    <input disabled class="tiny-input highlighted total-box" value="{{ getDefenseTotal('armor') }}" />
+                </div>
+                <div class="inline-block">
+                    <h3 class="item-name">Fort</h3>
+                    <input disabled class="tiny-input highlighted total-box" value="{{ getDefenseTotal('fortitude') }}" />
+                </div>
+                <div class="inline-block">
+                    <h3 class="item-name">ref</h3>
+                    <input disabled class="tiny-input highlighted total-box" value="{{ getDefenseTotal('reflex') }}" />
+                </div>
+                <div class="inline-block">
+                    <h3 class="item-name">Will</h3>
+                    <input disabled class="tiny-input highlighted total-box" value="{{ getDefenseTotal('will') }}" />
+                </div>
+                    
+            </section>
+
+
+            <section class="card">
                 <h2 class="section-header">XP</h2>
                 
                 <div class="inline-block">
@@ -96,9 +119,17 @@
                 <ul class="item-list margin-bottom">
                     <li class="daily-power power" ng-repeat="power in character.powers | filter:{type: 'dailypower'}">
                         <a ng-click="open_power_modal(power.id)">{{ power.name }}</a>
-
                     </li>
                 </ul>     
+            </section>
+            <section class="card">
+                <h2 class="section-header">Feats</h2>
+                <ul class="item-list margin-bottom">
+                    <li class="item" ng-repeat="feat in character.feats">
+                        <a ng-click="open_feat_modal(feat.id)">{{ feat.name }}</a>
+                        <i class="fa fa-times" ng-click="delete_feat(feat.id)"></i>
+                    </li>
+                </ul>
             </section>
 
             <section class="card">

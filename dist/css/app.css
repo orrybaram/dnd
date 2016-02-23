@@ -3472,3 +3472,19 @@ input.highlighted {
 
 .standard-modal {
   padding: 20px; }
+
+@media (max-width: 400px) {
+  .secondary-toolbar .tabs a {
+    font-size: 12px;
+    padding: 10px 10px; }
+  h3.item-name {
+    padding: 6px 0px;
+    width: 36px;
+    font-size: 10px; }
+  .total-box {
+    font-size: 11px;
+    padding: 7px !important;
+    width: 55px;
+    text-align: center; }
+  .total-box[disabled] {
+    width: 28px; } }
