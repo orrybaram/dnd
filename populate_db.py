@@ -73,7 +73,7 @@ class PopulateDB(webapp2.RequestHandler):
 
         for power in data:
             item_count += 1
-            if item_count < 8500:
+            if item_count < 6000:
                 continue
             logging.info(item_count)
             _power = Power.all().filter('power_id = ', power.get('id')).fetch(1)
