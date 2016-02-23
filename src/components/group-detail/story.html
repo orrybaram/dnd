@@ -1,13 +1,9 @@
 
 <div ng-show="ui.saving" class="toast">Saving...</div>
-
-<form on-form-change="save_group()" class="row content-view full-height">
-	<div class="columns medium-6 full-height">
-		<h3>The Story So Far...</h3>
+<div class="columns medium-10 push-1">
+	<button class="right" ng-click="showEditStory = !showEditStory">{{!showEditStory ? 'Edit' : 'Preview'}}</button>
+	<form ng-show="showEditStory" on-form-change="save_group()" class="row full-height content-view">
 		<textarea ng-model="group.story" class="full-height"></textarea>
-	</div>
-	<div class="columns medium-6 full-height">
-		<h3>Notes</h3>
-		<textarea ng-model="group.notes" class="full-height"></textarea>
-	</div>
-</form>
+	</form>
+	<p ng-hide="showEditStory" marked="group.story" class="full-height"></p>
+</div>
