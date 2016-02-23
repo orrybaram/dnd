@@ -3,6 +3,8 @@ const _ = require("lodash");
 require("angular");
 require("angular-ui-router");
 require("angular-ui-bootstrap");
+require("angular-marked");
+
 
 require("components/cards/power-card");
 require("components/modals");
@@ -10,7 +12,6 @@ require("components/character/service");
 require("./data");
 require("./js/directives");
 require("./js/ng-filters");
-
 
 angular
     .module('dnd', [
@@ -22,7 +23,8 @@ angular
         'directives.powerCard',
         'ui.bootstrap',
         'angular.filter',
-        'app.filters'
+        'app.filters',
+        'hc.marked'
     ])
     .config(config)
     .run(onRun)

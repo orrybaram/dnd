@@ -1,0 +1,51 @@
+@media (max-width:500px) {
+    .secondary-toolbar .tabs a {
+        font-size: 12px;
+        padding: 10px 10px;
+    }
+    h3.item-name {
+        padding: 6px 0px;
+        width: 36px;
+        font-size: 10px;
+    }
+    .total-box {
+        font-size: 11px;
+        padding: 7px !important;
+        width: 55px;
+        text-align: center;
+    }
+    .total-box[disabled] {
+        width: 28px;
+    }
+
+    .masonry-layout {
+        column-count: 1;
+        -webkit-column-count: 1;
+    }
+}
+
+// Scale up the modal
+@media (min-width: 500px) and (max-width:800px) {
+    // Automatically set modal's width for larger viewports
+    .modal-dialog {
+        width: $modal-md;
+        margin: 30px auto;
+    }
+    .modal-content {
+        box-shadow: 0 5px 15px rgba(0, 0, 0, .5);
+    }
+    // Modal sizes
+    .modal-sm {
+        width: $modal-sm;
+    }
+    .masonry-layout {
+        column-count: 2;
+        -webkit-column-count: 2;
+    }
+}
+
+@media (min-width: $screen-md-min) {
+    .modal-lg {
+        width: $modal-lg;
+    }
+}
