@@ -101,3 +101,13 @@
             page-break-inside: avoid;
                  break-inside: avoid;
 }
+
+.markdown-doc {
+  p {
+    margin-bottom: 10px;
+  }
+  ul {
+    list-style: disc;
+    padding-left: 20px;
+  }
+}

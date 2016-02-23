@@ -2948,6 +2948,13 @@ select {
   page-break-inside: avoid;
   break-inside: avoid; }
 
+.markdown-doc p {
+  margin-bottom: 10px; }
+
+.markdown-doc ul {
+  list-style: disc;
+  padding-left: 20px; }
+
 body {
   background: #F1F1F1;
   font-family: Helvetica Neue, sans-serif;
