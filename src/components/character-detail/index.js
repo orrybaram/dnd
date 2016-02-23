@@ -7,7 +7,7 @@ function CharacterDetailCtrl($scope, $rootScope, $state, $http, $timeout, $state
 
     $scope.ui = {};
     $scope.powers = Powers;
-    $scope.items = Items;
+    $scope.items = Items.items;
     $scope.feats = [];
     $scope.state = $state;
     $scope.upload = {};

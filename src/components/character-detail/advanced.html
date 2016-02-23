@@ -801,7 +801,7 @@
                     
                     <div class="row">
                         <div class="columns small-9">
-                            <input type="text" ng-model="new_weapon" uib-typeahead="item as item.name for item in items | filter:{name:$viewValue} | limitTo:20" class="width-100">
+                            <input type="text" ng-model="new_weapon" uib-typeahead="item as item.name for item in search_items($viewValue)" typeahead-is-open="itemTypeaheadOpen" typeahead-no-results="noItemResults" typeahead-min-length="3" class="width-100">
                         </div>
                         <div class="columns small-3">
                             <button ng-click="add_weapon()" class="width-100">add</button>

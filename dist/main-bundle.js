@@ -19,10 +19,10 @@ webpackJsonp([0,1],[
 	__webpack_require__(/*! components/modals */ 9);
 	__webpack_require__(/*! components/character/service */ 13);
 	__webpack_require__(/*! ./data */ 14);
-	__webpack_require__(/*! ./js/directives */ 17);
-	__webpack_require__(/*! ./js/ng-filters */ 20);
+	__webpack_require__(/*! ./js/directives */ 18);
+	__webpack_require__(/*! ./js/ng-filters */ 21);
 
-	angular.module('dnd', ['ui.router', 'dnd.data', 'dnd.modals', 'dnd.character', 'directives', 'directives.powerCard', 'ui.bootstrap', 'angular.filter', 'app.filters']).config(config).run(onRun).controller('AdminCtrl', __webpack_require__(/*! components/admin */ 21)).controller('AdminFeatsCtrl', __webpack_require__(/*! components/admin/feats */ 22)).controller('AdminItemsCtrl', __webpack_require__(/*! components/admin/items */ 23)).controller('GroupsCtrl', __webpack_require__(/*! components/group-list */ 24)).controller('GroupDetailCtrl', __webpack_require__(/*! components/group-detail */ 25)).controller('GroupDetailDashboardCtrl', __webpack_require__(/*! components/group-detail/dashboard */ 26)).controller('GroupDetailEncounterCtrl', __webpack_require__(/*! components/group-detail/encounter */ 27)).controller('GroupDetailStoryCtrl', __webpack_require__(/*! components/group-detail/story */ 28)).controller('GroupDetailAdminCtrl', __webpack_require__(/*! components/group-detail/admin */ 29)).controller('CharacterDetailCtrl', __webpack_require__(/*! components/character-detail */ 30)).controller('CharacterDetailAdvancedCtrl', __webpack_require__(/*! components/character-detail/advanced */ 32)).controller('CharacterDetailSimpleCtrl', __webpack_require__(/*! components/character-detail/simple */ 33)).controller('CharacterDetailPowersCtrl', __webpack_require__(/*! components/character-detail/powers */ 34)).controller('CharacterDetailNotesCtrl', __webpack_require__(/*! components/character-detail/notes */ 35));
+	angular.module('dnd', ['ui.router', 'dnd.data', 'dnd.modals', 'dnd.character', 'directives', 'directives.powerCard', 'ui.bootstrap', 'angular.filter', 'app.filters']).config(config).run(onRun).controller('AdminCtrl', __webpack_require__(/*! components/admin */ 22)).controller('AdminFeatsCtrl', __webpack_require__(/*! components/admin/feats */ 23)).controller('AdminItemsCtrl', __webpack_require__(/*! components/admin/items */ 24)).controller('GroupsCtrl', __webpack_require__(/*! components/group-list */ 25)).controller('GroupDetailCtrl', __webpack_require__(/*! components/group-detail */ 26)).controller('GroupDetailDashboardCtrl', __webpack_require__(/*! components/group-detail/dashboard */ 27)).controller('GroupDetailEncounterCtrl', __webpack_require__(/*! components/group-detail/encounter */ 28)).controller('GroupDetailStoryCtrl', __webpack_require__(/*! components/group-detail/story */ 29)).controller('GroupDetailAdminCtrl', __webpack_require__(/*! components/group-detail/admin */ 30)).controller('CharacterDetailCtrl', __webpack_require__(/*! components/character-detail */ 31)).controller('CharacterDetailAdvancedCtrl', __webpack_require__(/*! components/character-detail/advanced */ 33)).controller('CharacterDetailSimpleCtrl', __webpack_require__(/*! components/character-detail/simple */ 34)).controller('CharacterDetailPowersCtrl', __webpack_require__(/*! components/character-detail/powers */ 35)).controller('CharacterDetailNotesCtrl', __webpack_require__(/*! components/character-detail/notes */ 36));
 
 	function config($stateProvider, $urlRouterProvider, $locationProvider) {
 	    $urlRouterProvider.otherwise("/");
@@ -55848,7 +55848,7 @@ webpackJsonp([0,1],[
 
 	"use strict";
 
-	angular.module("dnd.data", []).factory("Items", __webpack_require__(/*! ./items */ 15)).factory("Powers", __webpack_require__(/*! ./powers */ 36)).factory("Feats", __webpack_require__(/*! ./feats */ 16));
+	angular.module("dnd.data", []).factory("Items", __webpack_require__(/*! ./items */ 15)).factory("Powers", __webpack_require__(/*! ./powers */ 16)).factory("Feats", __webpack_require__(/*! ./feats */ 17));
 
 /***/ },
 /* 15 */
@@ -55927,6 +55927,81 @@ webpackJsonp([0,1],[
 
 /***/ },
 /* 16 */
+/*!**********************************!*\
+  !*** ./src/data/powers/index.js ***!
+  \**********************************/
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Powers.$inject = ["$http", "$rootScope"];
+	module.exports = Powers;
+
+	/** @ngInject */
+	function Powers($http, $rootScope) {
+
+		var powers = [];
+
+		return { get: get, add: add, edit: edit, powers: powers, fetch: fetch, search: search, remove: remove, destroy: destroy, create_new: create_new };
+
+		function get() {
+			if (powers.length) {
+				$rootScope.$broadcast('fetched-power', powers);
+			}
+			return fetch();
+		}
+
+		function fetch() {
+			return $http.get('/api/v1/power').then(function (response) {
+				powers = response.data;
+				$rootScope.$broadcast('fetched-powers', powers);
+				return powers;
+			});
+		}
+
+		function search(query) {
+			return $http.post('/api/v1/power/search', { query_string: query }).then(function (data) {
+				console.log(data.data.results);
+				return data.data.results;
+			});
+		}
+
+		function edit(power) {
+			return $http.post('/api/v1/power', power).then(function () {
+				$rootScope.$broadcast('power-editted');
+			});
+		}
+
+		function add(data, character_key) {
+			return $http.post('/api/v1/character/' + character_key + '/power/add/', data);
+		}
+
+		function remove(power_id, character_key) {
+			return $http.post('/api/v1/character/' + character_key + '/power/' + power_id + '/delete/');
+		}
+
+		function destroy(power_id) {
+			return $http.post('/api/v1/power/' + power_id + '/delete/').then(function (data) {
+				$rootScope.$broadcast('power-destroyed');
+			}, function (error) {
+				console.log(error);
+			});
+		}
+
+		function create_new(power, character_key) {
+			var template = '<h1 class=player>' + power.name + '</h1>\n\t\t\t\t\t\t<p class="flavor">\n\t\t\t\t\t\t\t<b>' + power.tier + ' Tier</b><br>\n\t\t\t\t\t\t\t<b> Prerequisite</b>: ' + power.prerequisites + '<br>\n\t\t\t\t\t\t\t<b> Benefit</b>: ' + power.benefit + '\n\t\t\t\t\t\t</p>';
+
+			var postData = {
+				id: (power.length + 2).toString(),
+				name: power.name,
+				html: template
+			};
+			return $http.post('/api/v1/power/', postData);
+		}
+	}
+
+/***/ },
+/* 17 */
 /*!*********************************!*\
   !*** ./src/data/feats/index.js ***!
   \*********************************/
@@ -56010,7 +56085,7 @@ webpackJsonp([0,1],[
 	}
 
 /***/ },
-/* 17 */
+/* 18 */
 /*!******************************!*\
   !*** ./src/js/directives.js ***!
   \******************************/
@@ -56018,8 +56093,8 @@ webpackJsonp([0,1],[
 
 	"use strict";
 
-	var $ = __webpack_require__(/*! jquery */ 18);
-	__webpack_require__(/*! jquery-ui */ 19);
+	var $ = __webpack_require__(/*! jquery */ 19);
+	__webpack_require__(/*! jquery-ui */ 20);
 
 	angular.module('directives', []).directive('onFormChange', ["$parse", "$timeout", function ($parse, $timeout) {
 	    return {
@@ -56098,7 +56173,7 @@ webpackJsonp([0,1],[
 	});
 
 /***/ },
-/* 18 */
+/* 19 */
 /*!*********************************!*\
   !*** ./~/jquery/dist/jquery.js ***!
   \*********************************/
@@ -65938,13 +66013,13 @@ webpackJsonp([0,1],[
 
 
 /***/ },
-/* 19 */
+/* 20 */
 /*!**********************************!*\
   !*** ./~/jquery-ui/jquery-ui.js ***!
   \**********************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	var jQuery = __webpack_require__(/*! jquery */ 18);
+	var jQuery = __webpack_require__(/*! jquery */ 19);
 
 	/*! jQuery UI - v1.10.3 - 2013-05-03
 	* http://jqueryui.com
@@ -80952,7 +81027,7 @@ webpackJsonp([0,1],[
 
 
 /***/ },
-/* 20 */
+/* 21 */
 /*!******************************!*\
   !*** ./src/js/ng-filters.js ***!
   \******************************/
@@ -82883,7 +82958,7 @@ webpackJsonp([0,1],[
 	})(window, window.angular);
 
 /***/ },
-/* 21 */
+/* 22 */
 /*!***************************************!*\
   !*** ./src/components/admin/index.js ***!
   \***************************************/
@@ -82900,7 +82975,7 @@ webpackJsonp([0,1],[
 	}
 
 /***/ },
-/* 22 */
+/* 23 */
 /*!*********************************************!*\
   !*** ./src/components/admin/feats/index.js ***!
   \*********************************************/
@@ -82961,7 +83036,7 @@ webpackJsonp([0,1],[
 	}
 
 /***/ },
-/* 23 */
+/* 24 */
 /*!*********************************************!*\
   !*** ./src/components/admin/items/index.js ***!
   \*********************************************/
@@ -83022,7 +83097,7 @@ webpackJsonp([0,1],[
 	}
 
 /***/ },
-/* 24 */
+/* 25 */
 /*!********************************************!*\
   !*** ./src/components/group-list/index.js ***!
   \********************************************/
@@ -83064,7 +83139,7 @@ webpackJsonp([0,1],[
 	}
 
 /***/ },
-/* 25 */
+/* 26 */
 /*!**********************************************!*\
   !*** ./src/components/group-detail/index.js ***!
   \**********************************************/
@@ -83115,7 +83190,7 @@ webpackJsonp([0,1],[
 	}
 
 /***/ },
-/* 26 */
+/* 27 */
 /*!**************************************************!*\
   !*** ./src/components/group-detail/dashboard.js ***!
   \**************************************************/
@@ -83199,7 +83274,7 @@ webpackJsonp([0,1],[
 	}
 
 /***/ },
-/* 27 */
+/* 28 */
 /*!**************************************************!*\
   !*** ./src/components/group-detail/encounter.js ***!
   \**************************************************/
@@ -83291,7 +83366,7 @@ webpackJsonp([0,1],[
 	}
 
 /***/ },
-/* 28 */
+/* 29 */
 /*!**********************************************!*\
   !*** ./src/components/group-detail/story.js ***!
   \**********************************************/
@@ -83316,7 +83391,7 @@ webpackJsonp([0,1],[
 	}
 
 /***/ },
-/* 29 */
+/* 30 */
 /*!**********************************************!*\
   !*** ./src/components/group-detail/admin.js ***!
   \**********************************************/
@@ -83457,7 +83532,7 @@ webpackJsonp([0,1],[
 	}
 
 /***/ },
-/* 30 */
+/* 31 */
 /*!**************************************************!*\
   !*** ./src/components/character-detail/index.js ***!
   \**************************************************/
@@ -83466,7 +83541,7 @@ webpackJsonp([0,1],[
 	'use strict';
 
 	CharacterDetailCtrl.$inject = ["$scope", "$rootScope", "$state", "$http", "$timeout", "$stateParams", "$uibModal", "$log", "Character", "Powers", "Items", "Feats"];
-	var _require = __webpack_require__(/*! data/dnd-data */ 31);
+	var _require = __webpack_require__(/*! data/dnd-data */ 32);
 
 	var XP_LEVELS = _require.XP_LEVELS;
 	var RESERVED_POWER_TRAITS = _require.RESERVED_POWER_TRAITS;
@@ -83478,7 +83553,7 @@ webpackJsonp([0,1],[
 
 	    $scope.ui = {};
 	    $scope.powers = Powers;
-	    $scope.items = Items;
+	    $scope.items = Items.items;
 	    $scope.feats = [];
 	    $scope.state = $state;
 	    $scope.upload = {};
@@ -83754,7 +83829,7 @@ webpackJsonp([0,1],[
 	}
 
 /***/ },
-/* 31 */
+/* 32 */
 /*!******************************!*\
   !*** ./src/data/dnd-data.js ***!
   \******************************/
@@ -83772,7 +83847,7 @@ webpackJsonp([0,1],[
 	};
 
 /***/ },
-/* 32 */
+/* 33 */
 /*!*****************************************************!*\
   !*** ./src/components/character-detail/advanced.js ***!
   \*****************************************************/
@@ -83903,7 +83978,7 @@ webpackJsonp([0,1],[
 	}
 
 /***/ },
-/* 33 */
+/* 34 */
 /*!***************************************************!*\
   !*** ./src/components/character-detail/simple.js ***!
   \***************************************************/
@@ -83920,7 +83995,7 @@ webpackJsonp([0,1],[
 	}
 
 /***/ },
-/* 34 */
+/* 35 */
 /*!***************************************************!*\
   !*** ./src/components/character-detail/powers.js ***!
   \***************************************************/
@@ -83937,7 +84012,7 @@ webpackJsonp([0,1],[
 	}
 
 /***/ },
-/* 35 */
+/* 36 */
 /*!**************************************************!*\
   !*** ./src/components/character-detail/notes.js ***!
   \**************************************************/
@@ -83951,81 +84026,6 @@ webpackJsonp([0,1],[
 	/** @ngInject */
 	function CharacterDetailNotesCtrl($scope, $rootScope) {
 		$rootScope.minimizeToolbar = true;
-	}
-
-/***/ },
-/* 36 */
-/*!**********************************!*\
-  !*** ./src/data/powers/index.js ***!
-  \**********************************/
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Powers.$inject = ["$http", "$rootScope"];
-	module.exports = Powers;
-
-	/** @ngInject */
-	function Powers($http, $rootScope) {
-
-		var powers = [];
-
-		return { get: get, add: add, edit: edit, powers: powers, fetch: fetch, search: search, remove: remove, destroy: destroy, create_new: create_new };
-
-		function get() {
-			if (powers.length) {
-				$rootScope.$broadcast('fetched-power', powers);
-			}
-			return fetch();
-		}
-
-		function fetch() {
-			return $http.get('/api/v1/power').then(function (response) {
-				powers = response.data;
-				$rootScope.$broadcast('fetched-powers', powers);
-				return powers;
-			});
-		}
-
-		function search(query) {
-			return $http.post('/api/v1/power/search', { query_string: query }).then(function (data) {
-				console.log(data.data.results);
-				return data.data.results;
-			});
-		}
-
-		function edit(power) {
-			return $http.post('/api/v1/power', power).then(function () {
-				$rootScope.$broadcast('power-editted');
-			});
-		}
-
-		function add(data, character_key) {
-			return $http.post('/api/v1/character/' + character_key + '/power/add/', data);
-		}
-
-		function remove(power_id, character_key) {
-			return $http.post('/api/v1/character/' + character_key + '/power/' + power_id + '/delete/');
-		}
-
-		function destroy(power_id) {
-			return $http.post('/api/v1/power/' + power_id + '/delete/').then(function (data) {
-				$rootScope.$broadcast('power-destroyed');
-			}, function (error) {
-				console.log(error);
-			});
-		}
-
-		function create_new(power, character_key) {
-			var template = '<h1 class=player>' + power.name + '</h1>\n\t\t\t\t\t\t<p class="flavor">\n\t\t\t\t\t\t\t<b>' + power.tier + ' Tier</b><br>\n\t\t\t\t\t\t\t<b> Prerequisite</b>: ' + power.prerequisites + '<br>\n\t\t\t\t\t\t\t<b> Benefit</b>: ' + power.benefit + '\n\t\t\t\t\t\t</p>';
-
-			var postData = {
-				id: (power.length + 2).toString(),
-				name: power.name,
-				html: template
-			};
-			return $http.post('/api/v1/power/', postData);
-		}
 	}
 
 /***/ }
