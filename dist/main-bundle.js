@@ -17,13 +17,15 @@ webpackJsonp([0,1],[
 	__webpack_require__(/*! angular-marked */ 8);
 
 	__webpack_require__(/*! components/cards/power-card */ 10);
-	__webpack_require__(/*! components/modals */ 11);
-	__webpack_require__(/*! components/character/service */ 15);
-	__webpack_require__(/*! ./data */ 16);
-	__webpack_require__(/*! ./js/directives */ 20);
-	__webpack_require__(/*! ./js/ng-filters */ 23);
+	__webpack_require__(/*! components/cards/feat-card */ 11);
+	__webpack_require__(/*! components/cards/stat-card */ 12);
+	__webpack_require__(/*! components/modals */ 13);
+	__webpack_require__(/*! components/character/service */ 17);
+	__webpack_require__(/*! ./data */ 18);
+	__webpack_require__(/*! ./js/directives */ 22);
+	__webpack_require__(/*! ./js/ng-filters */ 25);
 
-	angular.module('dnd', ['ui.router', 'dnd.data', 'dnd.modals', 'dnd.character', 'directives', 'directives.powerCard', 'ui.bootstrap', 'angular.filter', 'app.filters', 'hc.marked']).config(config).run(onRun).controller('AdminCtrl', __webpack_require__(/*! components/admin */ 24)).controller('AdminFeatsCtrl', __webpack_require__(/*! components/admin/feats */ 25)).controller('AdminItemsCtrl', __webpack_require__(/*! components/admin/items */ 26)).controller('GroupsCtrl', __webpack_require__(/*! components/group-list */ 27)).controller('GroupDetailCtrl', __webpack_require__(/*! components/group-detail */ 28)).controller('GroupDetailDashboardCtrl', __webpack_require__(/*! components/group-detail/dashboard */ 29)).controller('GroupDetailEncounterCtrl', __webpack_require__(/*! components/group-detail/encounter */ 30)).controller('GroupDetailStoryCtrl', __webpack_require__(/*! components/group-detail/story */ 31)).controller('GroupDetailAdminCtrl', __webpack_require__(/*! components/group-detail/admin */ 32)).controller('CharacterDetailCtrl', __webpack_require__(/*! components/character-detail */ 33)).controller('CharacterDetailAdvancedCtrl', __webpack_require__(/*! components/character-detail/advanced */ 35)).controller('CharacterDetailSimpleCtrl', __webpack_require__(/*! components/character-detail/simple */ 36)).controller('CharacterDetailPowersCtrl', __webpack_require__(/*! components/character-detail/powers */ 37)).controller('CharacterDetailNotesCtrl', __webpack_require__(/*! components/character-detail/notes */ 38));
+	angular.module('dnd', ['ui.router', 'dnd.data', 'dnd.modals', 'dnd.character', 'directives', 'directives.powerCard', 'directives.featCard', 'directives.statCard', 'ui.bootstrap', 'angular.filter', 'app.filters', 'hc.marked']).config(config).run(onRun).controller('AdminCtrl', __webpack_require__(/*! components/admin */ 26)).controller('AdminFeatsCtrl', __webpack_require__(/*! components/admin/feats */ 27)).controller('AdminItemsCtrl', __webpack_require__(/*! components/admin/items */ 28)).controller('GroupsCtrl', __webpack_require__(/*! components/group-list */ 29)).controller('GroupDetailCtrl', __webpack_require__(/*! components/group-detail */ 30)).controller('GroupDetailDashboardCtrl', __webpack_require__(/*! components/group-detail/dashboard */ 31)).controller('GroupDetailEncounterCtrl', __webpack_require__(/*! components/group-detail/encounter */ 32)).controller('GroupDetailStoryCtrl', __webpack_require__(/*! components/group-detail/story */ 33)).controller('GroupDetailAdminCtrl', __webpack_require__(/*! components/group-detail/admin */ 34)).controller('CharacterDetailCtrl', __webpack_require__(/*! components/character-detail */ 35)).controller('CharacterDetailAdvancedCtrl', __webpack_require__(/*! components/character-detail/advanced */ 37)).controller('CharacterDetailSimpleCtrl', __webpack_require__(/*! components/character-detail/simple */ 38)).controller('CharacterDetailPowersCtrl', __webpack_require__(/*! components/character-detail/powers */ 39)).controller('CharacterDetailNotesCtrl', __webpack_require__(/*! components/character-detail/notes */ 40));
 
 	function config($stateProvider, $urlRouterProvider, $locationProvider) {
 	    $urlRouterProvider.otherwise("/");
@@ -57339,6 +57341,53 @@ webpackJsonp([0,1],[
 
 /***/ },
 /* 11 */
+/*!*******************************************!*\
+  !*** ./src/components/cards/feat-card.js ***!
+  \*******************************************/
+/***/ function(module, exports) {
+
+	'use strict';
+
+	angular.module('directives.featCard', []).directive('featCard', featCard);
+
+	function featCard() {
+		return {
+			templateUrl: "components/cards/feat-card.html",
+			link: function link(scope) {
+				scope.tapCard = function ($event, $index) {};
+			}
+		};
+	}
+
+/***/ },
+/* 12 */
+/*!*******************************************!*\
+  !*** ./src/components/cards/stat-card.js ***!
+  \*******************************************/
+/***/ function(module, exports) {
+
+	'use strict';
+
+	statCtrl.$inject = ["$scope"];
+	angular.module('directives.statCard', []).directive('statCard', statCard);
+
+	function statCard() {
+		return {
+			scope: {
+				'character': '=character'
+			},
+			templateUrl: "components/cards/stat-card.html",
+			controller: statCtrl
+		};
+	}
+
+	/** @ngInject */
+	function statCtrl($scope) {
+		console.log($scope);
+	}
+
+/***/ },
+/* 13 */
 /*!****************************************!*\
   !*** ./src/components/modals/index.js ***!
   \****************************************/
@@ -57346,10 +57395,10 @@ webpackJsonp([0,1],[
 
 	"use strict";
 
-	angular.module("dnd.modals", []).controller('BaseModalCtrl', __webpack_require__(/*! ./base-modal-ctrl */ 12)).controller('CreateFeatModalCtrl', __webpack_require__(/*! ./create-feat-modal */ 13)).controller('EditFeatModalCtrl', __webpack_require__(/*! ./edit-feat-modal */ 14));
+	angular.module("dnd.modals", []).controller('BaseModalCtrl', __webpack_require__(/*! ./base-modal-ctrl */ 14)).controller('CreateFeatModalCtrl', __webpack_require__(/*! ./create-feat-modal */ 15)).controller('EditFeatModalCtrl', __webpack_require__(/*! ./edit-feat-modal */ 16));
 
 /***/ },
-/* 12 */
+/* 14 */
 /*!**************************************************!*\
   !*** ./src/components/modals/base-modal-ctrl.js ***!
   \**************************************************/
@@ -57376,7 +57425,7 @@ webpackJsonp([0,1],[
 	}
 
 /***/ },
-/* 13 */
+/* 15 */
 /*!**********************************************************!*\
   !*** ./src/components/modals/create-feat-modal/index.js ***!
   \**********************************************************/
@@ -57385,7 +57434,7 @@ webpackJsonp([0,1],[
 	"use strict";
 
 	CreateFeatModalCtrl.$inject = ["$scope", "$uibModalInstance", "item", "$stateParams", "$timeout", "Feats", "Character"];
-	var BaseModalCtrl = __webpack_require__(/*! ../base-modal-ctrl */ 12);
+	var BaseModalCtrl = __webpack_require__(/*! ../base-modal-ctrl */ 14);
 
 	module.exports = CreateFeatModalCtrl;
 
@@ -57411,7 +57460,7 @@ webpackJsonp([0,1],[
 	}
 
 /***/ },
-/* 14 */
+/* 16 */
 /*!********************************************************!*\
   !*** ./src/components/modals/edit-feat-modal/index.js ***!
   \********************************************************/
@@ -57420,7 +57469,7 @@ webpackJsonp([0,1],[
 	"use strict";
 
 	EditFeatModalCtrl.$inject = ["$scope", "$uibModalInstance", "item", "$stateParams", "$timeout", "Feats", "Character"];
-	var BaseModalCtrl = __webpack_require__(/*! ../base-modal-ctrl */ 12);
+	var BaseModalCtrl = __webpack_require__(/*! ../base-modal-ctrl */ 14);
 
 	module.exports = EditFeatModalCtrl;
 
@@ -57440,7 +57489,7 @@ webpackJsonp([0,1],[
 	}
 
 /***/ },
-/* 15 */
+/* 17 */
 /*!*********************************************!*\
   !*** ./src/components/character/service.js ***!
   \*********************************************/
@@ -57493,7 +57542,7 @@ webpackJsonp([0,1],[
 	}
 
 /***/ },
-/* 16 */
+/* 18 */
 /*!***************************!*\
   !*** ./src/data/index.js ***!
   \***************************/
@@ -57501,10 +57550,10 @@ webpackJsonp([0,1],[
 
 	"use strict";
 
-	angular.module("dnd.data", []).factory("Items", __webpack_require__(/*! ./items */ 17)).factory("Powers", __webpack_require__(/*! ./powers */ 18)).factory("Feats", __webpack_require__(/*! ./feats */ 19));
+	angular.module("dnd.data", []).factory("Items", __webpack_require__(/*! ./items */ 19)).factory("Powers", __webpack_require__(/*! ./powers */ 20)).factory("Feats", __webpack_require__(/*! ./feats */ 21));
 
 /***/ },
-/* 17 */
+/* 19 */
 /*!*********************************!*\
   !*** ./src/data/items/index.js ***!
   \*********************************/
@@ -57579,7 +57628,7 @@ webpackJsonp([0,1],[
 	}
 
 /***/ },
-/* 18 */
+/* 20 */
 /*!**********************************!*\
   !*** ./src/data/powers/index.js ***!
   \**********************************/
@@ -57654,7 +57703,7 @@ webpackJsonp([0,1],[
 	}
 
 /***/ },
-/* 19 */
+/* 21 */
 /*!*********************************!*\
   !*** ./src/data/feats/index.js ***!
   \*********************************/
@@ -57738,7 +57787,7 @@ webpackJsonp([0,1],[
 	}
 
 /***/ },
-/* 20 */
+/* 22 */
 /*!******************************!*\
   !*** ./src/js/directives.js ***!
   \******************************/
@@ -57746,8 +57795,8 @@ webpackJsonp([0,1],[
 
 	"use strict";
 
-	var $ = __webpack_require__(/*! jquery */ 21);
-	__webpack_require__(/*! jquery-ui */ 22);
+	var $ = __webpack_require__(/*! jquery */ 23);
+	__webpack_require__(/*! jquery-ui */ 24);
 
 	angular.module('directives', []).directive('onFormChange', ["$parse", "$timeout", function ($parse, $timeout) {
 	    return {
@@ -57826,7 +57875,7 @@ webpackJsonp([0,1],[
 	});
 
 /***/ },
-/* 21 */
+/* 23 */
 /*!*********************************!*\
   !*** ./~/jquery/dist/jquery.js ***!
   \*********************************/
@@ -67666,13 +67715,13 @@ webpackJsonp([0,1],[
 
 
 /***/ },
-/* 22 */
+/* 24 */
 /*!**********************************!*\
   !*** ./~/jquery-ui/jquery-ui.js ***!
   \**********************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	var jQuery = __webpack_require__(/*! jquery */ 21);
+	var jQuery = __webpack_require__(/*! jquery */ 23);
 
 	/*! jQuery UI - v1.10.3 - 2013-05-03
 	* http://jqueryui.com
@@ -82680,7 +82729,7 @@ webpackJsonp([0,1],[
 
 
 /***/ },
-/* 23 */
+/* 25 */
 /*!******************************!*\
   !*** ./src/js/ng-filters.js ***!
   \******************************/
@@ -84611,7 +84660,7 @@ webpackJsonp([0,1],[
 	})(window, window.angular);
 
 /***/ },
-/* 24 */
+/* 26 */
 /*!***************************************!*\
   !*** ./src/components/admin/index.js ***!
   \***************************************/
@@ -84628,7 +84677,7 @@ webpackJsonp([0,1],[
 	}
 
 /***/ },
-/* 25 */
+/* 27 */
 /*!*********************************************!*\
   !*** ./src/components/admin/feats/index.js ***!
   \*********************************************/
@@ -84689,7 +84738,7 @@ webpackJsonp([0,1],[
 	}
 
 /***/ },
-/* 26 */
+/* 28 */
 /*!*********************************************!*\
   !*** ./src/components/admin/items/index.js ***!
   \*********************************************/
@@ -84750,7 +84799,7 @@ webpackJsonp([0,1],[
 	}
 
 /***/ },
-/* 27 */
+/* 29 */
 /*!********************************************!*\
   !*** ./src/components/group-list/index.js ***!
   \********************************************/
@@ -84792,7 +84841,7 @@ webpackJsonp([0,1],[
 	}
 
 /***/ },
-/* 28 */
+/* 30 */
 /*!**********************************************!*\
   !*** ./src/components/group-detail/index.js ***!
   \**********************************************/
@@ -84843,7 +84892,7 @@ webpackJsonp([0,1],[
 	}
 
 /***/ },
-/* 29 */
+/* 31 */
 /*!**************************************************!*\
   !*** ./src/components/group-detail/dashboard.js ***!
   \**************************************************/
@@ -84927,7 +84976,7 @@ webpackJsonp([0,1],[
 	}
 
 /***/ },
-/* 30 */
+/* 32 */
 /*!**************************************************!*\
   !*** ./src/components/group-detail/encounter.js ***!
   \**************************************************/
@@ -85019,7 +85068,7 @@ webpackJsonp([0,1],[
 	}
 
 /***/ },
-/* 31 */
+/* 33 */
 /*!**********************************************!*\
   !*** ./src/components/group-detail/story.js ***!
   \**********************************************/
@@ -85044,7 +85093,7 @@ webpackJsonp([0,1],[
 	}
 
 /***/ },
-/* 32 */
+/* 34 */
 /*!**********************************************!*\
   !*** ./src/components/group-detail/admin.js ***!
   \**********************************************/
@@ -85185,7 +85234,7 @@ webpackJsonp([0,1],[
 	}
 
 /***/ },
-/* 33 */
+/* 35 */
 /*!**************************************************!*\
   !*** ./src/components/character-detail/index.js ***!
   \**************************************************/
@@ -85194,7 +85243,7 @@ webpackJsonp([0,1],[
 	'use strict';
 
 	CharacterDetailCtrl.$inject = ["$scope", "$rootScope", "$state", "$http", "$timeout", "$stateParams", "$uibModal", "$log", "Character", "Powers", "Items", "Feats"];
-	var _require = __webpack_require__(/*! data/dnd-data */ 34);
+	var _require = __webpack_require__(/*! data/dnd-data */ 36);
 
 	var XP_LEVELS = _require.XP_LEVELS;
 	var RESERVED_POWER_TRAITS = _require.RESERVED_POWER_TRAITS;
@@ -85482,7 +85531,7 @@ webpackJsonp([0,1],[
 	}
 
 /***/ },
-/* 34 */
+/* 36 */
 /*!******************************!*\
   !*** ./src/data/dnd-data.js ***!
   \******************************/
@@ -85500,7 +85549,7 @@ webpackJsonp([0,1],[
 	};
 
 /***/ },
-/* 35 */
+/* 37 */
 /*!*****************************************************!*\
   !*** ./src/components/character-detail/advanced.js ***!
   \*****************************************************/
@@ -85631,7 +85680,7 @@ webpackJsonp([0,1],[
 	}
 
 /***/ },
-/* 36 */
+/* 38 */
 /*!***************************************************!*\
   !*** ./src/components/character-detail/simple.js ***!
   \***************************************************/
@@ -85648,7 +85697,7 @@ webpackJsonp([0,1],[
 	}
 
 /***/ },
-/* 37 */
+/* 39 */
 /*!***************************************************!*\
   !*** ./src/components/character-detail/powers.js ***!
   \***************************************************/
@@ -85665,7 +85714,7 @@ webpackJsonp([0,1],[
 	}
 
 /***/ },
-/* 38 */
+/* 40 */
 /*!**************************************************!*\
   !*** ./src/components/character-detail/notes.js ***!
   \**************************************************/

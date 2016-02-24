@@ -5,8 +5,9 @@ require("angular-ui-router");
 require("angular-ui-bootstrap");
 require("angular-marked");
 
-
 require("components/cards/power-card");
+require("components/cards/feat-card");
+require("components/cards/stat-card");
 require("components/modals");
 require("components/character/service");
 require("./data");
@@ -21,6 +22,8 @@ angular
         'dnd.character',
         'directives',
         'directives.powerCard',
+        'directives.featCard',
+        'directives.statCard',
         'ui.bootstrap',
         'angular.filter',
         'app.filters',

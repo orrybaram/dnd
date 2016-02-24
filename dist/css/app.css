@@ -50,6 +50,9 @@ strong {
 
 /* FANCYHANDS MIXINS
 ========================================================== */
+.margin-bottom--10 {
+  margin-bottom: 10px; }
+
 meta.foundation-version {
   font-family: "/5.5.0/"; }
 
@@ -3176,7 +3179,7 @@ a:visited {
   right: 20px; }
 
 label {
-  font-size: 8px;
+  font-size: 6px;
   text-transform: uppercase;
   display: block;
   font-weight: bold;
@@ -3185,6 +3188,9 @@ label {
   label small {
     float: right;
     color: #808080; }
+
+.item-label {
+  margin-top: -7px; }
 
 .center-text {
   text-align: center; }
@@ -3407,7 +3413,6 @@ input.highlighted {
 
 .card--power {
   position: relative;
-  border: 10px solid #FFF;
   margin: 10px;
   transition: all .1s;
   overflow: auto; }
@@ -3415,7 +3420,10 @@ input.highlighted {
     color: white;
     padding: 5px 10px;
     margin: 0;
-    background-color: #447DB5; }
+    background-color: #447DB5;
+    overflow: auto; }
+  .card--power .card-title--extra {
+    font-size: 12px; }
   .card--power .description {
     background: #ECECBA;
     color: #413623;
@@ -3495,13 +3503,6 @@ input.highlighted {
     -webkit-column-count: 1; } }
 
 @media (min-width: 500px) and (max-width: 800px) {
-  .modal-dialog {
-    width: 600px;
-    margin: 30px auto; }
-  .modal-content {
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5); }
-  .modal-sm {
-    width: 450px; }
   .masonry-layout {
     column-count: 2;
     -webkit-column-count: 2; } }
@@ -3509,3 +3510,12 @@ input.highlighted {
 @media (min-width: 992px) {
   .modal-lg {
     width: 900px; } }
+
+@media (min-width: 600px) {
+  .modal-dialog {
+    width: 600px;
+    margin: 30px auto; }
+  .modal-content {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5); }
+  .modal-sm {
+    width: 450px; } }

@@ -280,7 +280,7 @@ a {
 }
 
 label {
-	font-size: 8px;
+	font-size: 6px;
 	text-transform: uppercase;
 	display: block;
 	font-weight: bold;
@@ -291,6 +291,10 @@ label {
 		float: right;
 		color: #808080;
 	}
+}
+
+.item-label {
+	margin-top:-7px;
 }
 
 .center-text {
@@ -578,9 +582,6 @@ input.highlighted {
 
 .card--power {
 	position: relative;
-	border: 10px solid #FFF;
-	// max-width: 400px;
-	// max-height: 500px;
 	margin: 10px;
 	transition: all .1s;
 	overflow: auto;
@@ -590,6 +591,11 @@ input.highlighted {
 		padding: 5px 10px;
 		margin:0;
 		background-color:#447DB5;
+		overflow:auto;
+	}
+
+	.card-title--extra {
+		font-size: 12px;
 	}
 	.description {
 		background: #ECECBA;

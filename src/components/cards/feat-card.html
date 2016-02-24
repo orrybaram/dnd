@@ -1,0 +1,6 @@
+<div class="card masonry-layout-panel card--power card--{{feat.type}}" ng-class="{'card--tapped': cardTapped}" ng-click="cardTapped = !cardTapped">
+	<div class="card-header ">
+	    <h3 class="card-title">{{ feat.name }}</h3>
+	</div>
+	<div class="content item-content" ng-bind-html="feat.html | renderHTML"></div>
+</div>

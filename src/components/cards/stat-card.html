@@ -1,0 +1,160 @@
+<div class="card masonry-layout-panel card--power">
+	<ul class="item-list">
+        <li class="item item--weapon" on-form-change="update_weapon($index)" ng-repeat="weapon in character.weapons" ng-form="weaponForm{{$index}}">
+            <div class="inline-block">
+                <label class="item-label">Attack</label>
+                <input class="tiny-input" ng-model="weapon.attack" />
+            </div>
+            <div class="inline-block versus-label">
+                vs
+            </div>
+            <div class="inline-block">
+                <label class="item-label">Defense</label>
+                <input class="tiny-input" ng-model="weapon.defense" />
+            </div>
+            <div class="inline-block weapon-name">
+                <a ng-click="open_weapon_modal(weapon.id)">{{ weapon.name }}</a>
+            </div>
+            <div class="inline-block">
+                <label class="item-label">Damage</label>
+                <input class="small-input" ng-model="weapon.damage" />
+            </div>
+        </li>
+    </ul>
+    <section class="margin-bottom--10">
+        <h2 class="section-header">Initiative</h2>
+        <div class="inline-block">                        
+    	    <h3 class="item-name">INIT</h3>
+    	    <input disabled class="tiny-input highlighted total-box" value="{{ getInitiativeTotal() }}" />
+    	</div>
+    </section>
+    <section class="margin-bottom--10">
+        <h2 class="section-header">Defenses</h2>
+        
+        <div class="inline-block">
+            <h3 class="item-name">AC</h3>
+            <input disabled class="tiny-input highlighted total-box" value="{{ getDefenseTotal('armor') }}" />
+        </div>
+        <div class="inline-block">
+            <h3 class="item-name">Fort</h3>
+            <input disabled class="tiny-input highlighted total-box" value="{{ getDefenseTotal('fortitude') }}" />
+        </div>
+        <div class="inline-block">
+            <h3 class="item-name">ref</h3>
+            <input disabled class="tiny-input highlighted total-box" value="{{ getDefenseTotal('reflex') }}" />
+        </div>
+        <div class="inline-block">
+            <h3 class="item-name">Will</h3>
+            <input disabled class="tiny-input highlighted total-box" value="{{ getDefenseTotal('will') }}" />
+        </div>
+    </section>
+    <section class="margin-bottom--10">
+        <h2 class="section-header">Ability Scores</h2>
+        
+        <div class="item">
+	        <div class="inline-block">
+	            <h3 class="item-name">Str</h3>
+	            <div class="inline-block">
+	                <input disabled class="tiny-input highlighted total-box" value="{{character.strength}}" />
+	            </div>
+				<div class="inline-block">
+	                <label class="item-label">Abil Mod</label>
+	                <input disabled class="tiny-input" value="{{ getAbilModifier(character.strength) }}" />
+	            </div>
+	        </div>
+			<div class="inline-block">
+	            <h3 class="item-name">Con</h3>
+	            <div class="inline-block">
+	                <input disabled class="tiny-input highlighted total-box" value="{{character.constitution}}" />
+	            </div>
+				<div class="inline-block">
+	                <label class="item-label">Abil Mod</label>
+	                <input disabled class="tiny-input" value="{{ getAbilModifier(character.constitution) }}" />
+	            </div>
+	        </div>
+        </div>
+
+        <div class="item">
+        	<div class="inline-block">
+	            <h3 class="item-name">Dex</h3>
+	            <div class="inline-block">
+	                <input disabled class="tiny-input highlighted total-box" value="{{character.dexterity}}" />
+	            </div>
+				<div class="inline-block">
+	                <label class="item-label">Abil Mod</label>
+	                <input disabled class="tiny-input" value="{{ getAbilModifier(character.dexterity) }}" />
+	            </div>
+			</div>
+
+	        <div class="inline-block">
+	            <h3 class="item-name">Int</h3>
+	            <div class="inline-block">
+	                <input disabled class="tiny-input highlighted total-box" value="{{character.intelligence}}" />
+	            </div>
+				<div class="inline-block">
+	                <label class="item-label">Abil Mod</label>
+	                <input disabled class="tiny-input" value="{{ getAbilModifier(character.intelligence) }}" />
+	            </div>
+			</div>
+		</div>
+		
+
+        <div class="item">
+	        <div class="inline-block">    
+	            <h3 class="item-name">Wis</h3>
+	            <div class="inline-block">
+	                <input disabled class="tiny-input highlighted total-box" value="{{character.wisdom}}" />
+	            </div>
+				<div class="inline-block">
+	                <label class="item-label">Abil Mod</label>
+	                <input disabled class="tiny-input" value="{{ getAbilModifier(character.wisdom) }}" />
+	            </div>
+	        </div>
+            <div class="inline-block">
+                <h3 class="item-name">Cha</h3>
+                <div class="inline-block">
+                    <input disabled class="tiny-input highlighted total-box" value="{{character.charisma}}" />
+                </div>
+    			<div class="inline-block">
+                    <label class="item-label">Abil Mod</label>
+                    <input disabled class="tiny-input" value="{{ getAbilModifier(character.charisma) }}" />
+                </div>
+            </div>
+		</div>
+	</section>
+    <section class="margin-bottom--10">
+        <h2 class="section-header">Hit Points</h2>
+        <div class="inline-block">
+            <h3 class="item-name">HP</h3>
+            <input type="number" class="small-input highlighted total-box" ng-class="{warning: character.hp_current <= character.hp_bloodied}" ng-model="character.hp_current" />
+        </div>
+        <div class="inline-block">
+            <label class="item-label">Max</label>
+            <input type="number" class="tiny-input" ng-model="character.hp_max" />
+        </div>
+        <div class="inline-block">
+            <label class="item-label">Bloodied</label>
+            <input disabled class="tiny-input" value="{{ get_bloodied(character.hp_max) }}" />
+        </div>
+        <div class="inline-block">
+            <label class="item-label">Temp</label>
+            <input class="tiny-input" ng-model="character.hp_temp" />
+        </div>
+    </section>
+    
+    <section class="margin-bottom--10">
+        <h2 class="section-header">Surges</h2>
+        <div class="inline-block">
+            <h3 class="item-name">SRG</h3>
+            <input type="number" class="small-input highlighted total-box" ng-model="character.surges_used" />
+        </div>
+        <div class="inline-block">
+            <label class="item-label">Surge Value</label>
+            <input disabled class="tiny-input" value="{{ roundDown(character.hp_max / 4) }}" />
+        </div>
+        <div class="inline-block">
+            <label class="item-label">Surges per Day</label>
+            <input type="number" class="tiny-input" ng-model="character.surges_per_day" />
+        </div>
+    </section>
+</div>

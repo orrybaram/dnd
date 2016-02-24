@@ -26,6 +26,20 @@
 
 // Scale up the modal
 @media (min-width: 500px) and (max-width:800px) {
+    .masonry-layout {
+        column-count: 2;
+        -webkit-column-count: 2;
+    }
+}
+
+@media (min-width: $screen-md-min) {
+    .modal-lg {
+        width: $modal-lg;
+    }
+}
+
+
+@media(min-width: 600px) {
     // Automatically set modal's width for larger viewports
     .modal-dialog {
         width: $modal-md;
@@ -37,15 +51,5 @@
     // Modal sizes
     .modal-sm {
         width: $modal-sm;
-    }
-    .masonry-layout {
-        column-count: 2;
-        -webkit-column-count: 2;
-    }
-}
-
-@media (min-width: $screen-md-min) {
-    .modal-lg {
-        width: $modal-lg;
     }
 }
