@@ -25,7 +25,7 @@ webpackJsonp([0,1],[
 	__webpack_require__(/*! ./js/directives */ 23);
 	__webpack_require__(/*! ./js/ng-filters */ 26);
 
-	angular.module('dnd', ['ui.router', 'dnd.data', 'dnd.modals', 'dnd.character', 'directives', 'directives.powerCard', 'directives.featCard', 'directives.statCard', 'ui.bootstrap', 'angular.filter', 'app.filters', 'hc.marked']).config(config).run(onRun).controller('AdminCtrl', __webpack_require__(/*! components/admin */ 27)).controller('AdminFeatsCtrl', __webpack_require__(/*! components/admin/feats */ 28)).controller('AdminItemsCtrl', __webpack_require__(/*! components/admin/items */ 29)).controller('GroupsCtrl', __webpack_require__(/*! components/group-list */ 30)).controller('GroupDetailCtrl', __webpack_require__(/*! components/group-detail */ 31)).controller('GroupDetailDashboardCtrl', __webpack_require__(/*! components/group-detail/dashboard */ 32)).controller('GroupDetailEncounterCtrl', __webpack_require__(/*! components/group-detail/encounter */ 33)).controller('GroupDetailStoryCtrl', __webpack_require__(/*! components/group-detail/story */ 34)).controller('GroupDetailAdminCtrl', __webpack_require__(/*! components/group-detail/admin */ 35)).controller('CharacterDetailCtrl', __webpack_require__(/*! components/character-detail */ 36)).controller('CharacterDetailAdvancedCtrl', __webpack_require__(/*! components/character-detail/advanced */ 37)).controller('CharacterDetailCombatCtrl', __webpack_require__(/*! components/character-detail/combat */ 41)).controller('CharacterDetailNotesCtrl', __webpack_require__(/*! components/character-detail/notes */ 40));
+	angular.module('dnd', ['ui.router', 'dnd.data', 'dnd.modals', 'dnd.character', 'directives', 'directives.powerCard', 'directives.featCard', 'directives.statCard', 'ui.bootstrap', 'angular.filter', 'app.filters', 'hc.marked']).config(config).run(onRun).controller('AdminCtrl', __webpack_require__(/*! components/admin */ 27)).controller('AdminFeatsCtrl', __webpack_require__(/*! components/admin/feats */ 28)).controller('AdminItemsCtrl', __webpack_require__(/*! components/admin/items */ 29)).controller('GroupsCtrl', __webpack_require__(/*! components/group-list */ 30)).controller('GroupDetailCtrl', __webpack_require__(/*! components/group-detail */ 31)).controller('GroupDetailDashboardCtrl', __webpack_require__(/*! components/group-detail/dashboard */ 32)).controller('GroupDetailEncounterCtrl', __webpack_require__(/*! components/group-detail/encounter */ 33)).controller('GroupDetailStoryCtrl', __webpack_require__(/*! components/group-detail/story */ 34)).controller('GroupDetailAdminCtrl', __webpack_require__(/*! components/group-detail/admin */ 35)).controller('CharacterDetailCtrl', __webpack_require__(/*! components/character-detail */ 36)).controller('CharacterDetailAdvancedCtrl', __webpack_require__(/*! components/character-detail/advanced */ 37)).controller('CharacterDetailCombatCtrl', __webpack_require__(/*! components/character-detail/combat */ 38)).controller('CharacterDetailNotesCtrl', __webpack_require__(/*! components/character-detail/notes */ 39));
 
 	function config($stateProvider, $urlRouterProvider, $locationProvider) {
 	    $urlRouterProvider.otherwise("/");
@@ -85701,26 +85701,7 @@ webpackJsonp([0,1],[
 	}
 
 /***/ },
-/* 38 */,
-/* 39 */,
-/* 40 */
-/*!**************************************************!*\
-  !*** ./src/components/character-detail/notes.js ***!
-  \**************************************************/
-/***/ function(module, exports) {
-
-	"use strict";
-
-	CharacterDetailNotesCtrl.$inject = ["$scope", "$rootScope"];
-	module.exports = CharacterDetailNotesCtrl;
-
-	/** @ngInject */
-	function CharacterDetailNotesCtrl($scope, $rootScope) {
-		$rootScope.minimizeToolbar = true;
-	}
-
-/***/ },
-/* 41 */
+/* 38 */
 /*!***************************************************!*\
   !*** ./src/components/character-detail/combat.js ***!
   \***************************************************/
@@ -85733,6 +85714,23 @@ webpackJsonp([0,1],[
 
 	/** @ngInject */
 	function CharacterDetailCombatCtrl($scope, $rootScope) {
+		$rootScope.minimizeToolbar = true;
+	}
+
+/***/ },
+/* 39 */
+/*!**************************************************!*\
+  !*** ./src/components/character-detail/notes.js ***!
+  \**************************************************/
+/***/ function(module, exports) {
+
+	"use strict";
+
+	CharacterDetailNotesCtrl.$inject = ["$scope", "$rootScope"];
+	module.exports = CharacterDetailNotesCtrl;
+
+	/** @ngInject */
+	function CharacterDetailNotesCtrl($scope, $rootScope) {
 		$rootScope.minimizeToolbar = true;
 	}
 

@@ -3464,6 +3464,7 @@ input.highlighted {
   transform: rotate(2deg); }
   .card--tapped:after {
     content: "";
+    pointer-events: none;
     position: fixed;
     top: 0;
     bottom: 0;
