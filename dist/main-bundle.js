@@ -21,11 +21,11 @@ webpackJsonp([0,1],[
 	__webpack_require__(/*! components/cards/stat-card */ 12);
 	__webpack_require__(/*! components/modals */ 13);
 	__webpack_require__(/*! components/character/service */ 17);
-	__webpack_require__(/*! ./data */ 18);
-	__webpack_require__(/*! ./js/directives */ 22);
-	__webpack_require__(/*! ./js/ng-filters */ 25);
+	__webpack_require__(/*! ./data */ 19);
+	__webpack_require__(/*! ./js/directives */ 23);
+	__webpack_require__(/*! ./js/ng-filters */ 26);
 
-	angular.module('dnd', ['ui.router', 'dnd.data', 'dnd.modals', 'dnd.character', 'directives', 'directives.powerCard', 'directives.featCard', 'directives.statCard', 'ui.bootstrap', 'angular.filter', 'app.filters', 'hc.marked']).config(config).run(onRun).controller('AdminCtrl', __webpack_require__(/*! components/admin */ 26)).controller('AdminFeatsCtrl', __webpack_require__(/*! components/admin/feats */ 27)).controller('AdminItemsCtrl', __webpack_require__(/*! components/admin/items */ 28)).controller('GroupsCtrl', __webpack_require__(/*! components/group-list */ 29)).controller('GroupDetailCtrl', __webpack_require__(/*! components/group-detail */ 30)).controller('GroupDetailDashboardCtrl', __webpack_require__(/*! components/group-detail/dashboard */ 31)).controller('GroupDetailEncounterCtrl', __webpack_require__(/*! components/group-detail/encounter */ 32)).controller('GroupDetailStoryCtrl', __webpack_require__(/*! components/group-detail/story */ 33)).controller('GroupDetailAdminCtrl', __webpack_require__(/*! components/group-detail/admin */ 34)).controller('CharacterDetailCtrl', __webpack_require__(/*! components/character-detail */ 35)).controller('CharacterDetailAdvancedCtrl', __webpack_require__(/*! components/character-detail/advanced */ 37)).controller('CharacterDetailSimpleCtrl', __webpack_require__(/*! components/character-detail/simple */ 38)).controller('CharacterDetailPowersCtrl', __webpack_require__(/*! components/character-detail/powers */ 39)).controller('CharacterDetailNotesCtrl', __webpack_require__(/*! components/character-detail/notes */ 40));
+	angular.module('dnd', ['ui.router', 'dnd.data', 'dnd.modals', 'dnd.character', 'directives', 'directives.powerCard', 'directives.featCard', 'directives.statCard', 'ui.bootstrap', 'angular.filter', 'app.filters', 'hc.marked']).config(config).run(onRun).controller('AdminCtrl', __webpack_require__(/*! components/admin */ 27)).controller('AdminFeatsCtrl', __webpack_require__(/*! components/admin/feats */ 28)).controller('AdminItemsCtrl', __webpack_require__(/*! components/admin/items */ 29)).controller('GroupsCtrl', __webpack_require__(/*! components/group-list */ 30)).controller('GroupDetailCtrl', __webpack_require__(/*! components/group-detail */ 31)).controller('GroupDetailDashboardCtrl', __webpack_require__(/*! components/group-detail/dashboard */ 32)).controller('GroupDetailEncounterCtrl', __webpack_require__(/*! components/group-detail/encounter */ 33)).controller('GroupDetailStoryCtrl', __webpack_require__(/*! components/group-detail/story */ 34)).controller('GroupDetailAdminCtrl', __webpack_require__(/*! components/group-detail/admin */ 35)).controller('CharacterDetailCtrl', __webpack_require__(/*! components/character-detail */ 36)).controller('CharacterDetailAdvancedCtrl', __webpack_require__(/*! components/character-detail/advanced */ 37)).controller('CharacterDetailSimpleCtrl', __webpack_require__(/*! components/character-detail/simple */ 38)).controller('CharacterDetailPowersCtrl', __webpack_require__(/*! components/character-detail/powers */ 39)).controller('CharacterDetailNotesCtrl', __webpack_require__(/*! components/character-detail/notes */ 40));
 
 	function config($stateProvider, $urlRouterProvider, $locationProvider) {
 	    $urlRouterProvider.otherwise("/");
@@ -57368,7 +57368,7 @@ webpackJsonp([0,1],[
 
 	'use strict';
 
-	statCtrl.$inject = ["$scope"];
+	statCtrl.$inject = ["$scope", "Character"];
 	angular.module('directives.statCard', []).directive('statCard', statCard);
 
 	function statCard() {
@@ -57382,8 +57382,19 @@ webpackJsonp([0,1],[
 	}
 
 	/** @ngInject */
-	function statCtrl($scope) {
+	function statCtrl($scope, Character) {
 		console.log($scope);
+
+		$scope.getAbilModifier = Character.getAbilModifier;
+		$scope.getInitiativeTotal = Character.getInitiativeTotal;
+		$scope.getHalfLevel = Character.getHalfLevel;
+		$scope.roundDown = Character.roundDown;
+		$scope.getBloodied = Character.getBloodied;
+		$scope.getTotalAbilityScore = Character.getTotalAbilityScore;
+		$scope.getDefenseTotal = Character.getDefenseTotal;
+		$scope.getLevel = Character.getLevel;
+		$scope.getSpeed = Character.getSpeed;
+		$scope.getSkillTotal = Character.getSkillTotal;
 	}
 
 /***/ },
@@ -57493,56 +57504,170 @@ webpackJsonp([0,1],[
 /*!*********************************************!*\
   !*** ./src/components/character/service.js ***!
   \*********************************************/
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	Character.$inject = ["$rootScope", "$http"];
+	var _require = __webpack_require__(/*! data/dnd-data */ 18);
+
+	var XP_LEVELS = _require.XP_LEVELS;
+
 	angular.module('dnd.character', []).factory('Character', Character);
 
 	/** @ngInject */
 	function Character($rootScope, $http) {
 
-		var data;
+	    var data = {};
 
-		return {
-			data: data,
-			get: get,
-			fetch: fetch,
-			destroy: destroy,
-			update: update
-		};
+	    return {
+	        data: data,
+	        get: get,
+	        fetch: fetch,
+	        destroy: destroy,
+	        update: update,
 
-		function get() {
-			return data;
-		}
+	        getAbilModifier: getAbilModifier,
+	        getInitiativeTotal: getInitiativeTotal,
+	        getHalfLevel: getHalfLevel,
+	        roundDown: roundDown,
+	        getBloodied: getBloodied,
+	        getTotalAbilityScore: getTotalAbilityScore,
+	        getDefenseTotal: getDefenseTotal,
+	        getLevel: getLevel,
+	        getSpeed: getSpeed,
+	        getSkillTotal: getSkillTotal
 
-		function fetch(key) {
-			key = key || data.key;
-			return $http.get('/api/v1/character/' + key).then(function (response) {
-				data = response.data.character;
-				$rootScope.$broadcast('fetched-character', data);
-				return data;
-			});
-		}
+	    };
 
-		function destroy(key) {
-			key = key || data.key;
-			return $http.post('/api/v1/character/' + key + '/delete').then(function (response) {
-				console.log(response);
-			}, function (err) {
-				alert(err.data.error);
-			});
-		}
+	    function get() {
+	        return data;
+	    }
 
-		function update(postData, key) {
-			key = key || data.key;
-			return $http.post('/api/v1/character/' + key + '/update/', postData);
-		}
+	    function fetch(key) {
+	        key = key || data.key;
+	        return $http.get('/api/v1/character/' + key).then(function (response) {
+	            data = response.data.character;
+	            $rootScope.$broadcast('fetched-character', data);
+	            return data;
+	        });
+	    }
+
+	    function destroy(key) {
+	        key = key || data.key;
+	        return $http.post('/api/v1/character/' + key + '/delete').then(function (response) {
+	            console.log(response);
+	        }, function (err) {
+	            alert(err.data.error);
+	        });
+	    }
+
+	    function update(postData, key) {
+	        key = key || data.key;
+	        return $http.post('/api/v1/character/' + key + '/update/', postData);
+	    }
+
+	    function getAbilModifier(score) {
+	        return Math.floor((score - 10) / 2);
+	    }
+
+	    function getHalfLevel() {
+	        return Math.floor(data.level / 2);
+	    }
+
+	    function roundDown(score) {
+	        return Math.floor(score);
+	    }
+
+	    function getBloodied(hp) {
+	        var bloodied = roundDown(hp / 2);
+	        data.hp_bloodied = bloodied;
+	        return bloodied;
+	    }
+
+	    function getInitiativeTotal() {
+	        var total = parseInt(getAbilModifier(data.dexterity));
+	        total += parseInt(getHalfLevel());
+	        total += parseInt(data.initiative_misc);
+	        data.initiative_score = total;
+	        return total;
+	    }
+
+	    function getTotalAbilityScore(ability) {
+	        return parseInt(data[ability]) + parseInt(data[ability + '_misc_mod']);
+	    }
+
+	    function getDefenseTotal(defense) {
+	        var total = 10 + parseInt(getHalfLevel());
+
+	        total += parseInt(data[defense + '_abil']);
+	        total += parseInt(data[defense + '_char_class']);
+	        total += parseInt(data[defense + '_feat']);
+	        total += parseInt(data[defense + '_enh']);
+	        total += parseInt(data[defense + '_misc1']);
+	        total += parseInt(data[defense + '_misc2']);
+
+	        data[defense + '_total'] = total;
+
+	        return total;
+	    }
+
+	    function getLevel() {
+	        var level = 0;
+	        for (var i = 0; i < XP_LEVELS.length; i++) {
+	            if (XP_LEVELS[i] <= data.total_xp) {
+	                level += 1;
+	            }
+	        }
+	        data.level = level;
+	        return level;
+	    }
+
+	    function getSpeed() {
+	        var speed = parseInt(data.speed_base);
+	        speed += parseInt(data.speed_armor);
+	        speed += parseInt(data.speed_item);
+	        speed += parseInt(data.speed_misc);
+	        data.speed_total = speed;
+	        return speed;
+	    }
+
+	    function getSkillTotal(skill, ability) {
+	        var total = 0;
+
+	        if (data[skill + '_armor_penalty']) {
+	            total += parseInt(data[skill + '_armor_penalty']);
+	        }
+	        if (data[skill + '_trained']) {
+	            total += 5;
+	        }
+	        total += getAbilModifier(data[ability]) + getHalfLevel();
+	        total += parseInt(data[skill + '_misc']);
+	        data[skill + '_total'] = total;
+	        return total;
+	    }
 	}
 
 /***/ },
 /* 18 */
+/*!******************************!*\
+  !*** ./src/data/dnd-data.js ***!
+  \******************************/
+/***/ function(module, exports) {
+
+	'use strict';
+
+	var XP_LEVELS = [0, 1000, 2250, 3750, 5500, 7500, 10000, 13000, 16500, 20500, 26000, 32000, 39000, 47000, 57000, 69000, 83000, 99000, 119000, 143000, 175000, 210000, 255000, 310000, 375000, 450000, 550000, 675000, 825000, 1000000];
+
+	var RESERVED_POWER_TRAITS = ['key', 'id', 'name', 'secondary_name', 'description', 'type', 'level', 'info'];
+
+	module.exports = {
+		XP_LEVELS: XP_LEVELS,
+		RESERVED_POWER_TRAITS: RESERVED_POWER_TRAITS
+	};
+
+/***/ },
+/* 19 */
 /*!***************************!*\
   !*** ./src/data/index.js ***!
   \***************************/
@@ -57550,10 +57675,10 @@ webpackJsonp([0,1],[
 
 	"use strict";
 
-	angular.module("dnd.data", []).factory("Items", __webpack_require__(/*! ./items */ 19)).factory("Powers", __webpack_require__(/*! ./powers */ 20)).factory("Feats", __webpack_require__(/*! ./feats */ 21));
+	angular.module("dnd.data", []).factory("Items", __webpack_require__(/*! ./items */ 20)).factory("Powers", __webpack_require__(/*! ./powers */ 21)).factory("Feats", __webpack_require__(/*! ./feats */ 22));
 
 /***/ },
-/* 19 */
+/* 20 */
 /*!*********************************!*\
   !*** ./src/data/items/index.js ***!
   \*********************************/
@@ -57628,7 +57753,7 @@ webpackJsonp([0,1],[
 	}
 
 /***/ },
-/* 20 */
+/* 21 */
 /*!**********************************!*\
   !*** ./src/data/powers/index.js ***!
   \**********************************/
@@ -57703,7 +57828,7 @@ webpackJsonp([0,1],[
 	}
 
 /***/ },
-/* 21 */
+/* 22 */
 /*!*********************************!*\
   !*** ./src/data/feats/index.js ***!
   \*********************************/
@@ -57787,7 +57912,7 @@ webpackJsonp([0,1],[
 	}
 
 /***/ },
-/* 22 */
+/* 23 */
 /*!******************************!*\
   !*** ./src/js/directives.js ***!
   \******************************/
@@ -57795,8 +57920,8 @@ webpackJsonp([0,1],[
 
 	"use strict";
 
-	var $ = __webpack_require__(/*! jquery */ 23);
-	__webpack_require__(/*! jquery-ui */ 24);
+	var $ = __webpack_require__(/*! jquery */ 24);
+	__webpack_require__(/*! jquery-ui */ 25);
 
 	angular.module('directives', []).directive('onFormChange', ["$parse", "$timeout", function ($parse, $timeout) {
 	    return {
@@ -57875,7 +58000,7 @@ webpackJsonp([0,1],[
 	});
 
 /***/ },
-/* 23 */
+/* 24 */
 /*!*********************************!*\
   !*** ./~/jquery/dist/jquery.js ***!
   \*********************************/
@@ -67715,13 +67840,13 @@ webpackJsonp([0,1],[
 
 
 /***/ },
-/* 24 */
+/* 25 */
 /*!**********************************!*\
   !*** ./~/jquery-ui/jquery-ui.js ***!
   \**********************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	var jQuery = __webpack_require__(/*! jquery */ 23);
+	var jQuery = __webpack_require__(/*! jquery */ 24);
 
 	/*! jQuery UI - v1.10.3 - 2013-05-03
 	* http://jqueryui.com
@@ -82729,7 +82854,7 @@ webpackJsonp([0,1],[
 
 
 /***/ },
-/* 25 */
+/* 26 */
 /*!******************************!*\
   !*** ./src/js/ng-filters.js ***!
   \******************************/
@@ -84660,7 +84785,7 @@ webpackJsonp([0,1],[
 	})(window, window.angular);
 
 /***/ },
-/* 26 */
+/* 27 */
 /*!***************************************!*\
   !*** ./src/components/admin/index.js ***!
   \***************************************/
@@ -84677,7 +84802,7 @@ webpackJsonp([0,1],[
 	}
 
 /***/ },
-/* 27 */
+/* 28 */
 /*!*********************************************!*\
   !*** ./src/components/admin/feats/index.js ***!
   \*********************************************/
@@ -84738,7 +84863,7 @@ webpackJsonp([0,1],[
 	}
 
 /***/ },
-/* 28 */
+/* 29 */
 /*!*********************************************!*\
   !*** ./src/components/admin/items/index.js ***!
   \*********************************************/
@@ -84799,7 +84924,7 @@ webpackJsonp([0,1],[
 	}
 
 /***/ },
-/* 29 */
+/* 30 */
 /*!********************************************!*\
   !*** ./src/components/group-list/index.js ***!
   \********************************************/
@@ -84841,7 +84966,7 @@ webpackJsonp([0,1],[
 	}
 
 /***/ },
-/* 30 */
+/* 31 */
 /*!**********************************************!*\
   !*** ./src/components/group-detail/index.js ***!
   \**********************************************/
@@ -84892,7 +85017,7 @@ webpackJsonp([0,1],[
 	}
 
 /***/ },
-/* 31 */
+/* 32 */
 /*!**************************************************!*\
   !*** ./src/components/group-detail/dashboard.js ***!
   \**************************************************/
@@ -84976,7 +85101,7 @@ webpackJsonp([0,1],[
 	}
 
 /***/ },
-/* 32 */
+/* 33 */
 /*!**************************************************!*\
   !*** ./src/components/group-detail/encounter.js ***!
   \**************************************************/
@@ -85068,7 +85193,7 @@ webpackJsonp([0,1],[
 	}
 
 /***/ },
-/* 33 */
+/* 34 */
 /*!**********************************************!*\
   !*** ./src/components/group-detail/story.js ***!
   \**********************************************/
@@ -85093,7 +85218,7 @@ webpackJsonp([0,1],[
 	}
 
 /***/ },
-/* 34 */
+/* 35 */
 /*!**********************************************!*\
   !*** ./src/components/group-detail/admin.js ***!
   \**********************************************/
@@ -85234,7 +85359,7 @@ webpackJsonp([0,1],[
 	}
 
 /***/ },
-/* 35 */
+/* 36 */
 /*!**************************************************!*\
   !*** ./src/components/character-detail/index.js ***!
   \**************************************************/
@@ -85243,10 +85368,9 @@ webpackJsonp([0,1],[
 	'use strict';
 
 	CharacterDetailCtrl.$inject = ["$scope", "$rootScope", "$state", "$http", "$timeout", "$stateParams", "$uibModal", "$log", "Character", "Powers", "Items", "Feats"];
-	var _require = __webpack_require__(/*! data/dnd-data */ 36);
+	var _require = __webpack_require__(/*! data/dnd-data */ 18);
 
 	var XP_LEVELS = _require.XP_LEVELS;
-	var RESERVED_POWER_TRAITS = _require.RESERVED_POWER_TRAITS;
 
 	module.exports = CharacterDetailCtrl;
 
@@ -85273,16 +85397,17 @@ webpackJsonp([0,1],[
 	    $scope.delete_character = delete_character;
 	    $scope.save_character = save_character;
 
-	    $scope.getAbilModifier = getAbilModifier;
-	    $scope.getInitiativeTotal = getInitiativeTotal;
-	    $scope.getHalfLevel = getHalfLevel;
-	    $scope.roundDown = roundDown;
-	    $scope.get_bloodied = get_bloodied;
-	    $scope.getTotalAbilityScore = getTotalAbilityScore;
-	    $scope.getDefenseTotal = getDefenseTotal;
-	    $scope.get_level = get_level;
-	    $scope.get_speed = get_speed;
-	    $scope.get_skill_total = get_skill_total;
+	    $scope.getAbilModifier = Character.getAbilModifier;
+	    $scope.getInitiativeTotal = Character.getInitiativeTotal;
+	    $scope.getHalfLevel = Character.getHalfLevel;
+	    $scope.roundDown = Character.roundDown;
+	    $scope.getBloodied = Character.getBloodied;
+	    $scope.getTotalAbilityScore = Character.getTotalAbilityScore;
+	    $scope.getDefenseTotal = Character.getDefenseTotal;
+	    $scope.getLevel = Character.getLevel;
+	    $scope.getSpeed = Character.getSpeed;
+	    $scope.getSkillTotal = Character.getSkillTotal;
+
 	    $scope.open_power_modal = open_power_modal;
 	    $scope.open_item_modal = open_item_modal;
 	    $scope.open_weapon_modal = open_weapon_modal;
@@ -85309,8 +85434,8 @@ webpackJsonp([0,1],[
 	    });
 
 	    $scope.$watch('character', function () {
-	        $scope.next_level_xp = XP_LEVELS[$scope.get_level()];
-	        $scope.current_level_xp = XP_LEVELS[$scope.get_level() - 1];
+	        $scope.next_level_xp = XP_LEVELS[$scope.getLevel()];
+	        $scope.current_level_xp = XP_LEVELS[$scope.getLevel() - 1];
 	        $scope.your_xp_in_this_level = $scope.character.total_xp - $scope.current_level_xp;
 	        $scope.xp_in_level = $scope.next_level_xp - $scope.current_level_xp;
 	        $scope.xp_level_progress = Math.floor($scope.your_xp_in_this_level / $scope.xp_in_level * 100).toFixed(0);
@@ -85346,88 +85471,6 @@ webpackJsonp([0,1],[
 	                is_editting = false;
 	            }, 3000);
 	        });
-	    }
-	    function getAbilModifier(score) {
-	        return Math.floor((score - 10) / 2);
-	    }
-
-	    function getHalfLevel() {
-	        return Math.floor($scope.character.level / 2);
-	    }
-
-	    function roundDown(score) {
-	        return Math.floor(score);
-	    }
-
-	    function get_bloodied(hp) {
-	        var bloodied = $scope.roundDown(hp / 2);
-	        $scope.character.hp_bloodied = bloodied;
-	        return bloodied;
-	    }
-
-	    function getInitiativeTotal() {
-	        var total = parseInt($scope.getAbilModifier($scope.character.dexterity));
-	        total += parseInt($scope.getHalfLevel());
-	        total += parseInt($scope.character.initiative_misc);
-	        $scope.character.initiative_score = total;
-	        return total;
-	    }
-
-	    function getTotalAbilityScore(ability) {
-	        return parseInt($scope.character[ability]) + parseInt($scope.character[ability + '_misc_mod']);
-	    }
-
-	    function getDefenseTotal(defense) {
-	        var total = 10 + parseInt($scope.getHalfLevel());
-
-	        total += parseInt($scope.character[defense + '_abil']);
-	        total += parseInt($scope.character[defense + '_char_class']);
-	        total += parseInt($scope.character[defense + '_feat']);
-	        total += parseInt($scope.character[defense + '_enh']);
-	        total += parseInt($scope.character[defense + '_misc1']);
-	        total += parseInt($scope.character[defense + '_misc2']);
-
-	        $scope.character[defense + '_total'] = total;
-
-	        return total;
-	    }
-
-	    function get_level() {
-	        var level = 0;
-
-	        for (var i = 0; i < XP_LEVELS.length; i++) {
-	            if (XP_LEVELS[i] <= $scope.character.total_xp) {
-	                level += 1;
-	            }
-	        }
-
-	        $scope.character.level = level;
-
-	        return level;
-	    }
-
-	    function get_speed() {
-	        var speed = parseInt($scope.character.speed_base);
-	        speed += parseInt($scope.character.speed_armor);
-	        speed += parseInt($scope.character.speed_item);
-	        speed += parseInt($scope.character.speed_misc);
-	        $scope.character.speed_total = speed;
-	        return speed;
-	    }
-
-	    function get_skill_total(skill, ability) {
-	        var total = 0;
-
-	        if ($scope.character[skill + '_armor_penalty']) {
-	            total += parseInt($scope.character[skill + '_armor_penalty']);
-	        }
-	        if ($scope.character[skill + '_trained']) {
-	            total += 5;
-	        }
-	        total += $scope.getAbilModifier($scope.character[ability]) + $scope.getHalfLevel();
-	        total += parseInt($scope.character[skill + '_misc']);
-	        $scope.character[skill + '_total'] = total;
-	        return total;
 	    }
 
 	    // Power Modal
@@ -85529,24 +85572,6 @@ webpackJsonp([0,1],[
 	        });
 	    }
 	}
-
-/***/ },
-/* 36 */
-/*!******************************!*\
-  !*** ./src/data/dnd-data.js ***!
-  \******************************/
-/***/ function(module, exports) {
-
-	'use strict';
-
-	var XP_LEVELS = [0, 1000, 2250, 3750, 5500, 7500, 10000, 13000, 16500, 20500, 26000, 32000, 39000, 47000, 57000, 69000, 83000, 99000, 119000, 143000, 175000, 210000, 255000, 310000, 375000, 450000, 550000, 675000, 825000, 1000000];
-
-	var RESERVED_POWER_TRAITS = ['key', 'id', 'name', 'secondary_name', 'description', 'type', 'level', 'info'];
-
-	module.exports = {
-		XP_LEVELS: XP_LEVELS,
-		RESERVED_POWER_TRAITS: RESERVED_POWER_TRAITS
-	};
 
 /***/ },
 /* 37 */

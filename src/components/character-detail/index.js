@@ -1,4 +1,4 @@
-const {XP_LEVELS, RESERVED_POWER_TRAITS} = require("data/dnd-data");
+const {XP_LEVELS} = require("data/dnd-data");
 
 module.exports = CharacterDetailCtrl;
 
@@ -25,16 +25,17 @@ function CharacterDetailCtrl($scope, $rootScope, $state, $http, $timeout, $state
     $scope.delete_character = delete_character;
     $scope.save_character = save_character;
     
-    $scope.getAbilModifier = getAbilModifier;
-    $scope.getInitiativeTotal = getInitiativeTotal;
-    $scope.getHalfLevel = getHalfLevel;
-    $scope.roundDown = roundDown;
-    $scope.get_bloodied = get_bloodied;
-    $scope.getTotalAbilityScore = getTotalAbilityScore;
-    $scope.getDefenseTotal = getDefenseTotal;
-    $scope.get_level = get_level;
-    $scope.get_speed = get_speed;
-    $scope.get_skill_total = get_skill_total;
+    $scope.getAbilModifier = Character.getAbilModifier;
+    $scope.getInitiativeTotal = Character.getInitiativeTotal;
+    $scope.getHalfLevel = Character.getHalfLevel;
+    $scope.roundDown = Character.roundDown;
+    $scope.getBloodied = Character.getBloodied;
+    $scope.getTotalAbilityScore = Character.getTotalAbilityScore;
+    $scope.getDefenseTotal = Character.getDefenseTotal;
+    $scope.getLevel = Character.getLevel;
+    $scope.getSpeed = Character.getSpeed;
+    $scope.getSkillTotal = Character.getSkillTotal;
+    
     $scope.open_power_modal = open_power_modal;
     $scope.open_item_modal = open_item_modal;
     $scope.open_weapon_modal = open_weapon_modal;
@@ -62,8 +63,8 @@ function CharacterDetailCtrl($scope, $rootScope, $state, $http, $timeout, $state
     });
 
     $scope.$watch('character', function() {
-        $scope.next_level_xp = XP_LEVELS[$scope.get_level()];
-        $scope.current_level_xp = XP_LEVELS[$scope.get_level() - 1];
+        $scope.next_level_xp = XP_LEVELS[$scope.getLevel()];
+        $scope.current_level_xp = XP_LEVELS[$scope.getLevel() - 1];
         $scope.your_xp_in_this_level = $scope.character.total_xp - $scope.current_level_xp;
         $scope.xp_in_level = $scope.next_level_xp - $scope.current_level_xp;
         $scope.xp_level_progress = Math.floor(($scope.your_xp_in_this_level / $scope.xp_in_level) * 100).toFixed(0);
@@ -101,90 +102,7 @@ function CharacterDetailCtrl($scope, $rootScope, $state, $http, $timeout, $state
             }, 3000);
         });
     }
-    function getAbilModifier(score) {
-        return Math.floor((score - 10) / 2);
-    }
-
-    function getHalfLevel() {
-        return Math.floor($scope.character.level / 2);
-    }
-
-    function roundDown(score) {
-        return Math.floor(score);
-    }
-
-    function get_bloodied(hp) {
-        var bloodied = $scope.roundDown(hp / 2);
-        $scope.character.hp_bloodied = bloodied;
-        return bloodied;
-
-    }
-
-    function getInitiativeTotal() {
-        var total = parseInt($scope.getAbilModifier($scope.character.dexterity));
-        total += parseInt($scope.getHalfLevel());
-        total += parseInt($scope.character.initiative_misc);
-        $scope.character.initiative_score = total;
-        return total;
-    }
-
-    function getTotalAbilityScore(ability) {
-        return parseInt($scope.character[ability]) + parseInt($scope.character[ability + '_misc_mod']);
-    }
-
-    function getDefenseTotal(defense) {
-        var total = 10 + parseInt($scope.getHalfLevel());
-
-        total += parseInt($scope.character[defense + '_abil']);
-        total += parseInt($scope.character[defense + '_char_class']);
-        total += parseInt($scope.character[defense + '_feat']);
-        total += parseInt($scope.character[defense + '_enh']);
-        total += parseInt($scope.character[defense + '_misc1']);
-        total += parseInt($scope.character[defense + '_misc2']);
-
-        $scope.character[defense + '_total'] = total;
-
-        return total;
-    }
-
-    function get_level() {
-        var level = 0;
-
-        for (var i = 0; i < XP_LEVELS.length; i++) {
-            if(XP_LEVELS[i] <= $scope.character.total_xp) {
-                level += 1;
-            }
-        }
-
-        $scope.character.level = level;
-
-        return level;
-    }
-
-    function get_speed() {
-        var speed = parseInt($scope.character.speed_base);
-        speed += parseInt($scope.character.speed_armor);
-        speed += parseInt($scope.character.speed_item);
-        speed += parseInt($scope.character.speed_misc);
-        $scope.character.speed_total = speed;
-        return speed;
-    }
-
-    function get_skill_total(skill, ability) {
-        var total = 0;
-
-        if($scope.character[skill + '_armor_penalty']) {
-            total += parseInt($scope.character[skill + '_armor_penalty']);
-        }
-        if($scope.character[skill + '_trained']) {
-            total += 5;
-        }
-        total += $scope.getAbilModifier($scope.character[ability]) + $scope.getHalfLevel();
-        total += parseInt($scope.character[skill + '_misc']);
-        $scope.character[skill + '_total'] = total;
-        return total;
-    }
-
+    
 
     // Power Modal
     function open_power_modal(id) {

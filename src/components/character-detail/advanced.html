@@ -13,7 +13,7 @@
                     </div>
                     <div class="inline-block">
                         <label>Level</label>
-                        <input class="tiny-input" disabled value="{{get_level()}}" />
+                        <input class="tiny-input" disabled ng-value="getLevel()" />
                     </div>
                     
 
@@ -84,17 +84,17 @@
                     <h2 class="section-header">Initiative</h2>
                     <div class="inline-block">                        
                         <h3 class="item-name">INIT</h3>
-                        <input disabled class="tiny-input highlighted total-box" value="{{ getInitiativeTotal() }}" />
+                        <input disabled class="tiny-input highlighted total-box" ng-value="getInitiativeTotal()" />
                     </div>
 
                     <div class="inline-block">
                         <label>Dex</label>
-                        <input disabled class="tiny-input" value="{{ getAbilModifier(character.dexterity) }}" />
+                        <input disabled class="tiny-input" ng-value="getAbilModifier(character.dexterity)" />
                     </div>
 
                     <div class="inline-block">
                         <label>1/2 Level</label>
-                        <input disabled class="tiny-input" value="{{ getHalfLevel() }}" />
+                        <input disabled class="tiny-input" ng-value="getHalfLevel()" />
                     </div>
 
                     <div class="inline-block">
@@ -110,7 +110,7 @@
                     <div class="item">
                         <h3 class="item-name">Str</h3>
                         <div class="inline-block">
-                            <input disabled class="tiny-input highlighted total-box" value="{{character.strength}}" />
+                            <input disabled class="tiny-input highlighted total-box" ng-value="character.strength" />
                         </div>
 
                         <div class="inline-block">
@@ -120,19 +120,19 @@
 
                         <div class="inline-block">
                             <label>Abil Mod</label>
-                            <input disabled class="tiny-input" value="{{ getAbilModifier(character.strength) }}" />
+                            <input disabled class="tiny-input" ng-value="getAbilModifier(character.strength)" />
                         </div>
                         
                         <div class="inline-block">
                             <label>AM + 1/2 lvl</label>
-                            <input disabled class="tiny-input" value="{{ getAbilModifier(character.strength) + getHalfLevel() }}" />
+                            <input disabled class="tiny-input" ng-value="getAbilModifier(character.strength) + getHalfLevel()" />
                         </div>
                     </div>
 
                     <div class="item">
                         <h3 class="item-name">Con</h3>
                         <div class="inline-block">
-                            <input disabled class="tiny-input highlighted total-box" value="{{character.constitution}}" />
+                            <input disabled class="tiny-input highlighted total-box" ng-value="character.constitution" />
                         </div>
 
                         <div class="inline-block">
@@ -142,12 +142,12 @@
 
                         <div class="inline-block">
                             <label>Abil Mod</label>
-                            <input disabled class="tiny-input" value="{{ getAbilModifier(character.constitution) }}" />
+                            <input disabled class="tiny-input" ng-value="getAbilModifier(character.constitution)" />
                         </div>
 
                         <div class="inline-block">
                             <label>AM + 1/2 lvl</label>
-                            <input disabled class="tiny-input" value="{{ getAbilModifier(character.constitution) + getHalfLevel() }}" />
+                            <input disabled class="tiny-input" ng-value="getAbilModifier(character.constitution) + getHalfLevel()" />
                         </div>
                         
                     </div>
@@ -155,7 +155,7 @@
                     <div class="item">
                         <h3 class="item-name">Dex</h3>
                         <div class="inline-block">
-                            <input disabled class="tiny-input highlighted total-box" value="{{character.dexterity}}" />
+                            <input disabled class="tiny-input highlighted total-box" ng-value="character.dexterity" />
                         </div>
 
                         <div class="inline-block">
@@ -165,12 +165,12 @@
 
                         <div class="inline-block">
                             <label>Abil Mod</label>
-                            <input disabled class="tiny-input" value="{{ getAbilModifier(character.dexterity) }}" />
+                            <input disabled class="tiny-input" ng-value="getAbilModifier(character.dexterity)" />
                         </div>
 
                         <div class="inline-block">
                             <label>AM + 1/2 lvl</label>
-                            <input disabled class="tiny-input" value="{{ getAbilModifier(character.dexterity) + getHalfLevel() }}" />
+                            <input disabled class="tiny-input" ng-value="getAbilModifier(character.dexterity) + getHalfLevel()" />
                         </div>
 
                     </div>
@@ -178,7 +178,7 @@
                     <div class="item">
                         <h3 class="item-name">Int</h3>
                         <div class="inline-block">
-                            <input disabled class="tiny-input highlighted total-box" value="{{character.intelligence}}" />
+                            <input disabled class="tiny-input highlighted total-box" ng-value="character.intelligence" />
                         </div>
 
                         <div class="inline-block">
@@ -188,12 +188,12 @@
 
                         <div class="inline-block">
                             <label>Abil Mod</label>
-                            <input disabled class="tiny-input" value="{{ getAbilModifier(character.intelligence) }}" />
+                            <input disabled class="tiny-input" ng-value="getAbilModifier(character.intelligence)" />
                         </div>
 
                         <div class="inline-block">
                             <label>AM + 1/2 lvl</label>
-                            <input disabled class="tiny-input" value="{{ getAbilModifier(character.intelligence) + getHalfLevel() }}" />
+                            <input disabled class="tiny-input" ng-value="getAbilModifier(character.intelligence) + getHalfLevel()" />
                         </div>
 
                     </div>
@@ -201,7 +201,7 @@
                     <div class="item">
                         <h3 class="item-name">Wis</h3>
                         <div class="inline-block">
-                            <input disabled class="tiny-input highlighted total-box" value="{{character.wisdom}}" />
+                            <input disabled class="tiny-input highlighted total-box" ng-value="character.wisdom" />
                         </div>
 
                         <div class="inline-block">
@@ -211,12 +211,12 @@
 
                         <div class="inline-block">
                             <label>Abil Mod</label>
-                            <input disabled class="tiny-input" value="{{ getAbilModifier(character.wisdom) }}" />
+                            <input disabled class="tiny-input" ng-value="getAbilModifier(character.wisdom)" />
                         </div>
 
                         <div class="inline-block">
                             <label>AM + 1/2 lvl</label>
-                            <input disabled class="tiny-input" value="{{ getAbilModifier(character.wisdom) + getHalfLevel() }}" />
+                            <input disabled class="tiny-input" ng-value="getAbilModifier(character.wisdom) + getHalfLevel()" />
                         </div>
 
                     </div>
@@ -224,7 +224,7 @@
                     <div class="item">
                         <h3 class="item-name">Cha</h3>
                         <div class="inline-block">
-                            <input disabled class="tiny-input highlighted total-box" value="{{character.charisma}}" />
+                            <input disabled class="tiny-input highlighted total-box" ng-value="character.charisma" />
                         </div>
 
                         <div class="inline-block">
@@ -234,12 +234,12 @@
 
                         <div class="inline-block">
                             <label>Abil Mod</label>
-                            <input disabled class="tiny-input" value="{{ getAbilModifier(character.charisma) }}" />
+                            <input disabled class="tiny-input" ng-value="getAbilModifier(character.charisma)" />
                         </div>
 
                         <div class="inline-block">
                             <label>AM + 1/2 lvl</label>
-                            <input disabled class="tiny-input" value="{{ getAbilModifier(character.charisma) + getHalfLevel() }}" />
+                            <input disabled class="tiny-input" ng-value="getAbilModifier(character.charisma) + getHalfLevel()" />
                         </div>
 
                     </div>
@@ -259,7 +259,7 @@
                     </div>
                     <div class="inline-block">
                         <label>Bloodied</label>
-                        <input disabled class="tiny-input" value="{{ get_bloodied(character.hp_max) }}" />
+                        <input disabled class="tiny-input" ng-value="getBloodied(character.hp_max)" />
                     </div>
                     <div class="inline-block">
                         <label>Temp</label>
@@ -275,7 +275,7 @@
                     </div>
                     <div class="inline-block">
                         <label>Surge Value</label>
-                        <input disabled class="tiny-input" value="{{ roundDown(character.hp_max / 4) }}" />
+                        <input disabled class="tiny-input" ng-value="roundDown(character.hp_max / 4)" />
                     </div>
                     <div class="inline-block">
                         <label>Surges per Day</label>
@@ -291,11 +291,11 @@
                     <div class="item">
                         <div class="inline-block">
                             <h3 class="item-name wide">Acro</h3>
-                            <input disabled class="tiny-input highlighted total-box" value="{{ get_skill_total('acrobatics', 'dexterity') }}" />
+                            <input disabled class="tiny-input highlighted total-box" ng-value="getSkillTotal('acrobatics', 'dexterity')" />
                         </div>
                         <div class="inline-block">
                             <label>AM + 1/2 lvl</label>
-                            <input disabled class="tiny-input" value="{{ getAbilModifier(character.dexterity) + getHalfLevel() }}" />
+                            <input disabled class="tiny-input" ng-value="getAbilModifier(character.dexterity) + getHalfLevel()" />
                         </div>
                         <div class="inline-block">
                             <label>Armr Pnlty</label>
@@ -314,11 +314,11 @@
                     <div class="item">
                         <div class="inline-block">
                             <h3 class="item-name wide">Arcn</h3>
-                            <input disabled class="tiny-input highlighted total-box" value="{{ get_skill_total('arcana' , 'intelligence') }}" />
+                            <input disabled class="tiny-input highlighted total-box" ng-value="getSkillTotal('arcana' , 'intelligence')" />
                         </div>
                         <div class="inline-block">
                             <label>AM + 1/2 lvl</label>
-                            <input disabled class="tiny-input" value="{{ getAbilModifier(character.intelligence) + getHalfLevel() }}" />
+                            <input disabled class="tiny-input" ng-value="getAbilModifier(character.intelligence) + getHalfLevel()" />
                         </div>
                         <div class="inline-block">
                             <label>Misc</label>
@@ -332,11 +332,11 @@
                     <div class="item">
                         <div class="inline-block">
                             <h3 class="item-name wide">Athl</h3>
-                            <input disabled class="tiny-input highlighted total-box" value="{{ get_skill_total('athletics' ,'strength') }}" />
+                            <input disabled class="tiny-input highlighted total-box" ng-value="getSkillTotal('athletics' ,'strength')" />
                         </div>
                         <div class="inline-block">
                             <label>AM + 1/2 lvl</label>
-                            <input disabled class="tiny-input" value="{{ getAbilModifier(character.strength) + getHalfLevel() }}" />
+                            <input disabled class="tiny-input" ng-value="getAbilModifier(character.strength) + getHalfLevel()" />
                         </div>
                         <div class="inline-block">
                             <label>Armr Pnlty</label>
@@ -354,11 +354,11 @@
                     <div class="item">
                         <div class="inline-block">
                             <h3 class="item-name wide">Blff</h3>
-                            <input disabled class="tiny-input highlighted total-box" value="{{ get_skill_total('bluff', 'charisma') }}" />
+                            <input disabled class="tiny-input highlighted total-box" ng-value="getSkillTotal('bluff', 'charisma')" />
                         </div>
                         <div class="inline-block">
                             <label>AM + 1/2 lvl</label>
-                            <input disabled class="tiny-input" value="{{ getAbilModifier(character.charisma) + getHalfLevel() }}" />
+                            <input disabled class="tiny-input" ng-value=" getAbilModifier(character.charisma) + getHalfLevel()" />
                         </div>
                         <div class="inline-block">
                             <label>Misc</label>
@@ -373,11 +373,11 @@
                     <div class="item">
                         <div class="inline-block">
                             <h3 class="item-name wide">DPLM</h3>
-                            <input disabled class="tiny-input highlighted total-box" value="{{ get_skill_total('diplomacy', 'charisma') }}" />
+                            <input disabled class="tiny-input highlighted total-box" ng-value=" getSkillTotal('diplomacy', 'charisma')" />
                         </div>
                         <div class="inline-block">
                             <label>AM + 1/2 lvl</label>
-                            <input disabled class="tiny-input" value="{{ getAbilModifier(character.charisma) + getHalfLevel() }}" />
+                            <input disabled class="tiny-input" ng-value=" getAbilModifier(character.charisma) + getHalfLevel()" />
                         </div>
                         <div class="inline-block">
                             <label>Misc</label>
@@ -392,11 +392,11 @@
                     <div class="item">
                         <div class="inline-block">
                             <h3 class="item-name wide">DUNG</h3>
-                            <input disabled class="tiny-input highlighted total-box" value="{{ get_skill_total('dungeoneering', 'wisdom') }}" />
+                            <input disabled class="tiny-input highlighted total-box" ng-value=" getSkillTotal('dungeoneering', 'wisdom')" />
                         </div>
                         <div class="inline-block">
                             <label>AM + 1/2 lvl</label>
-                            <input disabled class="tiny-input" value="{{ getAbilModifier(character.wisdom) + getHalfLevel() }}" />
+                            <input disabled class="tiny-input" ng-value=" getAbilModifier(character.wisdom) + getHalfLevel()" />
                         </div>
                         <div class="inline-block">
                             <label>Misc</label>
@@ -411,11 +411,11 @@
                     <div class="item">
                         <div class="inline-block">
                             <h3 class="item-name wide">Endr</h3>
-                            <input disabled class="tiny-input highlighted total-box" value="{{ get_skill_total('endurance', 'constitution') }}" />
+                            <input disabled class="tiny-input highlighted total-box" ng-value=" getSkillTotal('endurance', 'constitution')" />
                         </div>
                         <div class="inline-block">
                             <label>AM + 1/2 lvl</label>
-                            <input disabled class="tiny-input" value="{{ getAbilModifier(character.constitution) + getHalfLevel() }}" />
+                            <input disabled class="tiny-input" ng-value=" getAbilModifier(character.constitution) + getHalfLevel()" />
                         </div>
                         <div class="inline-block">
                             <label>Armr Pnlty</label>
@@ -433,11 +433,11 @@
                     <div class="item">
                         <div class="inline-block">
                             <h3 class="item-name wide">Heal</h3>
-                            <input disabled class="tiny-input highlighted total-box" value="{{ get_skill_total('heal', 'wisdom') }}" />
+                            <input disabled class="tiny-input highlighted total-box" ng-value=" getSkillTotal('heal', 'wisdom')" />
                         </div>
                         <div class="inline-block">
                             <label>AM + 1/2 lvl</label>
-                            <input disabled class="tiny-input" value="{{ getAbilModifier(character.wisdom) + getHalfLevel() }}" />
+                            <input disabled class="tiny-input" ng-value=" getAbilModifier(character.wisdom) + getHalfLevel()" />
                         </div>
                         <div class="inline-block">
                             <label>Misc</label>
@@ -451,11 +451,11 @@
                     <div class="item">
                         <div class="inline-block">
                             <h3 class="item-name wide">Hist</h3>
-                            <input disabled class="tiny-input highlighted total-box" value="{{ get_skill_total('history', 'intelligence') }}" />
+                            <input disabled class="tiny-input highlighted total-box" ng-value=" getSkillTotal('history', 'intelligence')" />
                         </div>
                         <div class="inline-block">
                             <label>AM + 1/2 lvl</label>
-                            <input disabled class="tiny-input" value="{{ getAbilModifier(character.intelligence) + getHalfLevel() }}" />
+                            <input disabled class="tiny-input" ng-value=" getAbilModifier(character.intelligence) + getHalfLevel()" />
                         </div>
                         <div class="inline-block">
                             <label>Misc</label>
@@ -471,11 +471,11 @@
                     <div class="item">
                         <div class="inline-block">
                             <h3 class="item-name wide">Inst</h3>
-                            <input disabled class="tiny-input highlighted total-box" value="{{ get_skill_total('insight', 'wisdom') }}" />
+                            <input disabled class="tiny-input highlighted total-box" ng-value=" getSkillTotal('insight', 'wisdom')" />
                         </div>
                         <div class="inline-block">
                             <label>AM + 1/2 lvl</label>
-                            <input disabled class="tiny-input" value="{{ getAbilModifier(character.wisdom) + getHalfLevel() }}" />
+                            <input disabled class="tiny-input" ng-value=" getAbilModifier(character.wisdom) + getHalfLevel()" />
                         </div>
                         <div class="inline-block">
                             <label>Misc</label>
@@ -489,11 +489,11 @@
                     <div class="item">
                         <div class="inline-block">
                             <h3 class="item-name wide">Intm</h3>
-                            <input disabled class="tiny-input highlighted total-box" value="{{ get_skill_total('intimidate', 'charisma') }}" />
+                            <input disabled class="tiny-input highlighted total-box" ng-value=" getSkillTotal('intimidate', 'charisma')" />
                         </div>
                         <div class="inline-block">
                             <label>AM + 1/2 lvl</label>
-                            <input disabled class="tiny-input" value="{{ getAbilModifier(character.charisma) + getHalfLevel() }}" />
+                            <input disabled class="tiny-input" ng-value=" getAbilModifier(character.charisma) + getHalfLevel()" />
                         </div>
                         <div class="inline-block">
                             <label>Misc</label>
@@ -507,11 +507,11 @@
                     <div class="item">
                         <div class="inline-block">
                             <h3 class="item-name wide">Natr</h3>
-                            <input disabled class="tiny-input highlighted total-box" value="{{ get_skill_total('nature', 'wisdom') }}" />
+                            <input disabled class="tiny-input highlighted total-box" ng-value=" getSkillTotal('nature', 'wisdom')" />
                         </div>
                         <div class="inline-block">
                             <label>AM + 1/2 lvl</label>
-                            <input disabled class="tiny-input" value="{{ getAbilModifier(character.wisdom) + getHalfLevel() }}" />
+                            <input disabled class="tiny-input" ng-value=" getAbilModifier(character.wisdom) + getHalfLevel()" />
                         </div>
                         <div class="inline-block">
                             <label>Misc</label>
@@ -525,11 +525,11 @@
                     <div class="item">
                         <div class="inline-block">
                             <h3 class="item-name wide">Prcp</h3>
-                            <input disabled class="tiny-input highlighted total-box" value="{{ get_skill_total('perception', 'wisdom') }}" />
+                            <input disabled class="tiny-input highlighted total-box" ng-value=" getSkillTotal('perception', 'wisdom')" />
                         </div>
                         <div class="inline-block">
                             <label>AM + 1/2 lvl</label>
-                            <input disabled class="tiny-input" value="{{ getAbilModifier(character.wisdom) + getHalfLevel() }}" />
+                            <input disabled class="tiny-input" ng-value=" getAbilModifier(character.wisdom) + getHalfLevel()" />
                         </div>
                         <div class="inline-block">
                             <label>Misc</label>
@@ -543,11 +543,11 @@
                     <div class="item">
                         <div class="inline-block">
                             <h3 class="item-name wide">Rlgn</h3>
-                            <input disabled class="tiny-input highlighted total-box" value="{{ get_skill_total('religion', 'intelligence') }}" />
+                            <input disabled class="tiny-input highlighted total-box" ng-value=" getSkillTotal('religion', 'intelligence')" />
                         </div>
                         <div class="inline-block">
                             <label>AM + 1/2 lvl</label>
-                            <input disabled class="tiny-input" value="{{ getAbilModifier(character.intelligence) + getHalfLevel() }}" />
+                            <input disabled class="tiny-input" ng-value=" getAbilModifier(character.intelligence) + getHalfLevel()" />
                         </div>
                         <div class="inline-block">
                             <label>Misc</label>
@@ -561,11 +561,11 @@
                     <div class="item">
                         <div class="inline-block">
                             <h3 class="item-name wide">Stlth</h3>
-                            <input disabled class="tiny-input highlighted total-box" value="{{ get_skill_total('stealth', 'dexterity') }}" />
+                            <input disabled class="tiny-input highlighted total-box" ng-value=" getSkillTotal('stealth', 'dexterity')" />
                         </div>
                         <div class="inline-block">
                             <label>AM + 1/2 lvl</label>
-                            <input disabled class="tiny-input" value="{{ getAbilModifier(character.dexterity) + getHalfLevel() }}" />
+                            <input disabled class="tiny-input" ng-value=" getAbilModifier(character.dexterity) + getHalfLevel()" />
                         </div>
                         <div class="inline-block">
                             <label>Armr Pnlty</label>
@@ -583,11 +583,11 @@
                     <div class="item">
                         <div class="inline-block">
                             <h3 class="item-name wide">Street</h3>
-                            <input disabled class="tiny-input highlighted total-box" value="{{ get_skill_total('streetwise', 'charisma') }}" />
+                            <input disabled class="tiny-input highlighted total-box" ng-value=" getSkillTotal('streetwise', 'charisma')" />
                         </div>
                         <div class="inline-block">
                             <label>AM + 1/2 lvl</label>
-                            <input disabled class="tiny-input" value="{{ getAbilModifier(character.charisma) + getHalfLevel() }}" />
+                            <input disabled class="tiny-input" ng-value=" getAbilModifier(character.charisma) + getHalfLevel()" />
                         </div>
                         <div class="inline-block">
                             <label>Misc</label>
@@ -601,11 +601,11 @@
                     <div class="item">
                         <div class="inline-block">
                             <h3 class="item-name wide">Thvry</h3>
-                            <input disabled class="tiny-input highlighted total-box" value="{{ get_skill_total('theivery', 'dexterity') }}" />
+                            <input disabled class="tiny-input highlighted total-box" ng-value=" getSkillTotal('theivery', 'dexterity')" />
                         </div>
                         <div class="inline-block">
                             <label>AM + 1/2 lvl</label>
-                            <input disabled class="tiny-input" value="{{ getAbilModifier(character.dexterity) + getHalfLevel() }}" />
+                            <input disabled class="tiny-input" ng-value=" getAbilModifier(character.dexterity) + getHalfLevel()" />
                         </div>
                         <div class="inline-block">
                             <label>Armr Pnlty</label>
@@ -634,11 +634,11 @@
                     <div class="item">
                         <div class="inline-block">
                             <h3 class="item-name">AC</h3>
-                            <input disabled class="tiny-input highlighted total-box" value="{{ getDefenseTotal('armor') }}" />
+                            <input disabled class="tiny-input highlighted total-box" ng-value=" getDefenseTotal('armor')" />
                         </div>
                         <div class="inline-block">
                             <label>10 + 1/2 Lvl</label>
-                            <input disabled class="tiny-input" value="{{ 10 + getHalfLevel() }}" />
+                            <input disabled class="tiny-input" ng-value=" 10 + getHalfLevel()" />
                         </div>
                         <div class="inline-block">
                             <label>Abil</label>
@@ -669,11 +669,11 @@
                     <div class="item">
                         <div class="inline-block">
                             <h3 class="item-name">Fort</h3>
-                            <input disabled class="tiny-input highlighted total-box" value="{{ getDefenseTotal('fortitude') }}" />
+                            <input disabled class="tiny-input highlighted total-box" ng-value=" getDefenseTotal('fortitude')" />
                         </div>
                         <div class="inline-block">
                             <label>10 + 1/2 Lvl</label>
-                            <input disabled class="tiny-input" value="{{ 10 + getHalfLevel() }}" />
+                            <input disabled class="tiny-input" ng-value=" 10 + getHalfLevel()" />
                         </div>
                         <div class="inline-block">
                             <label>Abil</label>
@@ -704,11 +704,11 @@
                     <div class="item">
                         <div class="inline-block">
                             <h3 class="item-name">ref</h3>
-                            <input disabled class="tiny-input highlighted total-box" value="{{ getDefenseTotal('reflex') }}" />
+                            <input disabled class="tiny-input highlighted total-box" ng-value=" getDefenseTotal('reflex')" />
                         </div>
                         <div class="inline-block">
                             <label>10 + 1/2 Lvl</label>
-                            <input disabled class="tiny-input" value="{{ 10 + getHalfLevel() }}" />
+                            <input disabled class="tiny-input" ng-value=" 10 + getHalfLevel()" />
                         </div>
                         <div class="inline-block">
                             <label>Abil</label>
@@ -739,11 +739,11 @@
                     <div class="item">
                         <div class="inline-block">
                             <h3 class="item-name">Will</h3>
-                            <input disabled class="tiny-input highlighted total-box" value="{{ getDefenseTotal('will') }}" />
+                            <input disabled class="tiny-input highlighted total-box" ng-value=" getDefenseTotal('will')" />
                         </div>
                         <div class="inline-block">
                             <label>10 + 1/2 Lvl</label>
-                            <input disabled class="tiny-input" value="{{ 10 + getHalfLevel() }}" />
+                            <input disabled class="tiny-input" ng-value=" 10 + getHalfLevel()" />
                         </div>
                         <div class="inline-block">
                             <label>Abil</label>
@@ -851,7 +851,7 @@
                     <h2 class="section-header">Speed</h2>
                     <div class="inline-block">
                         <h3 class="item-name">SPD</h3>
-                        <input disabled class="tiny-input highlighted total-box" value="{{ get_speed() }}" />
+                        <input disabled class="tiny-input highlighted total-box" ng-value=" getSpeed()" />
                     </div>
                     <div class="inline-block">
                         <label>Base</label>
@@ -881,11 +881,11 @@
                     <h2 class="section-header">Senses</h2>
                     <div class="inline-block">
                         <h3 class="item-name wider">PSV INST</h3>
-                        <input disabled class="tiny-input highlighted total-box" value="{{character.insight_total + 10}}" />
+                        <input disabled class="tiny-input highlighted total-box" ng-value="character.insight_total + 10" />
                     </div>
                     <div class="inline-block">
                         <h3 class="item-name wider">PSV PRCP</h3>
-                        <input disabled class="tiny-input highlighted total-box" value="{{character.perception_total + 10}}" />
+                        <input disabled class="tiny-input highlighted total-box" ng-value="character.perception_total + 10" />
                     </div>
                     <div>
                         <label>Extra abilites</label>

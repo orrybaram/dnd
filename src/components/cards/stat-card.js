@@ -13,6 +13,17 @@ function statCard() {
 }
 
 /** @ngInject */
-function statCtrl($scope) {
+function statCtrl($scope, Character) {
 	console.log($scope)
+
+	$scope.getAbilModifier = Character.getAbilModifier;
+    $scope.getInitiativeTotal = Character.getInitiativeTotal;
+    $scope.getHalfLevel = Character.getHalfLevel;
+    $scope.roundDown = Character.roundDown;
+    $scope.getBloodied = Character.getBloodied;
+    $scope.getTotalAbilityScore = Character.getTotalAbilityScore;
+    $scope.getDefenseTotal = Character.getDefenseTotal;
+    $scope.getLevel = Character.getLevel;
+    $scope.getSpeed = Character.getSpeed;
+    $scope.getSkillTotal = Character.getSkillTotal;
 }
