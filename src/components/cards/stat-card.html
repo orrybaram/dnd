@@ -1,26 +1,29 @@
 <div class="card masonry-layout-panel card--power">
-	<ul class="item-list">
-        <li class="item item--weapon" on-form-change="update_weapon($index)" ng-repeat="weapon in character.weapons" ng-form="weaponForm{{$index}}">
-            <div class="inline-block">
-                <label class="item-label">Attack</label>
-                <input class="tiny-input" ng-model="weapon.attack" />
-            </div>
-            <div class="inline-block versus-label">
-                vs
-            </div>
-            <div class="inline-block">
-                <label class="item-label">Defense</label>
-                <input class="tiny-input" ng-model="weapon.defense" />
-            </div>
-            <div class="inline-block weapon-name">
-                <a ng-click="open_weapon_modal(weapon.id)">{{ weapon.name }}</a>
-            </div>
-            <div class="inline-block">
-                <label class="item-label">Damage</label>
-                <input class="small-input" ng-model="weapon.damage" />
-            </div>
-        </li>
-    </ul>
+	<section class="margin-bottom--10">
+		<h2 class="section-header">Weapons</h2>
+		<ul class="item-list">
+	        <li class="item item--weapon" on-form-change="update_weapon($index)" ng-repeat="weapon in character.weapons" ng-form="weaponForm{{$index}}">
+	            <div class="inline-block">
+	                <label class="item-label">Attack</label>
+	                <input class="tiny-input" ng-model="weapon.attack" />
+	            </div>
+	            <div class="inline-block versus-label">
+	                vs
+	            </div>
+	            <div class="inline-block">
+	                <label class="item-label">Defense</label>
+	                <input class="tiny-input" ng-model="weapon.defense" />
+	            </div>
+	            <div class="inline-block weapon-name">
+	                <a ng-click="open_weapon_modal(weapon.id)">{{ weapon.name }}</a>
+	            </div>
+	            <div class="inline-block">
+	                <label class="item-label">Damage</label>
+	                <input class="small-input" ng-model="weapon.damage" />
+	            </div>
+	        </li>
+	    </ul>
+	</section>
     <section class="margin-bottom--10">
         <h2 class="section-header">Initiative</h2>
         <div class="inline-block">                        

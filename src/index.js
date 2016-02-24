@@ -42,10 +42,10 @@ angular
     .controller('GroupDetailEncounterCtrl', require("components/group-detail/encounter"))
     .controller('GroupDetailStoryCtrl', require("components/group-detail/story"))
     .controller('GroupDetailAdminCtrl', require("components/group-detail/admin"))
+    
     .controller('CharacterDetailCtrl', require("components/character-detail"))
     .controller('CharacterDetailAdvancedCtrl', require("components/character-detail/advanced"))
-    .controller('CharacterDetailSimpleCtrl', require("components/character-detail/simple"))
-    .controller('CharacterDetailPowersCtrl', require("components/character-detail/powers"))
+    .controller('CharacterDetailCombatCtrl', require("components/character-detail/combat"))
     .controller('CharacterDetailNotesCtrl', require("components/character-detail/notes"))
 ;
 
@@ -118,22 +118,17 @@ function config($stateProvider, $urlRouterProvider, $locationProvider) {
                 templateUrl: "/components/character-detail/advanced.html",
                 controller: 'CharacterDetailAdvancedCtrl as detail'
             })
-            .state('character-detail.simple', {
-                url: "/simple",
-                templateUrl: "/components/character-detail/simple.html",
-                controller: 'CharacterDetailSimpleCtrl'
-            })
-            .state('character-detail.powers', {
-                url: "/powers",
-                templateUrl: "/components/character-detail/powers.html",
-                controller: 'CharacterDetailPowersCtrl as detail'
+            .state('character-detail.combat', {
+                url: "/combat",
+                templateUrl: "/components/character-detail/combat.html",
+                controller: 'CharacterDetailCombatCtrl'
             })
             .state('character-detail.notes', {
                 url: "/notes",
                 templateUrl: "/components/character-detail/notes.html",
                 controller: 'CharacterDetailNotesCtrl as detail'
             })
-    ;
+        ;
 }
 
 /** @ngInject */
